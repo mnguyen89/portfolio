@@ -1,0 +1,339 @@
+/* Visual Design — 2012–2018 retrospective.
+   Shares the modal shell, type ramp and gutter with the Slack and PayPal case
+   studies. Layout follows the Figma frame "Visuals" (369:117443): a centred
+   opening over a gradient band, the glance tags, then three galleries —
+   Branding, Illustration & Iconography, Print — each a heading over
+   full-width plates. */
+
+:root {
+  --cs-ink: #1c1917;
+  --cs-ink-soft: #6b6661;
+  --cs-ink-mute: #5e5d60;
+  --cs-surface: #ffffff;
+  --cs-surface-warm: #f7f5f0;
+  --cs-surface-grey: #f8f8f8;
+  --cs-accent: #1e99ed;
+
+  --cs-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --cs-body: "Geist", "Helvetica Neue", Arial, sans-serif;
+
+  /* 160px at the full 960px panel, as drawn; the floor is low enough that a
+     phone keeps a usable column rather than 183px between 96px gutters. */
+  --cs-gutter: clamp(20px, 22.2cqi - 53px, 160px);
+  --cs-radius: 10px;
+  /* the 175px rhythm between top-level blocks, tightened on narrow panels */
+  --cs-rhythm: 175px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #d9d9d9;
+  font-family: var(--cs-body);
+  line-height: 1.6;
+  color: var(--cs-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Modal shell ---------- */
+
+.cs-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(0px, 3vw, 100px);
+  background: rgba(29, 28, 29, 0.7);
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The query container lives on the panel, not on .cs, so the rules below can
+   restyle .cs itself — an element is never matched against its own container.
+   cqi is unchanged by this: .cs fills the panel with no horizontal padding. */
+.cs-panel {
+  container-type: inline-size;
+  position: relative;
+  width: min(960px, 100%);
+  background: var(--cs-surface);
+  border-radius: var(--cs-radius);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
+}
+
+.cs-close {
+  position: sticky;
+  top: 20px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  /* negative bottom margin cancels the button's own line box so the article starts flush */
+  margin: 20px 20px -60px auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  color: var(--cs-ink);
+  cursor: pointer;
+}
+
+.cs-close:hover { background: #fff; }
+.cs-close:focus-visible { outline: 2px solid var(--cs-accent); outline-offset: 2px; }
+
+.cs-close svg {
+  width: 18px; height: 18px;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round;
+}
+
+/* ---------- Case study ----------
+   One flex column on the 175px rhythm; the opening pair is nested so it can
+   keep its own tighter 53px gap. */
+
+.cs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-rhythm);
+  padding: 80px 0 160px;
+  overflow: hidden;
+  border-radius: var(--cs-radius);
+}
+
+.cs-open {
+  display: flex;
+  flex-direction: column;
+  gap: 53px;
+}
+
+/* ---------- Image placeholder ----------
+   Grey slot standing in for artwork not yet exported. The label is the spec for
+   what belongs there, so it ships in the markup rather than a comment. */
+
+.cs-ph {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 24px 28px;
+  width: 100%;
+  aspect-ratio: var(--ph-ratio, 16 / 10);
+  border-radius: 8px;
+  background: var(--cs-surface-grey);
+}
+
+.cs-ph__label {
+  max-width: 34ch;
+  font-family: var(--cs-body);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  text-wrap: balance;
+  color: #78726c;
+}
+
+/* ---------- Hero ---------- */
+
+.cs-hero {
+  padding: 0 var(--cs-gutter);
+  text-align: center;
+}
+
+/* same pill as .pf-badge on the home page */
+.cs-hero__badge {
+  display: inline-block;
+  margin: 0 0 26.67px;
+  padding: 3.33px 10px;
+  border-radius: 83.33px;
+  background: #1d1c1d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.042em;
+  text-transform: uppercase;
+  color: #fdfbf7;
+}
+
+.cs-hero__title {
+  margin: 0 0 12px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(30px, 4.2cqi, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-hero__lede {
+  margin: 0 auto;
+  max-width: 640px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--cs-ink-soft);
+}
+
+.cs-heroVisual {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 960 / 799;
+  padding: 100px 2.78% 133px;
+  background: linear-gradient(-23.5deg, var(--cs-surface-warm) 5%, #ffffff 71.4%);
+}
+
+.cs-heroVisual .cs-ph { max-width: 640px; }
+
+/* ---------- At a glance ---------- */
+
+.cs-glance { padding: 0 var(--cs-gutter); text-align: center; }
+
+.cs-glance__title {
+  margin: 0 0 75px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-tag {
+  padding: 10px 28px;
+  border-radius: 70px;
+  background: var(--cs-surface-warm);
+  font-family: var(--cs-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.15;
+  color: var(--cs-ink-mute);
+}
+
+/* the short centred rule between the opening and the galleries */
+.cs-rule {
+  width: 480px;
+  max-width: calc(100% - 2 * var(--cs-gutter));
+  height: 0;
+  margin: 0 auto;
+  border: 0;
+  border-top: 1px solid var(--cs-ink-mute);
+}
+
+/* ---------- Galleries ---------- */
+
+.cs-set {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.cs-copy { padding: 0 var(--cs-gutter); }
+
+.cs-copy__title {
+  margin: 0 0 20px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: var(--cs-ink);
+}
+
+.cs-copy__body {
+  margin: 0;
+  font-size: 13.33px;
+  line-height: 1.6;
+  color: var(--cs-ink-soft);
+}
+
+.cs-plates {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: 0;
+  padding: 0 var(--cs-gutter);
+  list-style: none;
+}
+
+.cs-plate { margin: 0; }
+
+.cs-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Three of the plates are smaller than the frame they sit in, on a field of
+   their own background colour. `contain` reproduces that inset exactly: the
+   image fits the short axis and the field shows through on the other. */
+.cs-plate--field {
+  aspect-ratio: var(--plate-ratio);
+  background: var(--plate-field);
+  overflow: hidden;
+}
+
+.cs-plate--field img {
+  height: 100%;
+  object-fit: contain;
+  object-position: var(--plate-pos, center);
+}
+
+/* ---------- Scroll-in reveal ----------
+   Hidden state is scoped to .cs-reveal, added at runtime, so the page still
+   renders if the script never runs. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-reveal [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .cs-reveal [data-reveal].is-revealed { opacity: 1; transform: none; }
+  .cs-close { transition: background 0.15s ease; }
+}
+
+/* ---------- Responsive ---------- */
+
+@container (max-width: 860px) {
+  .cs { --cs-rhythm: 120px; padding-block: 64px 120px; }
+  .cs-open { gap: 44px; }
+  .cs-glance__title { margin-bottom: 56px; }
+  .cs-set { gap: 72px; }
+  .cs-plates { gap: 40px; }
+}
+
+@container (max-width: 640px) {
+  .cs { --cs-rhythm: 88px; padding-block: 56px 88px; }
+  .cs-open { gap: 36px; }
+  .cs-glance__title { margin-bottom: 40px; }
+  .cs-set { gap: 48px; }
+  .cs-plates { gap: 32px; }
+  /* the gradient band is 4:3-ish tall on a phone; let it collapse to the plate */
+  .cs-heroVisual { aspect-ratio: auto; padding: 56px 16px 64px; }
+}
+
+@container (max-width: 420px) {
+  .cs-tag { padding: 8px 16px; font-size: 15px; }
+  .cs-ph { padding: 16px; }
+}
+
+@media (max-width: 640px) {
+  .cs-backdrop { padding: 0; }
+  .cs-panel { border-radius: 0; min-height: 100%; }
+  .cs { border-radius: 0; }
+}

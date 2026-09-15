@@ -1,0 +1,590 @@
+/* Minh Nguyen — portfolio home.
+   Built from Figma 11:4 (1000-wide frame). That frame is a 0.6667 scale of a
+   1500 master, which is why the design numbers are thirds — 13.333, 66.667,
+   86.667, 133.333. They are kept here so the page matches the frame, and
+   because the PayPal case study already uses this same scale (13px body). */
+
+:root {
+  --ink: #1c1917;
+  --ink-soft: #6b6661;
+  /* dt_color-otl-sec — the design's lightest text, used for the hero timespan */
+  --ink-faint: rgba(94, 93, 96, 0.45);
+  /* not in the Figma: the "Coming soon" state is site-only, so it keeps a
+     readable grey rather than borrowing --ink-faint (which fails 4.5:1) */
+  --ink-mute: #77757a;
+  --accent: #e76f51;
+  /* brand colours, used only for the menu icons' hover state */
+  --brand-linkedin: #0a66c2;
+  --brand-dribbble: #ea4c89;
+  --btn: #1d1c1d;
+  /* dt_color-otl-ter */
+  --rule: rgba(94, 93, 96, 0.13);
+
+  /* Page is a warm-paper wash that resolves to white past the fold. The stop
+     positions are the design's own (the gradient ends at 121.69%, so the foot
+     of the page lands near #fefefd rather than pure white). */
+  --paper: linear-gradient(180deg, #fbf9f6 12.694%, #ffffff 121.69%);
+  /* #e5e4e1 multiplied over the paper top, resolved so the bar needs no
+     blend mode of its own */
+  --highlight: #e1dfd9;
+
+  --display: "Bricolage Grotesque", "Bricolage Grotesque Placeholder", sans-serif;
+  --body: "Geist", "Geist Placeholder", system-ui, sans-serif;
+
+  /* The Figma frame is authored at 1000, so its padding values are used as-is.
+     Each is a vw ramp bounded by the design value at 1000 and its proportional
+     share at the 720 floor. Percentages can't be used: padding percentages
+     resolve against the PARENT's width, i.e. the window, not the content box. */
+  --content-max: 1000px;
+  --content-min: 720px;
+  --gutter: clamp(48px, 6.667vw, 66.67px);          /* nav + hero + footer */
+  --band-gutter: clamp(56px, 9.6vw, 96px);          /* plain bands, px-96 */
+  --band-space: clamp(96px, 13.333vw, 133.33px);    /* plain band rhythm */
+  --card-inset: clamp(24px, 4vw, 40px);             /* card band, px-40 */
+  --card-pad: var(--band-gutter);                   /* card padding, px-96 */
+  --card-space: clamp(88px, 12vw, 120px);           /* card rhythm, py-120 */
+  --col-gap: clamp(48px, 8.667vw, 86.67px);
+  /* Copy column is a fixed 320 in every row; the media column takes the rest,
+     which is how the design's flex-1 media behaves. */
+  --copy-col: 320px;
+  --media-h: clamp(240px, 37.5vw, 375px);
+  --card-radius: 32px;
+
+  --shadow-avatar: 0 15px 20px rgba(0, 0, 0, 0.1);
+  /* 302:201986 — one wide, very soft drop shadow. Deliberately NOT the Glass 2
+     recipe used by 309:11432 (0 4px 16px + inset 5px 25px 5px): that inner
+     shadow draws a dark band across the top edge this card doesn't have. */
+  --shadow-card: 0 2px 34px rgba(0, 0, 0, 0.05);
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-blur: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--body);
+  color: var(--ink);
+  /* content has a hard floor, so narrow viewports scroll rather than reflow */
+  min-width: var(--content-min);
+  /* Containing block for .pf-wash, which spans the whole document. */
+  position: relative;
+  background: var(--paper) no-repeat;
+}
+
+body.is-modalOpen { overflow: hidden; }
+
+img { max-width: 100%; }
+
+.pf-visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- Page decoration ----------
+   One halftone dot-wave bleeding off the left edge beneath the hero, per the
+   design (310:109502 — 614 square at -180.83, 326.17). Multiply drops the
+   asset's white ground, leaving just the dots; the glass cards are translucent,
+   so the dots read faintly through the first card as they do in the frame.
+   overflow:hidden clips the negative offset instead of scrolling the page. */
+.pf-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* must live on the layer, not on ::before: z-index makes .pf-wash a stacking
+     context, which would isolate a blend set on the child and leave the
+     asset's white ground painting opaque over the paper */
+  mix-blend-mode: multiply;
+}
+
+.pf-wash::before {
+  content: "";
+  position: absolute;
+  left: -180.83px;
+  top: 326.17px;
+  width: 614px;
+  height: 614px;
+  background: url("assets/decor/hero-dotwave.webp") no-repeat center / cover;
+}
+
+/* ---------- Nav ---------- */
+
+.pf-nav,
+.pf-hero,
+.pf-band,
+.pf-footer {
+  position: relative;
+  z-index: 1;
+  margin-inline: auto;
+  width: clamp(var(--content-min), 100%, var(--content-max));
+}
+
+.pf-nav {
+  display: flex;
+  /* baseline, not centre: the Work and My info triggers carry a 16.67px caret
+     and Home carries its underline, so their boxes differ in height and
+     centring would leave the three labels sitting off each other */
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 46.67px var(--gutter) 26.67px;
+  /* .pf-hero and .pf-band share z-index 1 and come later in the DOM, so the
+     nav has to outrank them or the open Work menu paints underneath them */
+  z-index: 3;
+}
+
+.pf-nav__group {
+  display: flex;
+  align-items: baseline;
+  gap: 33.33px;
+}
+
+.pf-nav__group + .pf-nav__group { gap: 0; }
+
+.pf-nav__link {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3.33px;
+  font-size: 13.33px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.pf-nav__link:hover { color: var(--ink); }
+.pf-nav__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.pf-nav__link.is-current { color: var(--ink); font-weight: 700; }
+
+.pf-nav__link.is-current::after {
+  content: "";
+  width: 13.33px;
+  height: 1.67px;
+  border-radius: 0.83px;
+  background: var(--accent);
+}
+
+.pf-nav__caret { width: 16.67px; height: 16.67px; }
+
+/* ---------- Work menu ---------- */
+
+.pf-nav__menu { position: relative; }
+
+/* the base nav link stacks its active underline in a column; the trigger runs
+   as a row so the caret reads as part of the label */
+.pf-nav__link--menu {
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.pf-nav__link--menu .pf-nav__caret { transition: transform 0.15s ease; }
+
+.pf-nav__menu.is-open .pf-nav__caret { transform: rotate(180deg); }
+
+.pf-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: -12px;
+  margin: 0;
+  /* 8px of vertical air above the first item and below the last, on top of the
+     10px the panel already insets by */
+  padding: 18px 10px;
+  min-width: 248px;
+  list-style: none;
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  /* denser than the feature cards: menu copy has to stay legible over whatever
+     artwork or card edge happens to sit beneath it */
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* the right-hand menu opens toward the page edge, so it anchors right to stay
+   inside the viewport */
+.pf-nav__dropdown--right { left: auto; right: -12px; }
+
+.pf-nav__dropdown[hidden] { display: none; }
+
+.pf-nav__dropdown li + li { margin-top: 2px; }
+
+.pf-nav__dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 13.33px;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--ink-soft);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pf-nav__dropdown a:hover {
+  background: rgba(94, 93, 96, 0.07);
+  color: var(--ink);
+}
+
+/* Masked rather than <img> so the glyph takes the item's own colour and follows
+   the hover state. All three sources are solid single-colour paths, so alpha
+   masking reproduces them exactly.
+   linkedin + document: IBM Carbon (Apache-2.0). dribbble: Simple Icons (CC0). */
+.pf-nav__icon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  transition: background-color 0.15s ease;
+}
+
+/* resting state is monochrome and follows the label; hover and keyboard focus
+   bring the mark up in its own brand colour */
+.pf-nav__dropdown a:hover .pf-nav__icon--linkedin,
+.pf-nav__dropdown a:focus-visible .pf-nav__icon--linkedin {
+  background-color: var(--brand-linkedin);
+}
+
+.pf-nav__dropdown a:hover .pf-nav__icon--dribbble,
+.pf-nav__dropdown a:focus-visible .pf-nav__icon--dribbble {
+  background-color: var(--brand-dribbble);
+}
+
+/* the resume has no brand mark, so it picks up the site accent instead */
+.pf-nav__dropdown a:hover .pf-nav__icon--resume,
+.pf-nav__dropdown a:focus-visible .pf-nav__icon--resume {
+  background-color: var(--accent);
+}
+
+.pf-nav__icon--linkedin {
+  -webkit-mask-image: url("assets/logos/linkedin.svg");
+          mask-image: url("assets/logos/linkedin.svg");
+}
+
+.pf-nav__icon--dribbble {
+  -webkit-mask-image: url("assets/logos/dribbble.svg");
+          mask-image: url("assets/logos/dribbble.svg");
+}
+
+.pf-nav__icon--resume {
+  -webkit-mask-image: url("assets/logos/document.svg");
+          mask-image: url("assets/logos/document.svg");
+}
+
+.pf-nav__dropdown a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  color: var(--ink);
+}
+
+/* marks the options that jump to the section because there's no case study to
+   open yet — same language as the .pf-cta.is-soon state on the page */
+.pf-nav__soon {
+  /* pushed to the trailing edge so the labels stay left-aligned on the icon */
+  margin-left: auto;
+  padding-left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.042em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* ---------- Hero ---------- */
+
+/* The design nests its gaps — 50 inside the hero group, 75 down to the
+   timespan, which itself carries 20 of padding. Flattened here: 50 as the base
+   gap, the balance added back on the timespan. */
+.pf-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  padding: 66.67px var(--gutter) 140px;
+  text-align: center;
+}
+
+.pf-hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: 13.33px;
+  width: 100%;
+}
+
+.pf-hero__name {
+  position: relative;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(38px, 5.556vw, 66.67px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* Marker bar behind the name (309:11430 — 620x46 at 190,151). Sized in em so
+   it tracks the name down the clamp; -1 keeps it under the glyphs but still
+   above the page wash, since .pf-hero opens its own stacking context. */
+.pf-hero__name::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: -0.15em;
+  transform: translateX(-50%);
+  /* 620 wide against the 66.67 name — kept as a ratio so the bar keeps its
+     proportion as the name ramps down */
+  width: min(9.3em, 100%);
+  height: 0.69em;
+  border-radius: 2px;
+  background: var(--highlight);
+}
+
+.pf-hero__role {
+  margin: 0;
+  font-size: clamp(15px, 1.667vw, 20px);
+  font-weight: 600;
+  letter-spacing: 0.125em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.pf-hero__avatar {
+  width: 148.33px;
+  height: 148.33px;
+  border-radius: 50%;
+  filter: drop-shadow(var(--shadow-avatar));
+}
+
+.pf-hero__span {
+  margin: 45px 0 0;
+  font-size: clamp(14px, 1.667vw, 20px);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---------- Feature bands ---------- */
+
+/* scroll-margin so a jump from the Work menu doesn't land flush to the edge */
+.pf-band { padding: 0; scroll-margin-top: 40px; }
+
+/* Framed rows sit on a glass card inset from the page edge (302:201984) */
+.pf-band--card { padding: 20px var(--card-inset); }
+
+.pf-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--copy-col);
+  align-items: center;
+  gap: var(--col-gap);
+  padding: var(--band-space) var(--band-gutter);
+}
+
+.pf-feature--mediaRight { grid-template-columns: var(--copy-col) minmax(0, 1fr); }
+
+/* 302:201986 — translucent glass, no outline, softly lifted */
+.pf-feature--framed {
+  padding: var(--card-space) var(--card-pad);
+  /* the design re-added a hairline on the cards (0.5px, dt_color-otl-ter) */
+  border: 0.5px solid var(--rule);
+  border-radius: var(--card-radius);
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-card);
+}
+
+.pf-feature__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--media-h);
+  border-radius: 10px;
+}
+
+/* contain rather than cover: these are product screenshots, so nothing in the
+   frame should be cropped to fill the column */
+.pf-feature__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* flat 20 between every element, per 302:201999 */
+.pf-feature__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+}
+
+.pf-feature__logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* the PayPal and Salesforce marks are not square — pin height, let width follow */
+.pf-feature__logo--tall { width: 33.33px; height: 40.18px; }
+.pf-feature__logo--wide { width: 57.5px; height: 40.25px; }
+
+.pf-feature__title {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(26px, 2.778vw, 33.33px);
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.pf-feature__desc {
+  margin: 0;
+  font-size: 13.33px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.pf-badge {
+  margin: 0;
+  padding: 3.33px 10px;
+  border-radius: 83.33px;
+  background: var(--btn);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.042em;
+  text-transform: uppercase;
+  color: #fdfbf7;
+}
+
+/* ---------- CTA ---------- */
+
+.pf-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6.67px;
+  padding: 8.33px 13.33px;
+  border-radius: 10px;
+  background: var(--btn);
+  font-size: 13.33px;
+  font-weight: 600;
+  line-height: normal;
+  color: #ffffff;
+  text-decoration: none;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pf-cta img { width: 13.33px; height: 13.33px; }
+
+.pf-cta:hover { transform: translateY(-1px); opacity: 0.9; }
+.pf-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* projects without a page yet — reads as a state, not a broken link */
+.pf-cta.is-soon {
+  background: transparent;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule);
+  cursor: default;
+}
+
+.pf-cta.is-soon:hover { transform: none; opacity: 1; }
+
+/* ---------- Footer ---------- */
+
+.pf-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px var(--gutter);
+  border-top: 1px solid var(--rule);
+}
+
+.pf-footer__note {
+  margin: 0;
+  font-size: 13.33px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.pf-footer__contact {
+  display: flex;
+  align-items: center;
+  gap: 13.33px;
+}
+
+.pf-footer__mark { width: 30px; height: 30px; mix-blend-mode: luminosity; }
+
+/* ---------- Case-study overlay ---------- */
+
+.pf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(29, 28, 29, 0.7);
+}
+
+.pf-modal[hidden] { display: none; }
+
+.pf-modal__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .pf-feature,
+  .pf-feature--mediaRight {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  /* keep the image first visually on stacked layouts */
+  .pf-feature--mediaRight .pf-feature__media { order: -1; }
+
+  .pf-band--card { padding: 20px var(--gutter); }
+  .pf-feature--framed { padding: var(--card-space) clamp(24px, 6vw, 83.33px); }
+  .pf-hero { padding-bottom: 110px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-cta { transition: none; }
+  .pf-cta:hover { transform: none; }
+  .pf-nav__link--menu .pf-nav__caret,
+  .pf-nav__dropdown a,
+  .pf-nav__icon { transition: none; }
+}

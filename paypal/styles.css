@@ -1,0 +1,741 @@
+:root {
+  --cs-ink: #1c1917;
+  --cs-ink-soft: #6b6661;
+  --cs-ink-mute: #77757a;
+  --cs-surface: #ffffff;
+  --cs-surface-warm: #f7f5f0;
+  --cs-surface-grey: #f8f8f8;
+  --cs-blue: #0070e0;
+  --cs-gold: #ffd140;
+  --cs-line: #d7d3da;
+  /* design token color-outline-tertiary -> color.palettes.gray.60 (#5e5d60) */
+  --cs-outline-tertiary: 94 93 96;
+
+  --cs-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --cs-body: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --cs-ui: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  --cs-gutter: clamp(96px, 22.2cqi - 53px, 160px);
+  /* image rows sit at the design's 136 inset so mockups keep their Figma sizes */
+  --cs-media: clamp(96px, 16.7cqi - 40px, 120px);
+  --cs-radius: 12px;
+
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #d9d9d9;
+  font-family: var(--cs-body);
+  line-height: 1.6;
+  color: var(--cs-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Modal shell ---------- */
+
+.cs-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(0px, 3vw, 64px);
+  background: rgba(29, 28, 29, 0.7);
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.cs-panel {
+  position: relative;
+  width: min(960px, 100%);
+  background: var(--cs-surface);
+  border-radius: var(--cs-radius);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
+}
+
+.cs-close {
+  position: sticky;
+  top: 20px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  /* negative bottom margin cancels the button's own line box so the article starts flush at the top */
+  margin: 20px 20px -60px auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  color: var(--cs-ink);
+  cursor: pointer;
+}
+
+.cs-close:hover { background: #fff; }
+.cs-close:focus-visible { outline: 2px solid var(--cs-blue); outline-offset: 2px; }
+
+.cs-close svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* ---------- Case study ---------- */
+
+.cs {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding-bottom: 0;
+  overflow: hidden;
+  border-radius: var(--cs-radius);
+}
+
+.cs-visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cs sup { font-size: 0.7em; vertical-align: super; line-height: 0; }
+
+/* Hero */
+
+.cs-hero {
+  padding: 80px var(--cs-gutter) 3px;
+  text-align: center;
+}
+
+.cs-hero__logo {
+  display: block;
+  width: 33px;
+  height: auto;
+  margin: 0 auto 27px;
+}
+
+.cs-hero__title {
+  margin: 0 0 12px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(30px, 4.2cqi, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-hero__lede {
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--cs-ink-soft);
+}
+
+.cs-heroVisual {
+  position: relative;
+  /* 190:93307 exports exactly on its box, blobs and long shadow included */
+  aspect-ratio: 960 / 794;
+  overflow: hidden;
+}
+
+.cs-heroVisual__plate {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Figma mockup plates ----------
+   Frame, notch, screen and shadows all arrive as one composited export per
+   group (Flat iPhone plus its long shadow), so nothing is redrawn here and no
+   seam can open between a screen bitmap and its bezel. Each export runs past
+   its node box wherever the long shadow bleeds; that overflow is left visible
+   so it falls behind whatever follows, the way Figma composites it. */
+
+.cs-plate {
+  position: relative;
+  padding: 0;
+}
+
+.cs-plate > img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+/* 322:110507 — box 960x822, export bleeds 257 past the bottom */
+.cs-plate--launch { aspect-ratio: 960 / 822; }
+/* 190:93477 — box 960x505, bleeds 16 */
+.cs-plate--rollout { aspect-ratio: 960 / 505; }
+/* 190:93502 — exports flush to its box */
+.cs-plate--value { aspect-ratio: 960 / 861.14; }
+/* 200:97339 — box 412x385.85, bleeds 48 / 30 / 48 / 66 */
+.cs-plate--compare { aspect-ratio: 412 / 385.85; }
+.cs-plate--compare > img {
+  width: 123.301%;
+  left: -11.6505%;
+  top: -7.775%;
+}
+
+/* A live screen dropped into a plate's aperture, for the two animated mockups.
+   The notch is redrawn because this screen covers the one baked into the plate. */
+.cs-plateScreen {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 12.266% / 5.668%;
+}
+
+.cs-plateScreen > img {
+  display: block;
+  /* the screen exports carry ~2px of their section background at the edges, so
+     overscan a little and let the aperture crop the fringe away */
+  width: 103%;
+  height: 103%;
+  margin: -1.5%;
+  object-fit: cover;
+}
+
+.cs-plateScreen__notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 56.532%;
+  height: 3.7562%;
+  transform: translateX(-50%);
+  border-radius: 0 0 10.443% 10.443% / 0 0 72.622% 72.622%;
+  background: #1d1c1d;
+}
+
+/* screen sits at 340.42, 81.17 in the 960x794 hero plate */
+.cs-heroVisual__screen {
+  left: 35.4604%;
+  top: 10.2229%;
+  width: 29.0788%;
+  height: 76.0886%;
+}
+
+/* third phone's screen at 611.77, 55.81 in the 960x505 rollout plate */
+.cs-plate--rollout__screen {
+  left: 63.726%;
+  top: 11.0515%;
+  width: 18.901%;
+  height: 77.8951%;
+  border-radius: 12.266% / 5.658%;
+}
+
+.ph__play {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(8, 8, 10, 0.82);
+  color: #fff;
+  font-family: var(--cs-body);
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Keywords */
+
+.cs-keywords {
+  /* 262:99258 insets at the 160 text gutter and the 640 box is what makes the
+     chips break 4 / 4 / 1. The 175 gap up to the hero visual is 125 here plus
+     the 50 .cs gap. */
+  padding: 125px var(--cs-gutter) 0;
+}
+
+/* 262:99303 */
+.cs-keywords__title {
+  margin: 0 0 75px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: var(--cs-ink);
+}
+
+
+/* 262:99315 — half the frame wide, 175 clear above and below (125 + .cs gap).
+   Tapered: color-outline-tertiary peaking at 50% through the core, easing out to
+   nothing at both ends so the rule stops without a hard edge. The shoulder stop
+   is scaled by the same half so the taper keeps its shape. */
+.cs-divider {
+  width: min(480px, 50cqi);
+  height: 1px;
+  margin: 125px auto 0;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--cs-outline-tertiary) / 0) 0%,
+    rgb(var(--cs-outline-tertiary) / 0.275) 18%,
+    rgb(var(--cs-outline-tertiary) / 0.5) 50%,
+    rgb(var(--cs-outline-tertiary) / 0.275) 82%,
+    rgb(var(--cs-outline-tertiary) / 0) 100%
+  );
+}
+
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-tag {
+  padding: 10px 28px;
+  border-radius: 70px;
+  background: var(--cs-surface-warm);
+  font-family: var(--cs-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.15;
+  color: #5e5d60;
+}
+
+/* Illustration pair */
+
+.cs-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 5cqi, 48px);
+  padding: 40px calc(var(--cs-media) + 16px) 40px;
+}
+
+.cs-gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Copy blocks */
+
+.cs-copy {
+  /* 190:93342 gap is now 100 to the compare band (the 150 moved into
+     200:95655's new 50 top padding, so compare -> flow still reads 150) */
+  padding: 100px var(--cs-gutter) 50px;
+}
+
+.cs-copy__title {
+  margin: 0 0 20px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-copy__body {
+  margin: 0;
+  max-width: 480px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cs-ink-soft);
+}
+
+.cs-copy__body + .cs-copy__body { margin-top: 20px; }
+
+.cs-copy__body strong { font-weight: 700; color: inherit; }
+
+.cs-copy--onDark { padding: 0 var(--cs-gutter); }
+
+/* 235:97550 — full-width body, unlike the 480 copy blocks below it */
+.cs-copy--wide .cs-copy__body { max-width: none; }
+.cs-copy--intro { padding: 125px var(--cs-gutter) 50px; }
+
+.cs-copy--onDark .cs-copy__title { color: #fff; }
+.cs-copy--onDark .cs-copy__body { color: rgba(255, 255, 255, 0.8); }
+
+/* Before / after */
+
+.cs-compare {
+  display: flex;
+  justify-content: center;
+  padding: clamp(48px, 18.75cqi, 180px) var(--cs-gutter) clamp(56px, 20.83cqi, 200px);
+  background: var(--cs-surface-grey);
+}
+
+/* 200:97332 scales as one composition: the stage is the query container and every
+   dimension inside is in em, so the three phones never reflow independently. */
+.cs-compare__stage {
+  container-type: inline-size;
+  width: min(640px, 100%);
+}
+
+.cs-compare__stageInner {
+  font-size: min(16px, 2.5cqi);
+  display: flex;
+  align-items: flex-start;
+  gap: 6.25em;
+}
+
+.cs-compare__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+  margin: 0;
+  min-width: 0;
+}
+
+.cs-compare__item--previous { width: 8em; flex: none; }
+.cs-compare__item--current { width: 25.75em; flex: none; }
+
+.cs-compare__card {
+  width: 100%;
+  height: auto;
+  border-radius: 0.833em;
+  /* 200:97336 carries a 0.833px #5e5d60 stroke; inset so it costs no layout width */
+  box-shadow:
+    inset 0 0 0 0.052em #5e5d60,
+    0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.cs-compare__label {
+  font-family: var(--cs-display);
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.15;
+  color: var(--cs-ink-mute);
+}
+
+.cs-compare__label--strong {
+  font-weight: 700;
+  color: var(--cs-ink);
+}
+
+/* Flow diagram + matrix */
+
+.cs-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  padding: 100px 0 100px;
+}
+
+.cs-flow__copy {
+  padding-inline: var(--cs-gutter);
+  margin-bottom: 19px;
+}
+
+.cs-flow__copy > * { max-width: 480px; }
+.cs-flow__copy .cs-copy__title { margin-bottom: 20px; }
+
+/* Diagram + matrix scale together as one composition, gap and padding included. */
+.cs-flow__stage {
+  container-type: inline-size;
+  width: min(640px, 100% - 2 * var(--cs-gutter));
+  margin-inline: auto;
+}
+
+.cs-flow__stageInner {
+  font-size: min(16px, 2.5cqi);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5em;
+  padding-bottom: 3em;
+}
+
+/* 200:95652 and 200:95648 ship as bitmaps, so they scale with the stage. */
+.cs-flow__diagram,
+.cs-flow__matrix {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Global launch (blue) */
+
+.cs-launch {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 200px 0 120px;
+  background: var(--cs-blue);
+  color: #fff;
+}
+
+/* 322:110507 exports with its own 100 / 160 padding and 40 gap */
+.cs-launch__phones { width: 100%; }
+
+.cs-outcomes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 50px var(--cs-gutter);
+  padding: clamp(32px, 5.83cqi, 56px) clamp(16px, 2.9cqi, 28px) clamp(36px, 6.67cqi, 64px);
+  list-style: none;
+  /* 200:96818: #1f81e4 at 92%, so the blue band reads faintly through the card. */
+  background: rgba(31, 129, 228, 0.92);
+  border-radius: 24px;
+  box-shadow:
+    0 0.85px 3px rgba(0, 0, 0, 0.19),
+    0 0.25px 1px rgba(0, 0, 0, 0.039);
+}
+
+.cs-outcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-inline: clamp(8px, 2.5cqi, 24px);
+  text-align: center;
+  backdrop-filter: blur(2px);
+}
+
+.cs-outcome__content {
+  /* 190:93469 fills its item (292 - 2*24 = 244) rather than hugging its text */
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Duotone: the translucent mass and the solid glyph both ride on currentColor,
+   so the pair stays legible if the card colour ever changes. */
+.cs-outcome__icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  fill: currentColor;
+  stroke: none;
+}
+
+.cs-outcome__title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.cs-outcome__list {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  list-style: none;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 190:93471 is one text node with a newline and paragraphSpacing 8 */
+.cs-outcome__list li + li { margin-top: 8px; }
+
+/* 190:93477 exports with its own 50 / 160 padding and 28 gaps */
+.cs-rollout { width: 100%; }
+
+.cs-launch__subtitle {
+  font-family: var(--cs-body);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: center;
+  color: #fff;
+}
+
+.cs-valueIntro { padding: 75px var(--cs-gutter) 0; }
+
+.cs-launch__subtitle { margin: 0; }
+
+.cs-launch__lede {
+  margin: 8px auto 0;
+  max-width: 480px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+/* 190:93502 exports with its own 100 / 160 padding and 24 / 72 gaps */
+.cs-valueGrid { width: 100%; }
+
+/* ---------- The impact (235:97595) ---------- */
+
+.cs-impact {
+  padding: 0 var(--cs-gutter);
+}
+
+.cs-impact__title {
+  margin: 0 0 8px;
+  font-family: var(--cs-body);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #fff;
+}
+
+.cs-impact__body {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- Previous / next project ----------
+   Sits inside the blue band, so it is tinted white-on-blue like .cs-outcomes.
+   Placeholder controls: the host portfolio binds [data-project-nav]. */
+
+.cs-projectNav {
+  display: flex;
+  gap: 24px;
+  margin-inline: var(--cs-gutter);
+  /* 225 above the buttons once the grid's 100 and 190:93500's 75 are counted,
+     matching the Figma section exactly. */
+  padding-top: 75px;
+}
+
+.cs-projectNav__btn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 22px 26px;
+  border: 0;
+  border-radius: var(--cs-radius);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.cs-projectNav__btn--next {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.cs-projectNav__btn:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cs-projectNav__btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.cs-projectNav__chev {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.7);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cs-projectNav__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cs-projectNav__kicker {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cs-projectNav__title {
+  font-family: var(--cs-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.15;
+  color: #fff;
+}
+
+/* ---------- Scroll-in reveal ----------
+   The hidden state is scoped to .cs-reveal, which the script adds at runtime, so
+   the page still renders normally if the script never runs. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-reveal [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .cs-reveal [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@container (max-width: 860px) {
+  .cs { gap: 48px; }
+  .cs-hero { padding-top: 64px; }
+  .cs-launch { padding-block: 112px 96px; }
+  .cs-outcomes { margin-block: 40px; }
+  .cs-valueIntro { padding-top: 72px; }
+  .cs-flow { padding-block: 40px 96px; }
+  .cs-copy { padding-top: 72px; }
+  .cs-keywords { padding-top: 88px; }
+  .cs-keywords__title { margin-bottom: 56px; }
+  .cs-divider { margin-top: 88px; }
+  .cs-copy--intro { padding-top: 88px; }
+}
+
+@container (max-width: 640px) {
+  .cs { gap: 40px; }
+  .cs-hero { padding-top: 56px; }
+  .cs-gallery { padding-block: 40px 0; }
+  .cs-keywords { padding-top: 64px; }
+  .cs-keywords__title { margin-bottom: 40px; }
+  .cs-divider { margin-top: 64px; }
+  .cs-copy--intro { padding-top: 64px; }
+  .cs-flow { gap: 40px; padding-block: 32px 64px; }
+  .cs-launch { gap: 40px; padding-block: 80px 72px; }
+  .cs-outcomes { grid-template-columns: 1fr; gap: 40px; margin-block: 32px; }
+  .cs-valueIntro { padding-top: 48px; }
+  .cs-projectNav { flex-direction: column; padding-top: 40px; }
+  .cs-projectNav__btn--next { justify-content: flex-start; text-align: left; flex-direction: row-reverse; }
+}
+
+@container (max-width: 420px) {
+  .cs-tag { padding: 8px 16px; font-size: 15px; }
+}
+
+@media (max-width: 640px) {
+  .cs-backdrop { padding: 0; }
+  .cs-panel { border-radius: 0; min-height: 100%; }
+  .cs { border-radius: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-close { transition: background 0.15s ease; }
+}
