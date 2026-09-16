@@ -21,8 +21,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
-  padding: 50px var(--cs-gutter, 160px);
+  gap: clamp(16px, 2.4vw, 24px);
+  /* scales with the window rather than stepping at a breakpoint */
+  padding: clamp(32px, 5vw, 50px) var(--cs-gutter, 160px);
 
   --nav-ink: #ffffff;
   --nav-ink-soft: rgba(255, 255, 255, 0.75);
@@ -60,9 +61,9 @@
 /* 393:119464 */
 .cs-projectNav__row {
   display: flex;
-  gap: 24px;
+  gap: clamp(16px, 2.4vw, 24px);
   width: 100%;
-  padding-block: 100px;
+  padding-block: clamp(48px, 10vw, 100px);
 }
 
 /* 393:119465 / 393:119472 — the pill and border the old buttons carried are
@@ -160,20 +161,26 @@
   .cs-projectNav__btn--next:hover .cs-projectNav__icon { transform: translateX(3px); }
 }
 
-/* The 100 block padding and the side-by-side row are too much once the modal
-   narrows, so tighten and stack, keeping the icon leading in both buttons. */
-@container (max-width: 860px) {
-  .cs-projectNav__row { padding-block: 72px; }
-}
+/* Stacks on the WINDOW, not the container. These live inside a .cs container
+   whose inline size is the modal minus its gutters, so a container query at
+   640 fired while the browser was still ~1000 wide and collapsed the row far
+   too early. Spacing above is fluid, so the row scales down continuously and
+   only stacks below 720. The labels are nowrap + ellipsis, so two-up holds
+   comfortably down to that point. */
+@media (max-width: 720px) {
+  .cs-projectNav__row { flex-direction: column; }
 
-@container (max-width: 640px) {
-  .cs-projectNav { padding-block: 40px; }
-  .cs-projectNav__row { flex-direction: column; gap: 16px; padding-block: 48px; }
+  /* flex-basis applies to the main axis, which is now height: the buttons'
+     flex: 1 1 0 collapsed them to their padding, 44 instead of 88. Stacked,
+     they should size to content and span the row. */
+  .cs-projectNav__btn { flex: 0 0 auto; width: 100%; }
+
   .cs-projectNav__btn--next {
     flex-direction: row-reverse;
     justify-content: flex-end;
-    gap: 16px;
+    gap: clamp(12px, 2vw, 16px);
     text-align: left;
   }
+
   .cs-projectNav__btn--next .cs-projectNav__text { align-items: flex-start; }
 }
