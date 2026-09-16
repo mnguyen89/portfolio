@@ -31,6 +31,13 @@
   --display: "Bricolage Grotesque", "Bricolage Grotesque Placeholder", sans-serif;
   --body: "Geist", "Geist Placeholder", system-ui, sans-serif;
 
+  /* Headings step through three discrete sizes instead of ramping
+     continuously: Large at the design width, Medium from 900 down, Small from
+     600 down. The two steps straddle the 720 stacking breakpoint, so the type
+     and the layout never change at the same width. */
+  --h-hero: 66.67px;    /* 309:11430 */
+  --h-title: 33.33px;   /* 302:201999 */
+
   /* The Figma frame is authored at 1000, so its padding values are used as-is.
      Each is a vw ramp bounded by the design value at 1000 and its proportional
      share at the 720 floor. Percentages can't be used: padding percentages
@@ -357,7 +364,7 @@ img { max-width: 100%; }
   margin: 0;
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(38px, 5.556vw, 66.67px);
+  font-size: var(--h-hero);
   line-height: 1.05;
   letter-spacing: -0.025em;
   text-transform: uppercase;
@@ -564,7 +571,7 @@ img { max-width: 100%; }
   margin: 0;
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(26px, 2.778vw, 33.33px);
+  font-size: var(--h-title);
   line-height: 1.15;
   color: var(--ink);
 }
@@ -665,6 +672,22 @@ img { max-width: 100%; }
 }
 
 /* ---------- Responsive ---------- */
+
+/* Heading scale, step 2 of 3 — Medium */
+@media (max-width: 900px) {
+  :root {
+    --h-hero: 52px;
+    --h-title: 30px;
+  }
+}
+
+/* Heading scale, step 3 of 3 — Small */
+@media (max-width: 600px) {
+  :root {
+    --h-hero: 38px;
+    --h-title: 26px;
+  }
+}
 
 @media (max-width: 720px) {
   .pf-feature,
