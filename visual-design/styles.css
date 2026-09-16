@@ -9,6 +9,8 @@
   --cs-ink: #1c1917;
   --cs-ink-soft: #6b6661;
   --cs-ink-mute: #5e5d60;
+  /* channels for the tapered divider */
+  --cs-outline-tertiary: 94 93 96;
   --cs-surface: #ffffff;
   --cs-surface-warm: #f7f5f0;
   --cs-surface-grey: #f8f8f8;
@@ -224,10 +226,18 @@ body {
 .cs-rule {
   width: 480px;
   max-width: calc(100% - 2 * var(--cs-gutter));
-  height: 0;
+  height: 1px;
   margin: 0 auto;
   border: 0;
-  border-top: 1px solid var(--cs-ink-mute);
+  /* tapered, peaking at 50 percent */
+  background: linear-gradient(
+    90deg,
+    rgb(var(--cs-outline-tertiary) / 0) 0%,
+    rgb(var(--cs-outline-tertiary) / 0.275) 18%,
+    rgb(var(--cs-outline-tertiary) / 0.5) 50%,
+    rgb(var(--cs-outline-tertiary) / 0.275) 82%,
+    rgb(var(--cs-outline-tertiary) / 0) 100%
+  );
 }
 
 /* ---------- Galleries ---------- */

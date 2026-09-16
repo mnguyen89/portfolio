@@ -26,7 +26,8 @@
 
   --nav-ink: #ffffff;
   --nav-ink-soft: rgba(255, 255, 255, 0.75);
-  --nav-rule: rgba(248, 248, 248, 0.55);
+  /* channels, not a colour: the divider tapers, so alpha varies along it */
+  --nav-rule: 248 248 248;
   --nav-pill: #ffffff;
   --nav-chev: #1d1c1d;
 }
@@ -34,7 +35,7 @@
 .cs-projectNav--onLight {
   --nav-ink: #1c1917;
   --nav-ink-soft: rgba(28, 25, 23, 0.75);
-  --nav-rule: rgba(94, 93, 96, 0.45);
+  --nav-rule: 94 93 96;
   --nav-pill: #1d1c1d;
   --nav-chev: #ffffff;
 }
@@ -45,7 +46,15 @@
   height: 1px;
   margin: 0;
   border: 0;
-  background: var(--nav-rule);
+  /* tapered, peaking at 50% — matches the dividers in the case studies */
+  background: linear-gradient(
+    90deg,
+    rgb(var(--nav-rule) / 0) 0%,
+    rgb(var(--nav-rule) / 0.275) 18%,
+    rgb(var(--nav-rule) / 0.5) 50%,
+    rgb(var(--nav-rule) / 0.275) 82%,
+    rgb(var(--nav-rule) / 0) 100%
+  );
 }
 
 /* 393:119464 */
