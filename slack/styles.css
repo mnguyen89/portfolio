@@ -328,7 +328,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 50px;
-  padding: 250px 0 120px;
+  padding: 250px 0 0;
   background: var(--cs-plum);
   color: #fff;
 }
@@ -380,64 +380,7 @@ body {
 }
 
 .cs-outcomes .cs-stat__figure { font-size: clamp(26px, 3.33cqi, 32px); color: #fff; }
-.cs-outcomes .cs-stat__label { color: #fff; }
-
-/* ---------- Previous / next project ---------- */
-
-.cs-projectNav {
-  display: flex;
-  gap: 24px;
-  margin: 0 var(--cs-gutter);
-  padding-top: 75px;
-}
-
-.cs-projectNav__btn {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 0;
-  padding: 22px 26px;
-  border: 0;
-  border-radius: 12px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-.cs-projectNav__btn--next { justify-content: flex-end; text-align: right; }
-
-.cs-projectNav__btn:hover {
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.cs-projectNav__btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-
-.cs-projectNav__chev {
-  flex: none; width: 20px; height: 20px;
-  fill: none; stroke: rgba(255, 255, 255, 0.7);
-  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
-}
-
-.cs-projectNav__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-
-.cs-projectNav__kicker { font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); }
-
-.cs-projectNav__title {
-  font-family: var(--cs-display);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.15;
-  color: #fff;
-}
-
-/* ---------- Scroll-in reveal ----------
+.cs-outcomes .cs-stat__label { color: #fff; }/* ---------- Scroll-in reveal ----------
    Hidden state is scoped to .cs-reveal, added at runtime, so the page still
    renders if the script never runs. */
 
@@ -478,10 +421,7 @@ body {
   .cs-strategyMedia { margin-top: 56px; padding-block: 0; }
   .cs-launch { gap: 40px; padding-block: 96px 72px; }
   .cs-pieces { gap: 48px; }
-  .cs-outcomes { grid-template-columns: 1fr; gap: 32px; padding: 40px 32px 44px; }
-  .cs-projectNav { flex-direction: column; padding-top: 48px; }
-  .cs-projectNav__btn--next { justify-content: flex-start; text-align: left; flex-direction: row-reverse; }
-}
+  .cs-outcomes { grid-template-columns: 1fr; gap: 32px; padding: 40px 32px 44px; }}
 
 @container (max-width: 420px) {
   .cs-tag { padding: 8px 16px; font-size: 15px; }

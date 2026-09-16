@@ -1,0 +1,157 @@
+/* ---------- Project nav — shared case-study component ----------
+   Figma: "Footer CTA" 393:119462 (960 x 412).
+
+   Every case-study modal links this file and drops the same markup in as the
+   last child of its closing band. The component owns its divider, its spacing
+   and its colours, so a host page needs no per-modal overrides — it only has to
+   provide --cs-gutter, --cs-body and --cs-display, which every case study
+   already defines, and a container for the cqi units (.cs).
+
+   Colour: white text over a white pill reading on a dark closing band, which is
+   the default. Add .cs-projectNav--onLight to any modal that ends on a light
+   background and both invert together — dark text, dark pill, light chevron.
+
+       <nav class="cs-projectNav cs-projectNav--onLight" aria-label="…">
+
+   Geometry, all from 393:119462: the frame pads 50 / 160 and puts 24 between the
+   rule and the button row; the row pads 100 above and below the 88-tall buttons
+   and splits its 640 as 308 + 24 + 308. */
+
+.cs-projectNav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 50px var(--cs-gutter, 160px);
+
+  --nav-ink: #ffffff;
+  --nav-ink-soft: rgba(255, 255, 255, 0.75);
+  --nav-rule: rgba(248, 248, 248, 0.55);
+  --nav-pill: #ffffff;
+  --nav-chev: #1d1c1d;
+}
+
+.cs-projectNav--onLight {
+  --nav-ink: #1c1917;
+  --nav-ink-soft: rgba(28, 25, 23, 0.75);
+  --nav-rule: rgba(94, 93, 96, 0.45);
+  --nav-pill: #1d1c1d;
+  --nav-chev: #ffffff;
+}
+
+/* 393:119463 — 480 wide, half the 960 frame, #f8f8f8 at 55% */
+.cs-projectNav__divider {
+  width: min(480px, 50cqi);
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--nav-rule);
+}
+
+/* 393:119464 */
+.cs-projectNav__row {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  padding-block: 100px;
+}
+
+/* 393:119465 / 393:119472 — the pill and border the old buttons carried are
+   gone; the circular icon is the only affordance now. */
+.cs-projectNav__btn {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 22px 0;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: var(--nav-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cs-projectNav__btn--prev { gap: 16px; justify-content: flex-start; }
+.cs-projectNav__btn--next { gap: 24px; justify-content: flex-end; text-align: right; }
+
+/* 393:119466 — 44 circle carrying a two-layer lift */
+.cs-projectNav__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--nav-pill);
+  box-shadow:
+    0 2.75px 9px rgba(0, 0, 0, 0.19),
+    0 0.25px 3px rgba(0, 0, 0, 0.039);
+}
+
+/* 393:119468 — a 5.83 x 11.67 stroke inside the 20 box, round caps */
+.cs-projectNav__chev {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: var(--nav-chev);
+  stroke-width: 1.4583;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Figma ships one right chevron and rotates the whole circle for Previous */
+.cs-projectNav__btn--prev .cs-projectNav__chev { transform: rotate(180deg); }
+
+.cs-projectNav__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.cs-projectNav__kicker {
+  font-family: var(--cs-body);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--nav-ink-soft);
+}
+
+.cs-projectNav__title {
+  font-family: var(--cs-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.15;
+  color: var(--nav-ink);
+}
+
+.cs-projectNav__btn:focus-visible {
+  outline: 2px solid var(--nav-ink);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-projectNav__icon { transition: transform 0.2s ease; }
+  .cs-projectNav__btn--prev:hover .cs-projectNav__icon { transform: translateX(-3px); }
+  .cs-projectNav__btn--next:hover .cs-projectNav__icon { transform: translateX(3px); }
+}
+
+/* The 100 block padding and the side-by-side row are too much once the modal
+   narrows, so tighten and stack, keeping the icon leading in both buttons. */
+@container (max-width: 860px) {
+  .cs-projectNav__row { padding-block: 72px; }
+}
+
+@container (max-width: 640px) {
+  .cs-projectNav { padding-block: 40px; }
+  .cs-projectNav__row { flex-direction: column; gap: 16px; padding-block: 48px; }
+  .cs-projectNav__btn--next {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 16px;
+    text-align: left;
+  }
+  .cs-projectNav__btn--next .cs-projectNav__text { align-items: flex-start; }
+}

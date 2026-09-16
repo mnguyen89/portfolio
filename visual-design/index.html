@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../shared/project-nav.css">
 </head>
 <body>
 
@@ -135,6 +136,34 @@
           </li>
         </ul>
       </section>
+
+      <nav class="cs-projectNav cs-projectNav--onLight" aria-label="Project navigation">
+        <hr class="cs-projectNav__divider">
+        <div class="cs-projectNav__row">
+          <button class="cs-projectNav__btn cs-projectNav__btn--prev" type="button" data-project-nav="prev">
+            <span class="cs-projectNav__icon">
+              <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M7.5 4.167 13.333 10 7.5 15.833" />
+              </svg>
+            </span>
+            <span class="cs-projectNav__text">
+              <span class="cs-projectNav__kicker">Previous project</span>
+              <span class="cs-projectNav__title">Project title</span>
+            </span>
+          </button>
+          <button class="cs-projectNav__btn cs-projectNav__btn--next" type="button" data-project-nav="next">
+            <span class="cs-projectNav__text">
+              <span class="cs-projectNav__kicker">Next project</span>
+              <span class="cs-projectNav__title">Project title</span>
+            </span>
+            <span class="cs-projectNav__icon">
+              <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M7.5 4.167 13.333 10 7.5 15.833" />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </nav>
 
     </article>
   </div>

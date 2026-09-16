@@ -99,7 +99,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--cs-rhythm);
-  padding: 80px 0 160px;
+  padding: 80px 0 0;
   overflow: hidden;
   border-radius: var(--cs-radius);
 }
@@ -310,7 +310,7 @@ body {
 /* ---------- Responsive ---------- */
 
 @container (max-width: 860px) {
-  .cs { --cs-rhythm: 120px; padding-block: 64px 120px; }
+  .cs { --cs-rhythm: 120px; padding-block: 64px 0; }
   .cs-open { gap: 44px; }
   .cs-glance__title { margin-bottom: 56px; }
   .cs-set { gap: 72px; }
@@ -318,7 +318,7 @@ body {
 }
 
 @container (max-width: 640px) {
-  .cs { --cs-rhythm: 88px; padding-block: 56px 88px; }
+  .cs { --cs-rhythm: 88px; padding-block: 56px 0; }
   .cs-open { gap: 36px; }
   .cs-glance__title { margin-bottom: 40px; }
   .cs-set { gap: 48px; }
@@ -337,3 +337,9 @@ body {
   .cs-panel { border-radius: 0; min-height: 100%; }
   .cs { border-radius: 0; }
 }
+
+/* ---------- Project nav ----------
+   The shared component (../shared/project-nav.css) already carries 50 of top
+   padding, so it wants only the band gap above it rather than the full section
+   rhythm. This page closes on the white panel, hence --onLight in the markup. */
+.cs-projectNav { margin-top: calc(50px - var(--cs-rhythm)); }
