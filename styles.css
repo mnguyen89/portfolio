@@ -468,13 +468,15 @@ img { max-width: 100%; }
   border-radius: 0;
 }
 
-/* natural aspect at a fixed height: no crop, no letterboxing, and flush to the
-   card's right edge via justify-end with zero padding */
+/* Natural aspect, no crop, flush to the card's right edge. The frame lets the
+   artwork overrun its half toward the card's centre, but at these column
+   widths that overrun (123px) reached into the copy — so it is sized to its
+   own half instead and scales with the card. */
 .pf-feature--split .pf-feature__media img {
   flex: 0 0 auto;
-  width: auto;
-  max-width: none;
-  height: clamp(240px, 37.5vw, 375px);
+  width: 100%;
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
@@ -488,7 +490,7 @@ img { max-width: 100%; }
   padding-top: 0;
 }
 
-.pf-feature--bleedBottom .pf-feature__media img { height: clamp(320px, 49.6vw, 496px); }
+.pf-feature--bleedBottom .pf-feature__media img { width: 100%; height: auto; }
 
 /* 302:201986 — copy only; the Slackbot is positioned, not laid out */
 .pf-feature--solo {
