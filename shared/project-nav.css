@@ -81,6 +81,8 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
+  /* 393:119465 overflow-clip */
+  overflow: hidden;
 }
 
 .cs-projectNav__btn--prev { gap: 16px; justify-content: flex-start; }
@@ -114,11 +116,22 @@
 /* Figma ships one right chevron and rotates the whole circle for Previous */
 .cs-projectNav__btn--prev .cs-projectNav__chev { transform: rotate(180deg); }
 
+/* 393:119469 / 393:119473 are whitespace-nowrap and the buttons overflow-clip,
+   so a long title truncates on one line rather than wrapping and pushing the
+   button taller than its 88. Ellipsis rather than a hard cut. */
 .cs-projectNav__text {
   display: flex;
   flex-direction: column;
   gap: 4px;
   min-width: 0;
+}
+
+.cs-projectNav__kicker,
+.cs-projectNav__title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .cs-projectNav__kicker {
