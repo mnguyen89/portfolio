@@ -1,0 +1,23 @@
+<svg width="64" height="64" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+<!-- Hairline as well as the shadow: the Visual Design card is itself white,
+     so on that one the tile has no fill contrast to sit against. The shadow
+     is applied in CSS, on the tile modifier class: an SVG loaded through an
+     img tag clips at its own viewport, which caps how far a feDropShadow can
+     spread. A CSS filter renders outside the element box instead. -->
+<rect x="2" y="1.5" width="36" height="36" rx="9" fill="#ffffff"
+      stroke="#1c1917" stroke-opacity="0.07" stroke-width="0.5"/>
+<svg x="9" y="8.5" width="22" height="22" viewBox="12.73 16.1 102.55 99.9" preserveAspectRatio="xMidYMid meet">
+  <g fill="#D6D2CE">
+    <path d="M86.86,43.14l-8.88,18.18h1.79c3.45,0,6.25,2.79,6.25,6.22v2.03c0,3.23-2.49,5.9-5.66,6.19v7.58h34.92V38.87c0-3.85-3.16-6.99-7.03-6.99h-27.12c5.96,10.34,6.22,10.25,5.73,11.26Z"/>
+    <path d="M47.64,75.77c-3.17-.3-5.66-2.96-5.66-6.19v-2.03c0-3.43,2.8-6.22,6.25-6.22h1.79c-9.42-19.29-9.4-18.6-8.83-19.59l5.68-9.85H19.76c-3.88,0-7.03,3.13-7.03,6.99v44.49H47.64v-7.58Z"/>
+    <path d="M12.73,88.25c0,3.87,3.15,7.01,7.01,7.01H108.26c3.87,0,7.01-3.15,7.01-7.01v-1.9H12.73v1.9Z"/>
+    <polygon points="57.44 98.26 56.39 108.26 71.62 108.26 70.56 98.26 57.44 98.26"/>
+    <path d="M48.95,111.26c-2.94,0-5.42,2.02-6.1,4.74h42.28c-.68-2.72-3.15-4.74-6.1-4.74h-30.09Z"/>
+  </g>
+  <g fill="#1c1917">
+    <path d="M53.36,61.32h21.28s9.17-18.78,9.17-18.78l-16.82-26.44v22.02c5.35,4.26,2.28,12.9-2.99,12.9s-9.89-8.66-3.01-12.9V16.1l-16.81,26.44,9.17,18.78Z"/>
+    <path d="M79.77,72.8c1.79,0,3.25-1.45,3.25-3.22v-2.03c0-1.78-1.46-3.22-3.25-3.22h-31.54c-1.79,0-3.25,1.45-3.25,3.22v2.03c0,1.78,1.46,3.22,3.25,3.22h31.54Z"/>
+    <rect x="50.64" y="75.8" width="26.73" height="7.55"/>
+  </g>
+</svg>
+</svg>

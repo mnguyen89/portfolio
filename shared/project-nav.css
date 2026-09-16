@@ -83,8 +83,8 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
-  /* 393:119465 overflow-clip */
-  overflow: hidden;
+  /* real links now, so the default underline has to come off */
+  text-decoration: none;
 }
 
 .cs-projectNav__btn--prev { gap: clamp(12px, calc(7.65px + 1.16vw), 16px); justify-content: flex-start; }
@@ -118,9 +118,15 @@
 /* Figma ships one right chevron and rotates the whole circle for Previous */
 .cs-projectNav__btn--prev .cs-projectNav__chev { transform: rotate(180deg); }
 
-/* 393:119469 / 393:119473 are whitespace-nowrap and the buttons overflow-clip,
-   so a long title truncates on one line rather than wrapping and pushing the
-   button taller than its 88. Ellipsis rather than a hard cut. */
+/* 393:119469 / 393:119473 are whitespace-nowrap, so a long title truncates on
+   one line rather than wrapping and pushing the button taller than its 88.
+   Ellipsis rather than a hard cut.
+
+   The clipping lives here, on the labels, and NOT on .cs-projectNav__btn: the
+   icon sits flush against the button edge, so a button-level overflow:hidden
+   cut off both its drop shadow at rest and the 3px it travels on hover. These
+   two plus min-width:0 on the button and .cs-projectNav__text are what actually
+   truncate the text, so the button needs no clip of its own. */
 .cs-projectNav__text {
   display: flex;
   flex-direction: column;
