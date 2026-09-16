@@ -685,7 +685,11 @@ img { max-width: 100%; }
 @media (max-width: 600px) {
   :root {
     --h-hero: 38px;
-    --h-title: 26px;
+    /* 1.5x .pf-feature__desc, which is a flat 13.33px at every width. Tied to
+       the body copy rather than left to land wherever a vw ramp put it: the
+       heading is carried as much by weight and family as by size at this
+       step, so the ratio is what matters. */
+    --h-title: 20px;
   }
 }
 
