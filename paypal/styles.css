@@ -282,7 +282,7 @@ body {
 
 
 /* 262:99315 — half the frame wide, 175 clear above and below (125 + .cs gap).
-   Tapered: color-outline-tertiary peaking at 50% through the core, easing out to
+   Tapered: color-outline-tertiary peaking at 20% through the core, easing out to
    nothing at both ends so the rule stops without a hard edge. The shoulder stop
    is scaled by the same half so the taper keeps its shape. */
 .cs-divider {
@@ -293,9 +293,9 @@ body {
   background: linear-gradient(
     90deg,
     rgb(var(--cs-outline-tertiary) / 0) 0%,
-    rgb(var(--cs-outline-tertiary) / 0.275) 18%,
-    rgb(var(--cs-outline-tertiary) / 0.5) 50%,
-    rgb(var(--cs-outline-tertiary) / 0.275) 82%,
+    rgb(var(--cs-outline-tertiary) / 0.11) 18%,
+    rgb(var(--cs-outline-tertiary) / 0.2) 50%,
+    rgb(var(--cs-outline-tertiary) / 0.11) 82%,
     rgb(var(--cs-outline-tertiary) / 0) 100%
   );
 }

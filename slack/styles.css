@@ -212,13 +212,13 @@ body {
   height: 1px;
   margin: 175px auto 0;
   border: 0;
-  /* tapered, peaking at 50 percent */
+  /* tapered, peaking at 20 percent */
   background: linear-gradient(
     90deg,
     rgb(var(--cs-outline-tertiary) / 0) 0%,
-    rgb(var(--cs-outline-tertiary) / 0.275) 18%,
-    rgb(var(--cs-outline-tertiary) / 0.5) 50%,
-    rgb(var(--cs-outline-tertiary) / 0.275) 82%,
+    rgb(var(--cs-outline-tertiary) / 0.11) 18%,
+    rgb(var(--cs-outline-tertiary) / 0.2) 50%,
+    rgb(var(--cs-outline-tertiary) / 0.11) 82%,
     rgb(var(--cs-outline-tertiary) / 0) 100%
   );
 }
