@@ -250,6 +250,11 @@
     // When embedded by the portfolio home, tell the host to dismiss the overlay.
     if (window.parent !== window) {
       window.parent.postMessage({ type: 'case-study:close' }, '*');
+    } else {
+      // Opened on its own — a local dev server, a shared link, file:// — there
+      // is no host to dismiss, so closing goes back to the home page instead
+      // of doing nothing.
+      window.location.href = '../index.html';
     }
   });
   document.addEventListener('keydown', (e) => {
