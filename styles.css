@@ -118,6 +118,26 @@ img { max-width: 100%; }
   background: url("assets/decor/hero-dotwave.webp") no-repeat center / cover;
 }
 
+/* 386:118231 — a second, larger texture low on the page, multiplied at 30%.
+   Anchored to the Systems design band rather than an absolute page offset, so
+   it stays put as content length changes. */
+#work-systems-design { position: relative; }
+
+#work-systems-design::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -8%;
+  bottom: -18%;
+  width: 539px;
+  height: 359px;
+  background: url("assets/decor/wash-right.webp") no-repeat center / cover;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+  transform: rotate(165deg) scaleY(-1);
+  pointer-events: none;
+}
+
 /* ---------- Nav ---------- */
 
 .pf-nav,
@@ -407,8 +427,61 @@ img { max-width: 100%; }
 
 .pf-feature--mediaRight { grid-template-columns: var(--copy-col) minmax(0, 1fr); }
 
+/* 309:11432 / 303:202155 — halves rather than a 320 copy column, no gap, and
+   the artwork is allowed to overrun its half. Slightly whiter and rounder than
+   the first card, which the design keeps at 0.6 / 32px. */
+.pf-feature--split,
+.pf-feature--split.pf-feature--mediaRight {
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 0;
+  border-width: 1px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.7);
+  align-items: stretch;
+}
+
+.pf-feature--split .pf-feature__body {
+  justify-content: center;
+  padding: var(--card-pad);
+}
+
+.pf-feature--split .pf-feature__media {
+  height: auto;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+/* overruns its half toward the card's centre, as in the frame */
+.pf-feature--split .pf-feature__media img {
+  width: auto;
+  max-width: none;
+  height: clamp(240px, 37.5vw, 375px);
+  margin-left: clamp(-85px, -8.5vw, 0px);
+  object-fit: contain;
+}
+
+/* 302:201986 — copy only; the Slackbot is positioned, not laid out */
+.pf-feature--solo {
+  grid-template-columns: var(--copy-col) minmax(0, 1fr);
+  overflow: hidden;
+}
+
+/* rotated and bled off the bottom-right corner, clipped by the card */
+.pf-feature__bleed {
+  position: absolute;
+  right: -43px;
+  bottom: -46px;
+  width: 246px;
+  height: 246px;
+  border-radius: 72px;
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
 /* 302:201986 — translucent glass, no outline, softly lifted */
 .pf-feature--framed {
+  position: relative;
   padding: var(--card-space) var(--card-pad);
   /* the design re-added a hairline on the cards (0.5px, dt_color-otl-ter) */
   border: 0.5px solid var(--rule);
@@ -523,7 +596,7 @@ img { max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 40px var(--gutter);
+  padding: clamp(64px, 10vw, 100px) var(--gutter) 40px;
   border-top: 1px solid var(--rule);
 }
 
@@ -575,6 +648,17 @@ img { max-width: 100%; }
   .pf-band--card { padding: 20px var(--gutter); }
   .pf-feature--framed { padding: var(--card-space) clamp(24px, 6vw, 83.33px); }
   .pf-hero { padding-bottom: 110px; }
+
+  /* the split halves stack too — two class names outrank the rule above, so
+     they need restating here */
+  .pf-feature--split,
+  .pf-feature--split.pf-feature--mediaRight { grid-template-columns: minmax(0, 1fr); }
+  .pf-feature--split .pf-feature__body { padding: clamp(24px, 6vw, 64px); }
+  .pf-feature--split .pf-feature__media img { width: 100%; height: auto; margin-left: 0; }
+
+  /* stacked, the copy fills the card, so the bleeding Slackbot would sit on
+     top of the description */
+  .pf-feature__bleed { display: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
