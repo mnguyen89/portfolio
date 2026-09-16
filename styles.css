@@ -108,33 +108,37 @@ img { max-width: 100%; }
   mix-blend-mode: multiply;
 }
 
+/* 391:118960 — the new dots wave sweeping across the hero. Anchored to the
+   1000-wide content column rather than the viewport so it tracks the layout. */
 .pf-wash::before {
   content: "";
   position: absolute;
-  left: -180.83px;
-  top: 326.17px;
-  width: 614px;
-  height: 614px;
-  background: url("assets/decor/hero-dotwave.webp") no-repeat center / cover;
+  top: 479px;
+  left: 50%;
+  width: 1000px;
+  height: 954px;
+  margin-left: -500px;
+  /* the asset's background is keyed to transparency, so only the dots paint —
+     the export had the frame's cream ground baked in, which showed as a
+     visible box against the page gradient */
+  background: url("assets/decor/hero-wave.webp") no-repeat center / 100% 100%;
 }
 
-/* 386:118231 — a second, larger texture low on the page, multiplied at 30%.
-   Anchored to the Systems design band rather than an absolute page offset, so
-   it stays put as content length changes. */
-#work-systems-design { position: relative; }
+/* 310:109502 — the halftone, moved down the page in the frame (y 2476, which
+   lands in the AI CRM band). Anchored to that section rather than an absolute
+   page offset. */
+#work-ai-crm-email { position: relative; }
 
-#work-systems-design::before {
+#work-ai-crm-email::before {
   content: "";
   position: absolute;
   z-index: -1;
-  right: -8%;
-  bottom: -18%;
-  width: 539px;
-  height: 359px;
-  background: url("assets/decor/wash-right.webp") no-repeat center / cover;
-  opacity: 0.3;
+  left: -200px;
+  bottom: -80px;
+  width: 589px;
+  height: 690px;
+  background: url("assets/decor/hero-dotwave.webp") no-repeat center / contain;
   mix-blend-mode: multiply;
-  transform: rotate(165deg) scaleY(-1);
   pointer-events: none;
 }
 
@@ -432,34 +436,66 @@ img { max-width: 100%; }
    the first card, which the design keeps at 0.6 / 32px. */
 .pf-feature--split,
 .pf-feature--split.pf-feature--mediaRight {
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0,…) not 1fr: the artwork is wider than its half, and plain 1fr
+     takes its min-content into account, so the media column grew and squeezed
+     the copy half. Pinning both halves lets the artwork overflow instead. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0;
   padding: 0;
   border-width: 1px;
   border-radius: 40px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   align-items: stretch;
+  /* clips the overhanging artwork to the 40px corners */
+  overflow: hidden;
+  /* the frame fixes these cards at 600 (and 640 for the last); without it the
+     card collapses to content height and the artwork ends up flush to the
+     bottom edge on both, losing the breathing room below the first */
+  min-height: clamp(480px, 60vw, 600px);
 }
 
 .pf-feature--split .pf-feature__body {
   justify-content: center;
-  padding: var(--card-pad);
+  /* 309:11435 px-80 py-96 */
+  padding: clamp(40px, 9.6vw, 96px) clamp(32px, 8vw, 80px);
 }
 
 .pf-feature--split .pf-feature__media {
-  height: auto;
-  overflow: hidden;
-  border-radius: inherit;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  /* 309:11433 pt-100 */
+  padding-top: clamp(40px, 10vw, 100px);
+  /* NOT hidden: the artwork is wider than its half and overhangs toward the
+     card's centre. Clipping happens on the card instead, so the overhang
+     survives while the 40px corners stay clean. */
+  overflow: visible;
+  border-radius: 0;
 }
 
-/* overruns its half toward the card's centre, as in the frame */
+/* natural aspect at a fixed height: no crop, no letterboxing, and flush to the
+   card's right edge via justify-end with zero padding */
 .pf-feature--split .pf-feature__media img {
+  flex: 0 0 auto;
   width: auto;
   max-width: none;
   height: clamp(240px, 37.5vw, 375px);
-  margin-left: clamp(-85px, -8.5vw, 0px);
   object-fit: contain;
 }
+
+/* 309:11537 — this one sits flush to the card's bottom edge instead */
+/* two class names, to outrank the .pf-feature--split.pf-feature--mediaRight
+   selector that sets the 600 default */
+.pf-feature--split.pf-feature--bleedBottom { min-height: clamp(520px, 64vw, 640px); }
+
+.pf-feature--bleedBottom .pf-feature__media {
+  align-items: flex-end;
+  padding-top: 0;
+}
+
+.pf-feature--bleedBottom .pf-feature__media img { height: clamp(320px, 49.6vw, 496px); }
 
 /* 302:201986 — copy only; the Slackbot is positioned, not laid out */
 .pf-feature--solo {
