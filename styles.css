@@ -104,23 +104,53 @@ img { max-width: 100%; }
 }
 
 /* ---------- Page decoration ----------
-   391:118960 — the dots wave. Sized and placed from the frame and anchored to
-   the hero so it tracks the content column; it deliberately overruns the hero
-   into the first card, where the cards paint over it.
+   391:118960 — the dots wave.
 
-   Plain opacity, no blend mode: that is what the frame specifies, and the
-   artwork already carries its own alpha so there is no ground to knock out. */
-.pf-hero::after {
+   Hosted on body, not .pf-hero, for two reasons. .pf-hero is position:relative
+   with z-index:1, so it isolates a stacking context: a mix-blend-mode inside
+   it would have nothing but the hero's own transparency to multiply against.
+   And body is positioned with z-index:auto, so it is a containing block
+   without being an isolating group — the wave resolves its offsets against
+   the window while still blending with the paper gradient, which propagates
+   from body to the canvas. */
+body::after {
   content: "";
   position: absolute;
-  z-index: -1;
-  /* 272.98 / 1000 of the column, and 561.56 less the nav's 95.33 */
-  left: 27.298%;
-  top: 466px;
-  width: 80.302%;
+  /* under .pf-hero / .pf-band / .pf-footer, which all sit at z-index 1, so the
+     cards still paint over the wave as the frame shows */
+  z-index: 0;
+
+  /* Pinned to the window edge, not the content column. Two reasons. The
+     column anchoring the frame uses put the right edge at 107.6% of the
+     column, which html's overflow-x then sheared 68px off at 893 wide. And the
+     artwork is hard-cropped on both vertical edges — mean alpha is ~24 in both
+     column 0 and column 699 of 700, so it is a band built to bleed off-canvas,
+     not a shape with soft sides. Any right inset inside the window therefore
+     puts that crop on screen as a sliced-off edge. Its left crop lands behind
+     the first card, which paints over it.
+
+     Width still comes off the column, so the wave keeps the frame's scale and
+     stays overlapped with the cards rather than drifting into the margin. */
+  right: 0;
+  width: calc(0.80302 * min(100%, var(--content-max)));
   aspect-ratio: 803.02 / 597.78;
-  background: url("assets/decor/hero-wave.webp") no-repeat center / cover;
+
+  /* 561.56 in the frame, less the nav, whose height is clamped and so is not a
+     constant. The parallax script measures it; this is the 1000-wide fallback. */
+  top: var(--wave-top, 562px);
+
+  /* contain, not cover: the box and the artwork share an aspect ratio, so
+     cover only risks cropping the wave's soft edges on a rounding error */
+  background: url("assets/decor/hero-wave.webp") no-repeat center / contain;
+  /* multiply so the artwork can only ever darken the paper — no light ground
+     can read as a panel sitting on top of the page */
+  mix-blend-mode: multiply;
   opacity: 0.2;
+
+  /* parallax, driven by --wave-shift (see index.html). translate3d so the
+     shift stays on the compositor and does not relayout on every frame. */
+  transform: translate3d(0, var(--wave-shift, 0px), 0);
+  will-change: transform;
   pointer-events: none;
 }
 
@@ -739,6 +769,9 @@ img { max-width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* belt and braces: the script already skips the parallax, this makes the
+     wave hold still even if --wave-shift were set some other way */
+  body::after { transform: none; }
   .pf-cta { transition: none; }
   .pf-cta:hover { transform: none; }
   .pf-nav__link--menu .pf-nav__caret,

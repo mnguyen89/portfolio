@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=3c851f21">
+<link rel="stylesheet" href="styles.css?v=1c957781">
 </head>
 <body>
 
@@ -312,6 +312,52 @@
     if (e.source === frame.contentWindow && e.data && e.data.type === 'case-study:close') close();
   });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+</script>
+
+<script>
+// Dots wave parallax (391:118960). The wave is body::after, and JS cannot
+// touch a pseudo-element directly, so both values are passed down as custom
+// properties on :root and consumed in styles.css.
+(() => {
+  const root = document.documentElement;
+  const hero = document.querySelector('.pf-hero');
+  if (!hero) return;
+
+  // The nav's height is a clamp, so the wave's 561.56 in the frame is not a
+  // constant number of pixels from the top of the page. Measure it instead of
+  // hard-coding, and keep the frame's 466 offset from the top of the hero.
+  const place = () => root.style.setProperty('--wave-top', (hero.offsetTop + 466) + 'px');
+
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let frame = 0;
+
+  const drift = () => {
+    frame = 0;
+    // Travels down as the page scrolls up, so it lags the content at about
+    // three-quarter speed. Capped so it stays a hero decoration rather than
+    // trailing the reader the whole way down the page.
+    const shift = Math.min(window.scrollY * 0.25, 240);
+    root.style.setProperty('--wave-shift', shift.toFixed(2) + 'px');
+  };
+
+  const onScroll = () => { if (!frame) frame = requestAnimationFrame(drift); };
+
+  const sync = () => {
+    if (motion.matches) {
+      removeEventListener('scroll', onScroll);
+      if (frame) { cancelAnimationFrame(frame); frame = 0; }
+      root.style.setProperty('--wave-shift', '0px');
+    } else {
+      addEventListener('scroll', onScroll, { passive: true });
+      drift();
+    }
+  };
+
+  place();
+  addEventListener('resize', place);
+  motion.addEventListener('change', sync);
+  sync();
 })();
 </script>
 
