@@ -21,9 +21,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(16px, 2.4vw, 24px);
+  gap: clamp(10px, 2.4vw, 24px);
   /* scales with the window rather than stepping at a breakpoint */
-  padding: clamp(32px, 5vw, 50px) var(--cs-gutter, 160px);
+  padding: clamp(16px, 5vw, 50px) var(--cs-gutter, 160px);
 
   --nav-ink: #ffffff;
   --nav-ink-soft: rgba(255, 255, 255, 0.75);
@@ -61,9 +61,9 @@
 /* 393:119464 */
 .cs-projectNav__row {
   display: flex;
-  gap: clamp(16px, 2.4vw, 24px);
+  gap: clamp(10px, 2.4vw, 24px);
   width: 100%;
-  padding-block: clamp(48px, 10vw, 100px);
+  padding-block: clamp(28px, 10vw, 100px);
 }
 
 /* 393:119465 / 393:119472 — the pill and border the old buttons carried are
@@ -74,7 +74,8 @@
   display: flex;
   align-items: center;
   margin: 0;
-  padding: 22px 0;
+  /* 22 at >=720, easing to 14 by 375 so the 88 height scales on phones */
+  padding: clamp(14px, calc(5.3px + 2.32vw), 22px) 0;
   border: 0;
   border-radius: 12px;
   background: none;
@@ -86,16 +87,16 @@
   overflow: hidden;
 }
 
-.cs-projectNav__btn--prev { gap: 16px; justify-content: flex-start; }
-.cs-projectNav__btn--next { gap: 24px; justify-content: flex-end; text-align: right; }
+.cs-projectNav__btn--prev { gap: clamp(12px, calc(7.65px + 1.16vw), 16px); justify-content: flex-start; }
+.cs-projectNav__btn--next { gap: clamp(14px, calc(3.1px + 2.9vw), 24px); justify-content: flex-end; text-align: right; }
 
 /* 393:119466 — 44 circle carrying a two-layer lift */
 .cs-projectNav__icon {
   flex: none;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: clamp(34px, calc(23.13px + 2.9vw), 44px);
+  height: clamp(34px, calc(23.13px + 2.9vw), 44px);
   border-radius: 50%;
   background: var(--nav-pill);
   box-shadow:
@@ -105,8 +106,8 @@
 
 /* 393:119468 — a 5.83 x 11.67 stroke inside the 20 box, round caps */
 .cs-projectNav__chev {
-  width: 20px;
-  height: 20px;
+  width: clamp(15.5px, calc(10.6px + 1.3vw), 20px);
+  height: clamp(15.5px, calc(10.6px + 1.3vw), 20px);
   fill: none;
   stroke: var(--nav-chev);
   stroke-width: 1.4583;
@@ -137,7 +138,7 @@
 
 .cs-projectNav__kicker {
   font-family: var(--cs-body);
-  font-size: 13px;
+  font-size: clamp(11.5px, calc(9.87px + 0.435vw), 13px);
   line-height: 1.6;
   color: var(--nav-ink-soft);
 }
@@ -145,7 +146,7 @@
 .cs-projectNav__title {
   font-family: var(--cs-display);
   font-weight: 500;
-  font-size: 16px;
+  font-size: clamp(14px, calc(11.83px + 0.58vw), 16px);
   line-height: 1.15;
   color: var(--nav-ink);
 }
@@ -178,7 +179,7 @@
   .cs-projectNav__btn--next {
     flex-direction: row-reverse;
     justify-content: flex-end;
-    gap: clamp(12px, 2vw, 16px);
+    gap: clamp(12px, calc(7.65px + 1.16vw), 16px);
     text-align: left;
   }
 

@@ -36,17 +36,16 @@
      share at the 720 floor. Percentages can't be used: padding percentages
      resolve against the PARENT's width, i.e. the window, not the content box. */
   --content-max: 1000px;
-  --content-min: 720px;
-  --gutter: clamp(48px, 6.667vw, 66.67px);          /* nav + hero + footer */
-  --band-gutter: clamp(56px, 9.6vw, 96px);          /* plain bands, px-96 */
-  --band-space: clamp(96px, 13.333vw, 133.33px);    /* plain band rhythm */
-  --card-inset: clamp(24px, 4vw, 40px);             /* card band, px-40 */
+  --gutter: clamp(20px, 6.667vw, 66.67px);          /* nav + hero + footer */
+  --band-gutter: clamp(20px, 9.6vw, 96px);          /* plain bands, px-96 */
+  --band-space: clamp(48px, 13.333vw, 133.33px);    /* plain band rhythm */
+  --card-inset: clamp(12px, 4vw, 40px);             /* card band, px-40 */
   --card-pad: var(--band-gutter);                   /* card padding, px-96 */
-  --card-space: clamp(88px, 12vw, 120px);           /* card rhythm, py-120 */
-  --col-gap: clamp(48px, 8.667vw, 86.67px);
+  --card-space: clamp(40px, 12vw, 120px);           /* card rhythm, py-120 */
+  --col-gap: clamp(24px, 8.667vw, 86.67px);
   /* Copy column is a fixed 320 in every row; the media column takes the rest,
      which is how the design's flex-1 media behaves. */
-  --copy-col: 320px;
+  --copy-col: clamp(220px, 32vw, 320px);
   --media-h: clamp(240px, 37.5vw, 375px);
   --card-radius: 32px;
 
@@ -61,15 +60,23 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* portfolio-template clipsContent in the frame, and the dots wave overruns
+     the column by design. This has to sit on the root: body's overflow does
+     not reliably propagate to the viewport, so setting it there clipped the
+     body box while the page still scrolled sideways. */
+  overflow-x: hidden;
+}
 
 body {
   margin: 0;
   min-height: 100%;
   font-family: var(--body);
   color: var(--ink);
-  /* content has a hard floor, so narrow viewports scroll rather than reflow */
-  min-width: var(--content-min);
+  /* was min-width: 720, which made phones scroll sideways instead of
+     reflowing. Only a sanity floor now. */
+  min-width: 320px;
   position: relative;
   background: var(--paper) no-repeat;
 }
@@ -137,7 +144,7 @@ img { max-width: 100%; }
   position: relative;
   z-index: 1;
   margin-inline: auto;
-  width: clamp(var(--content-min), 100%, var(--content-max));
+  width: min(100%, var(--content-max));
 }
 
 .pf-nav {
@@ -148,7 +155,7 @@ img { max-width: 100%; }
   align-items: baseline;
   justify-content: space-between;
   gap: 24px;
-  padding: 46.67px var(--gutter) 26.67px;
+  padding: clamp(24px, 4.667vw, 46.67px) var(--gutter) clamp(16px, 2.667vw, 26.67px);
   /* .pf-hero and .pf-band share z-index 1 and come later in the DOM, so the
      nav has to outrank them or the open Work menu paints underneath them */
   z-index: 3;
@@ -214,7 +221,7 @@ img { max-width: 100%; }
   /* 8px of vertical air above the first item and below the last, on top of the
      10px the panel already insets by */
   padding: 18px 10px;
-  min-width: 248px;
+  min-width: min(248px, calc(100vw - 32px));
   list-style: none;
   border: 1px solid var(--rule);
   border-radius: 16px;
@@ -334,7 +341,7 @@ img { max-width: 100%; }
   flex-direction: column;
   align-items: center;
   gap: 50px;
-  padding: 66.67px var(--gutter) 140px;
+  padding: clamp(32px, 6.667vw, 66.67px) var(--gutter) clamp(56px, 14vw, 140px);
   text-align: center;
 }
 
@@ -618,7 +625,7 @@ img { max-width: 100%; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: clamp(64px, 10vw, 100px) var(--gutter) 40px;
+  padding: clamp(40px, 10vw, 100px) var(--gutter) clamp(24px, 4vw, 40px);
   border-top: 1px solid var(--rule);
 }
 
@@ -657,7 +664,7 @@ img { max-width: 100%; }
 
 /* ---------- Responsive ---------- */
 
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   .pf-feature,
   .pf-feature--mediaRight {
     grid-template-columns: minmax(0, 1fr);
@@ -668,8 +675,8 @@ img { max-width: 100%; }
   .pf-feature--mediaRight .pf-feature__media { order: -1; }
 
   .pf-band--card { padding: 20px var(--gutter); }
-  .pf-feature--framed { padding: var(--card-space) clamp(24px, 6vw, 83.33px); }
-  .pf-hero { padding-bottom: 110px; }
+  .pf-feature--framed { padding: var(--card-space) clamp(20px, 6vw, 83.33px); }
+  .pf-hero { padding-bottom: clamp(48px, 12vw, 110px); }
 
   /* the split halves stack too — two class names outrank the rule above, so
      they need restating here */
