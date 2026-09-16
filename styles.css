@@ -70,7 +70,6 @@ body {
   color: var(--ink);
   /* content has a hard floor, so narrow viewports scroll rather than reflow */
   min-width: var(--content-min);
-  /* Containing block for .pf-wash, which spans the whole document. */
   position: relative;
   background: var(--paper) no-repeat;
 }
@@ -91,37 +90,24 @@ img { max-width: 100%; }
 }
 
 /* ---------- Page decoration ----------
-   One halftone dot-wave bleeding off the left edge beneath the hero, per the
-   design (310:109502 — 614 square at -180.83, 326.17). Multiply drops the
-   asset's white ground, leaving just the dots; the glass cards are translucent,
-   so the dots read faintly through the first card as they do in the frame.
-   overflow:hidden clips the negative offset instead of scrolling the page. */
-.pf-wash {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-  /* must live on the layer, not on ::before: z-index makes .pf-wash a stacking
-     context, which would isolate a blend set on the child and leave the
-     asset's white ground painting opaque over the paper */
-  mix-blend-mode: multiply;
-}
+   391:118960 — the dots wave. Sized and placed from the frame and anchored to
+   the hero so it tracks the content column; it deliberately overruns the hero
+   into the first card, where the cards paint over it.
 
-/* 391:118960 — the new dots wave sweeping across the hero. Anchored to the
-   1000-wide content column rather than the viewport so it tracks the layout. */
-.pf-wash::before {
+   Plain opacity, no blend mode: that is what the frame specifies, and the
+   artwork already carries its own alpha so there is no ground to knock out. */
+.pf-hero::after {
   content: "";
   position: absolute;
-  top: 479px;
-  left: 50%;
-  width: 1000px;
-  height: 954px;
-  margin-left: -500px;
-  /* the asset's background is keyed to transparency, so only the dots paint —
-     the export had the frame's cream ground baked in, which showed as a
-     visible box against the page gradient */
-  background: url("assets/decor/hero-wave.webp") no-repeat center / 100% 100%;
+  z-index: -1;
+  /* 272.98 / 1000 of the column, and 561.56 less the nav's 95.33 */
+  left: 27.298%;
+  top: 466px;
+  width: 80.302%;
+  aspect-ratio: 803.02 / 597.78;
+  background: url("assets/decor/hero-wave.webp") no-repeat center / cover;
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 /* 310:109502 — the halftone, moved down the page in the frame (y 2476, which
