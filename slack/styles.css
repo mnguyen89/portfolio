@@ -119,6 +119,57 @@ body {
   background: var(--cs-surface-grey);
 }
 
+/* Real screenshots. .cs-ph stays for the slots still waiting on artwork (the
+   journey map), so the two live side by side. */
+.cs-shot { margin: 0; }
+
+.cs-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* The hero is the mascot rather than a screenshot, so it keeps the placeholder's
+   band and ratio and sits inside it rather than filling it. */
+.cs-shot--hero {
+  display: grid;
+  place-items: center;
+  /* .cs-ph carried width:100%; without it the grid shrink-wrapped to 300px */
+  width: 100%;
+  aspect-ratio: var(--shot-ratio, 640 / 420);
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--cs-surface-grey);
+}
+
+/* A percentage height here is indeterminate - the parent's height comes from
+   aspect-ratio, so the image resolved against nothing and overflowed. Sized off
+   the container instead. */
+.cs-shot--hero img {
+  width: auto;
+  height: clamp(150px, 34cqi, 300px);
+  border-radius: 0;
+}
+
+/* Two-up, as the design pairs them */
+.cs-shots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0;
+}
+
+.cs-shots img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* the pair that sits above the problem cards, inside the band */
+.cs-shots--band { margin-bottom: 56px; }
+
 .cs-ph__label {
   max-width: 34ch;
   font-family: var(--cs-body);
@@ -432,6 +483,7 @@ body {
   .cs-rule { margin-top: 80px; }
   .cs-stats { grid-template-columns: 1fr; gap: 20px; margin-top: 64px; }
   .cs-problemBand { margin-top: 64px; padding-block: 80px 88px; }
+  .cs-shots { grid-template-columns: 1fr; }
   .cs-problems { grid-template-columns: 1fr; }
   .cs-problem { padding-inline: 0; }
   .cs-strategyMedia { margin-top: 56px; padding-block: 0; }
