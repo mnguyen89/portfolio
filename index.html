@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=225db538">
+<link rel="stylesheet" href="styles.css?v=516a5e42">
 </head>
 <body>
 
@@ -343,6 +343,23 @@
   const CLEAR_MIN = 24;
   const FALLBACK_PEEK = 80;
 
+  // The wave moves DOWN the document as the page scrolls up, so its net speed
+  // on screen is (1 - rate) of the content's: the more it lags, the further
+  // away it reads. The rate is derived, not chosen, because it is boxed in by
+  // arithmetic. Travel is downward only, so it is bounded by the peek — the
+  // dots have to keep clearing the card's top edge — and that edge stays on
+  // screen for cardTop worth of scroll. So the largest rate that lasts the
+  // whole way is budget/cardTop, and anything above it exhausts the budget
+  // early and locks the wave to the page for the rest: at 0.35 the wave ran
+  // at 65% of content speed to scrollY 300, then at 100% — and a background
+  // that detaches and then sticks reads as a bug, not as depth. Held to a
+  // single continuous rate instead, roughly 0.15 at 1000 wide, which is 85%
+  // of content speed and nearly double the travel the old flat 0.08 gave.
+  const MIN_PEEK = 16;
+  let driftBudget = 0;
+  let cardTopDoc = Infinity;
+  let rate = 0;
+
   // Both decorations are measured rather than hard-coded: the nav's height is
   // a clamp, and the sections reflow, so neither the frame's y values nor a
   // fixed offset from the hero stays correct across widths.
@@ -359,6 +376,9 @@
       }
 
       root.style.setProperty('--wave-top', (cardTop - peek - DOTS_START * waveH) + 'px');
+      driftBudget = Math.max(0, peek - MIN_PEEK);
+      cardTopDoc = cardTop;
+      rate = cardTop > 0 ? driftBudget / cardTop : 0;
     } else {
       root.style.setProperty('--wave-top', (hero.offsetTop + 441.23) + 'px');
     }
@@ -376,15 +396,20 @@
 
   const drift = () => {
     frame = 0;
-    // Travels down as the page scrolls up, so it lags the content slightly.
-    // The rate is deliberately gentle: the wave drifting down eats into the
-    // PEEK above the card, and the card's top edge is on screen from the top
-    // of the page until roughly scrollY 740. At 0.25 the drift was 185px by
-    // then and the 80px peek had closed long before. At 0.08 it is ~59px, so
-    // a sliver of dots still clears the card the whole time it is in view.
-    // Capped so the wave stays a hero decoration rather than trailing the
-    // reader the whole way down the page.
-    const shift = Math.min(window.scrollY * 0.08, 240);
+    // driftBudget, not a fixed cap, so the dots keep MIN_PEEK above the card
+    // while that edge is on screen. Once the card's top edge has scrolled off
+    // the top, nobody can see it and the peek no longer constrains anything —
+    // so the budget grows from there at the same rate, which lets the lag
+    // continue (and stay visible in the margin beside the card) instead of
+    // the wave locking to the page after ~300px. Growing it at exactly RATE
+    // keeps the handover continuous, with no jump at the crossover.
+    // Past cardTop the card's top edge is off screen, nobody can see it and
+    // the peek stops constraining anything, so the budget keeps growing at the
+    // same rate and the lag simply continues — visible in the margin beside
+    // the card. Growing it at exactly `rate` keeps the handover seamless.
+    const y = window.scrollY;
+    const budget = driftBudget + Math.max(0, y - cardTopDoc) * rate;
+    const shift = Math.min(y * rate, budget);
     root.style.setProperty('--wave-shift', shift.toFixed(2) + 'px');
   };
 

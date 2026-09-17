@@ -162,6 +162,13 @@ body::after {
      knock out and nothing to gain from multiplying. */
   opacity: 0.2;
 
+  /* Aerial perspective: a distant plane reads softer than the page on top of
+     it, so the dots get a touch of blur to sit behind the content rather than
+     on it. Small on purpose — the dots are only a few px across and more than
+     this smears them into a haze. The artwork's own margins give the blur
+     somewhere to spread, so nothing is clipped at the element box. */
+  filter: blur(1.5px);
+
   /* parallax, driven by --wave-shift (see index.html). translate3d so the
      shift stays on the compositor and does not relayout on every frame. */
   transform: translate3d(0, var(--wave-shift, 0px), 0);
