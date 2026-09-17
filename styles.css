@@ -766,8 +766,8 @@ body::before {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  /* no rule above the footer — the padding carries the separation */
   padding: clamp(40px, 10vw, 100px) var(--gutter) clamp(24px, 4vw, 40px);
-  border-top: 1px solid var(--rule);
 }
 
 .pf-footer__note {
