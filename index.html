@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=a0a84e98">
+<link rel="stylesheet" href="styles.css?v=5b750d64">
 </head>
 <body>
 
@@ -322,23 +322,53 @@
 (() => {
   const root = document.documentElement;
   const hero = document.querySelector('.pf-hero');
+  const halftoneBand = document.querySelector('#work-ai-crm-email');
+  const firstCard = document.querySelector('#work-new-team-activation .pf-feature');
   if (!hero) return;
 
-  // The nav's height is a clamp, so the wave's 531.56 in the frame is not a
-  // constant number of pixels from the top of the page. Measure it instead of
-  // hard-coding, and keep the frame's 441.23 offset from the top of the hero
-  // (531.56 less the frame nav's 90.33).
-  const place = () => root.style.setProperty('--wave-top', (hero.offsetTop + 441.23) + 'px');
+  // The wave artwork is fully transparent down to 38.4% of its height (its
+  // dots start at row 200 of 521), so it cannot be placed by its box: at the
+  // frame's own y the dots begin 35px below the first card's top edge and
+  // nothing shows above it. Place it off the card instead, discounting that
+  // dead band, so this much of the dots clears the card's top edge.
+  const DOTS_START = 0.384;
+  const PEEK = 80;
+
+  // Both decorations are measured rather than hard-coded: the nav's height is
+  // a clamp, and the sections reflow, so neither the frame's y values nor a
+  // fixed offset from the hero stays correct across widths.
+  const place = () => {
+    if (firstCard) {
+      // the wave's height comes from its aspect-ratio, so it tracks the column
+      const waveH = parseFloat(getComputedStyle(document.body, '::after').height) || 0;
+      const cardTop = firstCard.getBoundingClientRect().top + window.scrollY;
+      root.style.setProperty('--wave-top', (cardTop - PEEK - DOTS_START * waveH) + 'px');
+    } else {
+      root.style.setProperty('--wave-top', (hero.offsetTop + 441.23) + 'px');
+    }
+    // The halftone is on body so its multiply can reach the paper, so it no
+    // longer inherits the AI CRM band's box. Reproduce the bottom:-80px it had
+    // there: its 690px box ends 80px below the band.
+    if (halftoneBand) {
+      const bottom = halftoneBand.offsetTop + halftoneBand.offsetHeight + 80;
+      root.style.setProperty('--halftone-top', (bottom - 690) + 'px');
+    }
+  };
 
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   let frame = 0;
 
   const drift = () => {
     frame = 0;
-    // Travels down as the page scrolls up, so it lags the content at about
-    // three-quarter speed. Capped so it stays a hero decoration rather than
-    // trailing the reader the whole way down the page.
-    const shift = Math.min(window.scrollY * 0.25, 240);
+    // Travels down as the page scrolls up, so it lags the content slightly.
+    // The rate is deliberately gentle: the wave drifting down eats into the
+    // PEEK above the card, and the card's top edge is on screen from the top
+    // of the page until roughly scrollY 740. At 0.25 the drift was 185px by
+    // then and the 80px peek had closed long before. At 0.08 it is ~59px, so
+    // a sliver of dots still clears the card the whole time it is in view.
+    // Capped so the wave stays a hero decoration rather than trailing the
+    // reader the whole way down the page.
+    const shift = Math.min(window.scrollY * 0.08, 240);
     root.style.setProperty('--wave-shift', shift.toFixed(2) + 'px');
   };
 

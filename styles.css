@@ -126,8 +126,9 @@ img { max-width: 100%; }
 body::after {
   content: "";
   position: absolute;
-  /* under .pf-hero / .pf-band / .pf-footer, which all sit at z-index 1, so the
-     cards still paint over the wave as the frame shows */
+  /* Behind .pf-hero / .pf-band / .pf-footer, which all sit at z-index 1, so
+     the cards paint over the wave. The wave is instead positioned so its dots
+     clear the first card's top edge and peek out above it — see --wave-top. */
   z-index: 0;
 
   /* Pinned to the window edge, not the content column. Two reasons. The
@@ -145,9 +146,12 @@ body::after {
   width: calc(0.80302 * min(100%, var(--content-max)));
   aspect-ratio: 803.02 / 597.78;
 
-  /* 531.56 in the frame, less the nav, whose height is clamped and so is not a
-     constant. The parallax script measures it; this is the 1000-wide fallback. */
-  top: var(--wave-top, 532px);
+  /* Set by the script from the first card's top edge rather than from the
+     frame's y. The artwork is fully transparent for its top 38.4% — its dots
+     do not start until row 200 of 521 — so at the frame's own y the dots begin
+     35px BELOW the card's top edge and nothing shows above it. The script
+     subtracts that dead band plus a peek. This is the 1000-wide fallback. */
+  top: var(--wave-top, 416px);
 
   /* contain, not cover: the box and the artwork share an aspect ratio, so
      cover only risks cropping the wave's soft edges on a rounding error */
@@ -165,17 +169,25 @@ body::after {
   pointer-events: none;
 }
 
-/* 310:109502 — the halftone, moved down the page in the frame (y 2476, which
-   lands in the AI CRM band). Anchored to that section rather than an absolute
-   page offset. */
-#work-ai-crm-email { position: relative; }
+/* 310:109502 — the halftone. Like the dots wave this is a direct child of the
+   frame in Figma, not of a section, and it has to live on body here for the
+   same reason: #work-ai-crm-email is position:relative with z-index:1 from
+   .pf-band, so it isolated a stacking context and the multiply had nothing but
+   that section's own transparency to blend against. The blend was therefore
+   inert — and hero-dotwave.webp is RGB with no alpha channel at all (100%
+   opaque on a pure white ground), so the white ground showed as a panel. The
+   blend is doing all the work of hiding it, so it has to actually apply.
 
-#work-ai-crm-email::before {
+   Kept at z-index 0, below the bands, which is where it painted before. */
+body::before {
   content: "";
   position: absolute;
-  z-index: -1;
-  left: -200px;
-  bottom: -80px;
+  z-index: 0;
+  /* the script measures this off the AI CRM band, reproducing the bottom:-80px
+     it used to have; the fallback is the frame's own y */
+  top: var(--halftone-top, 2456px);
+  /* 200px left of the content column, as in the frame */
+  left: calc(max(0px, (100% - min(100%, var(--content-max))) / 2) - 200px);
   width: 589px;
   height: 690px;
   background: url("assets/decor/hero-dotwave.webp") no-repeat center / contain;
