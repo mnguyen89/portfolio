@@ -13,6 +13,14 @@
      readable grey rather than borrowing --ink-faint (which fails 4.5:1) */
   --ink-mute: #77757a;
   --accent: #00B5E1;
+  /* 10:175 — the Home marker. A highlighter stroke, not the old rule: the
+     frame lays it over the top of the word at multiply. */
+  --marker-home: #ffbaa9;
+  /* Per-project card tints (309:11432, 303:202155), held as channels so the
+     gradients can set their own alpha. */
+  --tint-salesforce: 0, 161, 224;
+  --tint-paypal: 255, 203, 77;
+  --tint-paypal-end: 251, 200, 78;
   /* brand colours, used only for the menu icons' hover state */
   --brand-linkedin: #0a66c2;
   --brand-dribbble: #ea4c89;
@@ -61,8 +69,10 @@
      recipe used by 309:11432 (0 4px 16px + inset 5px 25px 5px): that inner
      shadow draws a dark band across the top edge this card doesn't have. */
   --shadow-card: 0 2px 34px rgba(0, 0, 0, 0.05);
-  --glass: rgba(255, 255, 255, 0.6);
-  --glass-blur: 3px;
+  /* 302:201986 now matches the split cards: 0.8 over an 8px backdrop blur
+     (it was 0.6 over 3px) */
+  --glass: rgba(255, 255, 255, 0.8);
+  --glass-blur: 8px;
 }
 
 * { box-sizing: border-box; }
@@ -135,16 +145,17 @@ body::after {
   width: calc(0.80302 * min(100%, var(--content-max)));
   aspect-ratio: 803.02 / 597.78;
 
-  /* 561.56 in the frame, less the nav, whose height is clamped and so is not a
+  /* 531.56 in the frame, less the nav, whose height is clamped and so is not a
      constant. The parallax script measures it; this is the 1000-wide fallback. */
-  top: var(--wave-top, 562px);
+  top: var(--wave-top, 532px);
 
   /* contain, not cover: the box and the artwork share an aspect ratio, so
      cover only risks cropping the wave's soft edges on a rounding error */
   background: url("assets/decor/hero-wave.webp") no-repeat center / contain;
-  /* multiply so the artwork can only ever darken the paper — no light ground
-     can read as a panel sitting on top of the page */
-  mix-blend-mode: multiply;
+  /* Normal blend at 20%, which is what 391:118960 specifies — the generator
+     emits mix-blend-multiply when a node carries it (as 10:175 does) and emits
+     none here. The artwork has its own alpha, so there is no light ground to
+     knock out and nothing to gain from multiplying. */
   opacity: 0.2;
 
   /* parallax, driven by --wave-shift (see index.html). translate3d so the
@@ -221,14 +232,28 @@ body::after {
 .pf-nav__link:hover { color: var(--ink); }
 .pf-nav__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
-.pf-nav__link.is-current { color: var(--ink); font-weight: 700; }
+.pf-nav__link.is-current {
+  position: relative;
+  color: var(--ink);
+  font-weight: 700;
+}
 
+/* 10:175 — a highlighter stroke across the top of the word, replacing the
+   13.33x1.67 rule that used to sit under it. The frame draws a 53x8 bar over a
+   38-wide "Home" at multiply, so it lands on the glyphs and darkens them
+   rather than hiding them. Sized in em and inset from both edges so it tracks
+   the word however the font renders, rather than pinning a 53px width. */
 .pf-nav__link.is-current::after {
   content: "";
-  width: 13.33px;
-  height: 1.67px;
+  position: absolute;
+  left: -0.575em;
+  right: -0.55em;
+  top: 0.025em;
+  height: 0.6em;
   border-radius: 0.83px;
-  background: var(--accent);
+  background: var(--marker-home);
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
 .pf-nav__caret { width: 16.67px; height: 16.67px; }
@@ -547,6 +572,37 @@ body::after {
   pointer-events: none;
 }
 
+/* Each split card carries its own brand tint over the shared glass: a single
+   diagonal wash that fades out before halfway, with the 0.8 white underneath
+   it. Kept as a second background layer rather than folded into one gradient
+   so the white stays exactly the value the framed cards use. Selectors are
+   id-scoped, which also outranks the two-class .pf-feature--split rules. */
+
+/* 309:11432 — Salesforce blue at 5% */
+#work-ai-crm-email .pf-feature--split {
+  background-image:
+    linear-gradient(250.734deg,
+      rgba(var(--tint-salesforce), 0.05) 7.9%,
+      rgba(255, 255, 255, 0) 61.043%),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0.8) 100%);
+  /* this one card is blurred harder than the rest */
+  -webkit-backdrop-filter: blur(13px);
+  backdrop-filter: blur(13px);
+}
+
+/* 303:202155 — PayPal yellow at 18%, a notably stronger wash */
+#work-visual-design .pf-feature--split {
+  background-image:
+    linear-gradient(233.13deg,
+      rgba(var(--tint-paypal), 0.18) 0%,
+      rgba(var(--tint-paypal-end), 0) 51.357%),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0.8) 100%);
+}
+
 /* 302:201986 — translucent glass, no outline, softly lifted */
 .pf-feature--framed {
   position: relative;
@@ -598,15 +654,27 @@ body::after {
    feDropShadow could not spread past the 2px margin around the tile. A CSS
    filter renders outside the element box, so the blur can be as soft as it
    wants. */
-.pf-feature__logo--tile {
-  /* Larger than the brand marks on purpose: the tile carries ~7px of padding,
-     so a 64px tile puts ~35px of glyph on screen - the same optical size as
-     slack.svg's 36px of ink at 40px. Shadow offsets scale with the tile. */
-  width: 64px;
-  height: 64px;
-  filter: drop-shadow(0 3px 6px rgba(28, 25, 23, 0.16))
-          drop-shadow(0 1px 2px rgba(28, 25, 23, 0.08));
+/* 406:6148 / 412:119758 — the two projects without a brand mark use a glyph
+   on a white plate. The plate used to be painted into the SVG itself; the
+   frame's icons are now bare 48x48 two-tone glyphs, so the plate is built
+   here: 12px of padding around a 48px glyph, i.e. the frame's 72px tile. */
+.pf-feature__tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Fixed 72 rather than 12px of padding around the glyph: the frame's stroke
+     is inside its 72px box, so padding plus a 0.8px border made the tile 73.6.
+     Flex centring places the 48px glyph, which leaves the frame's 12px. */
+  width: 72px;
+  height: 72px;
+  border: 0.8px solid var(--rule);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 1px rgba(28, 25, 23, 0.08),
+              0 3px 8px rgba(28, 25, 23, 0.16);
 }
+
+.pf-feature__tile img { display: block; width: 48px; height: 48px; }
 
 /* the PayPal and Salesforce marks are not square — pin height, let width follow */
 .pf-feature__logo--tall { width: 33.33px; height: 40.18px; }

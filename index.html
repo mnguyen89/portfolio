@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=1c957781">
+<link rel="stylesheet" href="styles.css?v=a0a84e98">
 </head>
 <body>
 
@@ -142,7 +142,7 @@
              loading="lazy" decoding="async">
       </div>
       <div class="pf-feature__body">
-        <img class="pf-feature__logo pf-feature__logo--tile" src="assets/logos/systems-design.svg" alt="" width="64" height="64">
+        <span class="pf-feature__tile"><img src="assets/logos/systems-design.svg" alt="" width="48" height="48"></span>
         <h3 class="pf-feature__title">Systems design</h3>
         <p class="pf-feature__desc">A system spanning discovery through delivery — a guidelines site, Sketch kit and JSON tokens feeding component libraries for iOS, Android and web, so product teams build from shared, config-driven UI instead of rebuilding each surface.</p>
         <span class="pf-cta is-soon" aria-disabled="true">Coming soon</span>
@@ -155,7 +155,7 @@
     <article class="pf-feature pf-feature--framed pf-feature--split pf-feature--bleedBottom pf-feature--mediaRight">
       <div class="pf-feature__body">
         <!-- spans several employers, so a neutral mark rather than one logo -->
-        <img class="pf-feature__logo pf-feature__logo--tile" src="assets/logos/visual-design.svg" alt="" width="64" height="64">
+        <span class="pf-feature__tile"><img src="assets/logos/visual-design.svg" alt="" width="48" height="48"></span>
         <h3 class="pf-feature__title">Visual Design</h3>
         <p class="pf-feature__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
         <a class="pf-cta" href="visual-design/index.html" data-case-study data-case-title="Visual Design">
@@ -324,10 +324,11 @@
   const hero = document.querySelector('.pf-hero');
   if (!hero) return;
 
-  // The nav's height is a clamp, so the wave's 561.56 in the frame is not a
+  // The nav's height is a clamp, so the wave's 531.56 in the frame is not a
   // constant number of pixels from the top of the page. Measure it instead of
-  // hard-coding, and keep the frame's 466 offset from the top of the hero.
-  const place = () => root.style.setProperty('--wave-top', (hero.offsetTop + 466) + 'px');
+  // hard-coding, and keep the frame's 441.23 offset from the top of the hero
+  // (531.56 less the frame nav's 90.33).
+  const place = () => root.style.setProperty('--wave-top', (hero.offsetTop + 441.23) + 'px');
 
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   let frame = 0;

@@ -172,7 +172,10 @@ body {
 
 /* ---------- At a glance ---------- */
 
-.cs-glance { padding: 0 var(--cs-gutter); text-align: center; }
+/* 125 here plus the 50 .cs gap is the 175 the other case studies put above
+   this section - paypal does it with the same padding, visual design with
+   its 175 --cs-rhythm. Slack was running on the 50 gap alone. */
+.cs-glance { padding: 125px var(--cs-gutter) 0; text-align: center; }
 
 .cs-glance__title {
   margin: 0 0 75px;
@@ -412,6 +415,8 @@ body {
 @container (max-width: 860px) {
   .cs { gap: 48px; }
   .cs-hero { padding-top: 64px; }
+  .cs-glance { padding-top: 88px; }
+  .cs-glance__title { margin-bottom: 56px; }
   .cs-rule { margin-top: 120px; }
   .cs-problemBand { padding-block: 120px 132px; }
   .cs-strategy { padding-block: 72px; }
@@ -422,6 +427,7 @@ body {
 @container (max-width: 640px) {
   .cs { gap: 40px; }
   .cs-hero { padding-top: 56px; }
+  .cs-glance { padding-top: 64px; }
   .cs-glance__title { margin-bottom: 40px; }
   .cs-rule { margin-top: 80px; }
   .cs-stats { grid-template-columns: 1fr; gap: 20px; margin-top: 64px; }
