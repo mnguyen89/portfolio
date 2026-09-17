@@ -6,6 +6,9 @@
   --cs-surface-warm: #f7f5f0;
   --cs-surface-grey: #f8f8f8;
   --cs-blue: #0070e0;
+  /* 190:93447's gradient stops */
+  --cs-blue-top: #006fde;
+  --cs-blue-deep: #003087;
   --cs-gold: #ffd140;
   --cs-line: #d7d3da;
   /* design token color-outline-tertiary -> color.palettes.gray.60 (#5e5d60) */
@@ -167,11 +170,16 @@ body {
 .cs-plate {
   position: relative;
   padding: 0;
-  /* The exports bleed past their boxes (see the aspect-ratio notes below), and
-     the img is absolutely positioned at height:auto — without clipping, the
-     launch plate's 257px bottom bleed spilled onto .cs-outcomes and covered
-     its icons and titles. The plate IS the aperture, so clip to it. */
-  overflow: hidden;
+  /* NOT overflow:hidden. The exports bleed past their boxes wherever the long
+     shadow runs on (257 below the launch plate), and clipping to the box cut
+     that shadow off mid-strength, leaving a hard horizontal edge across the
+     band. The bleed is allowed to show instead: its baked background is the
+     same gradient the band paints, matched to within 1/255, so the only thing
+     that reads is the shadow itself.
+
+     The img is absolutely positioned, so it paints above later static siblings
+     — whatever follows a bleeding plate therefore lifts itself above it with
+     position + z-index rather than the plate clipping. */
 }
 
 .cs-plate > img {
@@ -323,14 +331,47 @@ body {
 
 /* Illustration pair */
 
+/* 190:93339 — wraps two up, then the third alone and centred on its own row.
+   Column gap 48, row gap 100, both inside the section's 40 / 16 padding. */
 .cs-gallery {
+  --gal-gap: clamp(12px, 5cqi, 48px);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(12px, 5cqi, 48px);
-  padding: 40px calc(var(--cs-media) + 16px) 40px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-items: center;
+  column-gap: var(--gal-gap);
+  row-gap: clamp(32px, 10.42cqi, 100px);
+  /* 40 of its own, plus the 20 bottom padding 190:93300 now carries below the
+     gallery, so the gap down to the next copy block reads 210 not 190 */
+  padding: 40px calc(var(--cs-media) + 16px) 60px;
 }
 
+.cs-gallery__item {
+  margin: 0;
+  width: 100%;
+}
+
+/* 393:119526 spans both tracks but keeps one track's width, so it centres */
+.cs-gallery__item--solo {
+  grid-column: 1 / -1;
+  width: calc((100% - var(--gal-gap)) / 2);
+}
+
+/* 393:119497 — 13 Geist over 160%, centred under the plate */
+.cs-gallery__label {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--cs-ink-mute);
+}
+
+/* 393:119526 sets 24 here where the first two rows use 16 */
+.cs-gallery__item--solo .cs-gallery__label { margin-top: 24px; }
+
 .cs-gallery img {
+  /* block, or the inline baseline adds ~7px of descender under every plate and
+     each row lands 7 taller than the 305.8 / 318 Figma draws */
+  display: block;
   width: 100%;
   height: auto;
   border-radius: 8px;
@@ -480,7 +521,11 @@ body {
   flex-direction: column;
   gap: 50px;
   padding: 200px 0 0;
-  background: var(--cs-blue);
+  /* 190:93447 — the band now runs a vertical gradient rather than flat blue.
+     Figma stretches the gradient axis to 1.284x the band, so the bottom edge
+     only reaches ~78% of the way to the deep stop. Verified against the baked
+     backgrounds of the three mockup plates, which sit inside this band. */
+  background: linear-gradient(180deg, var(--cs-blue-top) 0%, var(--cs-blue-deep) 128.424%);
   color: #fff;
 }
 
@@ -494,6 +539,11 @@ body {
   margin: 50px var(--cs-gutter);
   padding: clamp(32px, 5.83cqi, 56px) clamp(16px, 2.9cqi, 28px) clamp(36px, 6.67cqi, 64px);
   list-style: none;
+  /* sits in the launch plate's 257 of shadow bleed, so it has to paint above
+     the plate's absolutely-positioned image; at 92% the shadow still reads
+     faintly through, which is what Figma composites too */
+  position: relative;
+  z-index: 1;
   /* 200:96818: #1f81e4 at 92%, so the blue band reads faintly through the card. */
   background: rgba(31, 129, 228, 0.92);
   -webkit-backdrop-filter: blur(2px);
@@ -563,7 +613,8 @@ body {
   color: #fff;
 }
 
-.cs-valueIntro { padding: 75px var(--cs-gutter) 0; }
+/* same reason as .cs-outcomes — the rollout plate bleeds 16 into this one */
+.cs-valueIntro { position: relative; z-index: 1; padding: 75px var(--cs-gutter) 0; }
 
 .cs-launch__subtitle { margin: 0; }
 
