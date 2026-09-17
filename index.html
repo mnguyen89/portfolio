@@ -280,21 +280,54 @@
   const frame = modal.querySelector('.pf-modal__frame');
   let lastFocus = null;
 
-  const open = (href, title) => {
+  // Captured before the first pushState. Every href on this page is relative,
+  // so once the address bar reads /paypal/ the document's base has moved and
+  // "slack/index.html" would resolve to /paypal/slack/index.html. Resolving
+  // against HOME instead keeps the links correct for the whole session.
+  const HOME = new URL(location.href);
+  const homeUrl = HOME.pathname + HOME.search;
+
+  // /paypal/index.html -> /paypal/ : the tidy form to share, and the same URL
+  // the case study is really served at, so a pasted link loads the standalone
+  // page rather than needing a redirect.
+  const shareUrl = (href) => new URL(href, HOME).pathname.replace(/index\.html$/, '');
+
+  const linkFor = (path) => Array.from(document.querySelectorAll('[data-case-study]'))
+    .find((l) => shareUrl(l.getAttribute('href')) === path);
+
+  // Assigning frame.src pushes an entry onto the JOINT session history, so the
+  // first Back press stepped the iframe instead of closing the overlay. A
+  // same-origin location.replace() swaps the document without an entry, which
+  // leaves our own pushState as the thing Back actually undoes. Links the user
+  // clicks inside the case study still add entries, so Back walks back through
+  // the footer nav first and only then closes — which is what you'd expect.
+  const load = (url) => {
+    try { frame.contentWindow.location.replace(url); }
+    catch (_) { frame.src = url; }
+  };
+
+  const open = (href, title, track) => {
     lastFocus = document.activeElement;
     frame.title = title || 'Case study';
-    frame.src = href;
+    load(new URL(href, HOME).href);
     modal.hidden = false;
     document.body.classList.add('is-modalOpen');
     frame.focus();
+    const url = shareUrl(href);
+    if (track !== false && location.pathname !== url) {
+      history.pushState({ cs: url }, '', url);
+    }
   };
 
-  const close = () => {
+  const close = (track) => {
     if (modal.hidden) return;
     modal.hidden = true;
-    frame.src = 'about:blank';
+    load('about:blank');
     document.body.classList.remove('is-modalOpen');
     if (lastFocus) lastFocus.focus();
+    if (track !== false && location.pathname !== HOME.pathname) {
+      history.pushState({ cs: null }, '', homeUrl);
+    }
   };
 
   // Progressive enhancement: without JS these are ordinary links to the page.
@@ -306,12 +339,39 @@
     });
   });
 
+  // The footer nav inside a case study walks to the next project within the
+  // iframe, so re-read the frame's own location on every load and keep the
+  // address bar honest — otherwise it would still claim the project you
+  // entered on. Same-origin, so this is readable; guarded anyway.
+  frame.addEventListener('load', () => {
+    if (modal.hidden) return;
+    let path;
+    try { path = frame.contentWindow.location.pathname; } catch (_) { return; }
+    if (!path || path === 'blank') return;
+    const url = path.replace(/index\.html$/, '');
+    if (url === location.pathname) return;
+    const link = linkFor(url);
+    if (link) frame.title = link.dataset.caseTitle || frame.title;
+    history.replaceState({ cs: url }, '', url);
+  });
+
   // The case study renders its own scrim and close button, so it tells us when
   // to dismiss rather than us drawing a second chrome on top of it.
   addEventListener('message', (e) => {
     if (e.source === frame.contentWindow && e.data && e.data.type === 'case-study:close') close();
   });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // Back and forward move between the home page and an open case study.
+  addEventListener('popstate', (e) => {
+    const url = (e.state && e.state.cs) || null;
+    if (!url) { close(false); return; }
+    const link = linkFor(url);
+    open(link ? link.getAttribute('href') : url, link && link.dataset.caseTitle, false);
+  });
+
+  // Mark the entry state so the first Back out of a case study lands here.
+  history.replaceState({ cs: null }, '', location.pathname + location.search);
 })();
 </script>
 
