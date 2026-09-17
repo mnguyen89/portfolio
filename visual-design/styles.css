@@ -145,19 +145,20 @@ body {
   text-align: center;
 }
 
-/* same pill as .pf-badge on the home page */
-.cs-hero__badge {
-  display: inline-block;
+/* a raised white card holding the 48px mark; centred by the hero's text-align */
+.cs-hero__icon {
+  display: inline-flex;
   margin: 0 0 26.67px;
-  padding: 3.33px 10px;
-  border-radius: 83.33px;
-  background: #1d1c1d;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.042em;
-  text-transform: uppercase;
-  color: #fdfbf7;
+  padding: 12px;
+  border: 0.8px solid rgba(94, 93, 96, 0.13);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 1px 1px rgba(28, 25, 23, 0.08),
+    0 3px 8px rgba(28, 25, 23, 0.16);
 }
+
+.cs-hero__icon img { display: block; width: 48px; height: 48px; }
 
 .cs-hero__title {
   margin: 0 0 12px;
@@ -285,19 +286,41 @@ body {
   height: auto;
 }
 
-/* Three of the plates are smaller than the frame they sit in, on a field of
-   their own background colour. `contain` reproduces that inset exactly: the
-   image fits the short axis and the field shows through on the other. */
+/* Several plates are framed differently from the artwork inside them: inset on
+   a field of flat colour, or cropped to a different aspect. --plate-pad is the
+   inset the design draws, --plate-fit picks contain (letterbox onto the field)
+   or cover (crop to the frame). --plate-field is optional: a crop needs none.
+
+   Note --plate-pad's vertical value is not the percentage Figma reports. CSS
+   resolves percentage padding against the inline size on every side, so a
+   design inset of v% of the frame height is written here as v% x height/width. */
 .cs-plate--field {
   aspect-ratio: var(--plate-ratio);
-  background: var(--plate-field);
+  padding: var(--plate-pad, 0);
+  background: var(--plate-field, transparent);
   overflow: hidden;
 }
 
 .cs-plate--field img {
   height: 100%;
-  object-fit: contain;
+  object-fit: var(--plate-fit, contain);
   object-position: var(--plate-pos, center);
+}
+
+/* One plate is a portrait card floating on its field, carrying its own shadow.
+   The percentages are the card's 318x455 against the 640 square it sits in. */
+.cs-plate--card {
+  display: grid;
+  place-items: center;
+  aspect-ratio: var(--plate-ratio);
+  background: var(--plate-field);
+}
+
+.cs-plate--card img {
+  width: 49.7%;
+  height: 71.1%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* ---------- Scroll-in reveal ----------

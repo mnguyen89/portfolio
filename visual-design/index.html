@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=976d3525">
+<link rel="stylesheet" href="styles.css?v=f02c9689">
 <link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
 </head>
 <body>
@@ -24,9 +24,14 @@
 
       <div class="cs-open">
         <header class="cs-hero">
-          <p class="cs-hero__badge">2012 &ndash; 2018</p>
+          <!-- The date pill became an icon card in the design (412:119804); the
+               years moved into the glance tags. Figma calls the glyph
+               "trust-network-icon", but it is a pen nib. -->
+          <p class="cs-hero__icon">
+            <img src="assets/pen-nib.svg" alt="" width="48" height="48">
+          </p>
           <h1 class="cs-hero__title" id="cs-title">Visual Design</h1>
-          <p class="cs-hero__lede">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
+          <p class="cs-hero__lede">Six years of brand identity, illustration and print — including the campaign art for SoundHound’s 200-million-user milestone. Built as systems, not one-offs, so a small team could extend the work without me in the room.</p>
         </header>
 
         <div class="cs-heroVisual">
@@ -39,55 +44,31 @@
       <section class="cs-glance" aria-labelledby="cs-glance-title">
         <h2 class="cs-glance__title" id="cs-glance-title">Project at a glance</h2>
         <ul class="cs-tags">
-          <li class="cs-tag">Visual Design</li>
+          <li class="cs-tag">Art Direction</li>
           <li class="cs-tag">2012&ndash;2018</li>
           <li class="cs-tag">Brand Identity</li>
           <li class="cs-tag">Illustration</li>
           <li class="cs-tag">Iconography</li>
           <li class="cs-tag">Typography</li>
           <li class="cs-tag">Print</li>
-          <li class="cs-tag">Art Direction</li>
-          <li class="cs-tag">Side Projects</li>
+          <li class="cs-tag">Design Systems</li>
+          <li class="cs-tag">Campaign</li>
         </ul>
       </section>
 
       <hr class="cs-rule">
 
-      <section class="cs-set" aria-labelledby="cs-branding-title">
-        <div class="cs-copy">
-          <h2 class="cs-copy__title" id="cs-branding-title">Branding</h2>
-          <p class="cs-copy__body">Identity and campaign work — wordmarks, seasonal artwork and the milestone graphics a product reaches for when it has something to celebrate. The brief was usually a number or a date; the job was making it feel like an occasion.</p>
-        </div>
-
-        <ul class="cs-plates">
-          <li>
-            <figure class="cs-plate">
-              <img src="assets/branding-valentine.webp" width="1200" height="898"
-                   alt="“Be. Loving” wordmark set inside a pink watercolour heart, with smaller hearts scattered around it."
-                   loading="lazy" decoding="async">
-            </figure>
-          </li>
-          <li>
-            <figure class="cs-plate">
-              <img src="assets/branding-soundhound-200m.webp" width="414" height="392"
-                   alt="“Celebrating SoundHound 200 Million Users” lockup, the zeros forming a summit that two climbers reach over a snowy peak."
-                   loading="lazy" decoding="async">
-            </figure>
-          </li>
-        </ul>
-      </section>
-
       <section class="cs-set" aria-labelledby="cs-illustration-title">
         <div class="cs-copy">
           <h2 class="cs-copy__title" id="cs-illustration-title">Illustration &amp; Iconography</h2>
-          <p class="cs-copy__body">Character avatars, achievement badges and icon sets drawn to hold up at small sizes. Most of it came down to deciding what a shape can afford to lose — and testing the same glyph filled against stroked before committing a set to it.</p>
+          <p class="cs-copy__body">Icon libraries and illustration sets for product, support and marketing surfaces. I fixed the grid, stroke weight and corner radius up front, then tested every glyph filled against stroked at small sizes — so the set stayed legible as it grew, and any designer could draw the next icon on spec.</p>
         </div>
 
         <ul class="cs-plates">
           <li>
-            <!-- narrower than its frame in the design; the blue field carries the inset -->
+            <!-- inset on its own blue, as drawn: ~2.4% of the frame all round -->
             <figure class="cs-plate cs-plate--field"
-                    style="--plate-ratio: 670 / 430; --plate-field: #1e99ed">
+                    style="--plate-ratio: 640 / 479; --plate-field: #1e99ed; --plate-pad: 1.67% 2.41%">
               <img src="assets/illus-avatars.webp" width="752" height="564"
                    alt="Five flat-illustrated face avatars in a row on a blue field, each with a different skin tone, hair and glasses."
                    loading="lazy" decoding="async">
@@ -107,31 +88,73 @@
                    loading="lazy" decoding="async">
             </figure>
           </li>
+          <li>
+            <figure class="cs-plate">
+              <img src="assets/illus-search.webp" width="752" height="564"
+                   alt="Six line icons on pale blue — a checklist, a headset with a question mark, a check in a circle, a medical-cross shield, a document, and a magnifier over a gauge."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+        </ul>
+      </section>
+
+      <section class="cs-set" aria-labelledby="cs-branding-title">
+        <div class="cs-copy">
+          <h2 class="cs-copy__title" id="cs-branding-title">Branding</h2>
+          <p class="cs-copy__body">Identity and campaign work, including the milestone artwork announcing SoundHound’s 200 millionth user. Every piece had to carry one idea and hold up at every size it shipped at — app icon to launch banner to holiday card.</p>
+        </div>
+
+        <ul class="cs-plates">
+          <li>
+            <figure class="cs-plate">
+              <img src="assets/branding-soundhound-200m.webp" width="414" height="392"
+                   alt="“Celebrating SoundHound 200 Million Users” lockup, the zeros forming a summit that two climbers reach over a snowy peak."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li>
+            <!-- a portrait card floating on amber, with its own shadow (403:119626) -->
+            <figure class="cs-plate cs-plate--card"
+                    style="--plate-ratio: 1 / 1; --plate-field: #ffc63e">
+              <img src="assets/branding-sound-of-music.webp" width="700" height="700"
+                   alt="Holiday card — “May the hills be alive with the sound of music” over an orange gradient, with SoundHound marks snowed into the hills below."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li>
+            <!-- cropped to a squarer frame on pale pink -->
+            <figure class="cs-plate cs-plate--field"
+                    style="--plate-ratio: 524 / 512; --plate-field: #fff0f3; --plate-pad: 3.14% 0; --plate-fit: cover">
+              <img src="assets/branding-valentine.webp" width="1200" height="898"
+                   alt="“Be. Loving” wordmark set inside a pink watercolour heart, with smaller hearts scattered around it."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
         </ul>
       </section>
 
       <section class="cs-set" aria-labelledby="cs-print-title">
         <div class="cs-copy">
           <h2 class="cs-copy__title" id="cs-print-title">Print</h2>
-          <p class="cs-copy__body">Posters and editorial pieces, mostly self-directed. Type doing the work of an image — set on a curve, cropped hard, or left alone on a flat field of colour.</p>
+          <p class="cs-copy__body">Self-directed posters and typeface specimens, where type does the work of an image. Print gives you no hover state and no second screen — which is where I learned the hierarchy and restraint I still bring to product UI.</p>
         </div>
 
         <ul class="cs-plates">
           <li>
             <!-- the poster sits centred on a light grey field in the design -->
             <figure class="cs-plate cs-plate--field"
-                    style="--plate-ratio: 834 / 1100; --plate-field: #f7f7f7">
+                    style="--plate-ratio: 834 / 1100; --plate-field: #f7f7f7; --plate-pad: 16.03% 0">
               <img src="assets/print-poster.webp" width="1200" height="1199"
                    alt="Typographic poster for a Pedro Almodóvar film — the title set on a tight curve around a red lipstick print."
                    loading="lazy" decoding="async">
             </figure>
           </li>
           <li>
-            <!-- anchored to the bottom so the yellow field extends above it -->
+            <!-- square artwork cropped to a portrait frame -->
             <figure class="cs-plate cs-plate--field"
-                    style="--plate-ratio: 640 / 905; --plate-field: #fae630; --plate-pos: bottom">
-              <img src="assets/print-cityscape.webp" width="891" height="897"
-                   alt="Line illustration of the Chrysler Building and surrounding towers in pale blue on a yellow field."
+                    style="--plate-ratio: 1049 / 1500; --plate-fit: cover">
+              <img src="assets/print-gotham.webp" width="1280" height="1279"
+                   alt="Gotham typeface specimen poster — “GOTHAM | H+F” set vertically beside a pale blue line drawing of the Chrysler Building on yellow."
                    loading="lazy" decoding="async">
             </figure>
           </li>
