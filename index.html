@@ -287,13 +287,20 @@
   const HOME = new URL(location.href);
   const homeUrl = HOME.pathname + HOME.search;
 
-  // /paypal/index.html -> /paypal/ : the tidy form to share, and the same URL
-  // the case study is really served at, so a pasted link loads the standalone
-  // page rather than needing a redirect.
-  const shareUrl = (href) => new URL(href, HOME).pathname.replace(/index\.html$/, '');
+  // An open project is addressed by a hash — /portfolio/#paypal — so the page
+  // that loads is always the portfolio itself and a shared link lands here
+  // with the project already open. A path like /paypal/ cannot do that on a
+  // static host: it is a real file, so the server hands over the standalone
+  // case study and the portfolio never renders. The hash is never sent to the
+  // server at all, so index.html is always what gets served.
+  //
+  // paypal/index.html -> "paypal". Works on the relative hrefs here and on the
+  // absolute pathname the iframe reports, at a domain root or in /portfolio/.
+  const slugOf = (href) => new URL(href, HOME).pathname
+    .replace(/\/index\.html$/, '').split('/').filter(Boolean).pop();
 
-  const linkFor = (path) => Array.from(document.querySelectorAll('[data-case-study]'))
-    .find((l) => shareUrl(l.getAttribute('href')) === path);
+  const linkForSlug = (slug) => Array.from(document.querySelectorAll('[data-case-study]'))
+    .find((l) => slugOf(l.getAttribute('href')) === slug);
 
   // Assigning frame.src pushes an entry onto the JOINT session history, so the
   // first Back press stepped the iframe instead of closing the overlay. A
@@ -313,9 +320,9 @@
     modal.hidden = false;
     document.body.classList.add('is-modalOpen');
     frame.focus();
-    const url = shareUrl(href);
-    if (track !== false && location.pathname !== url) {
-      history.pushState({ cs: url }, '', url);
+    const slug = slugOf(href);
+    if (track !== false && location.hash.slice(1) !== slug) {
+      history.pushState(null, '', '#' + slug);
     }
   };
 
@@ -325,8 +332,8 @@
     load('about:blank');
     document.body.classList.remove('is-modalOpen');
     if (lastFocus) lastFocus.focus();
-    if (track !== false && location.pathname !== HOME.pathname) {
-      history.pushState({ cs: null }, '', homeUrl);
+    if (track !== false && location.hash) {
+      history.pushState(null, '', homeUrl);
     }
   };
 
@@ -348,11 +355,11 @@
     let path;
     try { path = frame.contentWindow.location.pathname; } catch (_) { return; }
     if (!path || path === 'blank') return;
-    const url = path.replace(/index\.html$/, '');
-    if (url === location.pathname) return;
-    const link = linkFor(url);
+    const slug = slugOf(path);
+    if (!slug || slug === location.hash.slice(1)) return;
+    const link = linkForSlug(slug);
     if (link) frame.title = link.dataset.caseTitle || frame.title;
-    history.replaceState({ cs: url }, '', url);
+    history.replaceState(null, '', '#' + slug);
   });
 
   // The case study renders its own scrim and close button, so it tells us when
@@ -362,16 +369,21 @@
   });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Back and forward move between the home page and an open case study.
-  addEventListener('popstate', (e) => {
-    const url = (e.state && e.state.cs) || null;
-    if (!url) { close(false); return; }
-    const link = linkFor(url);
-    open(link ? link.getAttribute('href') : url, link && link.dataset.caseTitle, false);
-  });
+  // The hash is the single source of truth, so the same routine serves the
+  // first paint, Back/forward, and anyone editing the address bar by hand.
+  const sync = () => {
+    let slug = '';
+    try { slug = decodeURIComponent(location.hash.slice(1)); } catch (_) {}
+    const link = slug && linkForSlug(slug);
+    if (link) open(link.getAttribute('href'), link.dataset.caseTitle, false);
+    else close(false);
+  };
 
-  // Mark the entry state so the first Back out of a case study lands here.
-  history.replaceState({ cs: null }, '', location.pathname + location.search);
+  addEventListener('popstate', sync);
+  addEventListener('hashchange', sync);
+
+  // A shared link arrives with the project in the hash: open it on arrival.
+  sync();
 })();
 </script>
 
