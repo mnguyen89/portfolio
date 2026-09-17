@@ -520,7 +520,9 @@ body::before {
   /* the frame fixes these cards at 600 (and 640 for the last); without it the
      card collapses to content height and the artwork ends up flush to the
      bottom edge on both, losing the breathing room below the first */
-  min-height: clamp(480px, 60vw, 600px);
+  /* ceiling lowered from 600 to meet the 560 cap — a min-height above a
+     max-height wins, so the card would have stayed at 600 */
+  min-height: clamp(480px, 60vw, 560px);
 }
 
 .pf-feature--split .pf-feature__body {
@@ -557,7 +559,8 @@ body::before {
 /* 309:11537 — this one sits flush to the card's bottom edge instead */
 /* two class names, to outrank the .pf-feature--split.pf-feature--mediaRight
    selector that sets the 600 default */
-.pf-feature--split.pf-feature--bleedBottom { min-height: clamp(520px, 64vw, 640px); }
+/* likewise down from 640 */
+.pf-feature--split.pf-feature--bleedBottom { min-height: clamp(520px, 64vw, 560px); }
 
 .pf-feature--bleedBottom .pf-feature__media {
   align-items: flex-end;
@@ -618,6 +621,10 @@ body::before {
 /* 302:201986 — translucent glass, no outline, softly lifted */
 .pf-feature--framed {
   position: relative;
+  /* Every project card tops out at 560. The cards clip their overhanging
+     artwork, so this is lifted again once they stack (see the 720 query):
+     stacked, the copy runs to 630 and the cap would cut the CTA off. */
+  max-height: 560px;
   padding: var(--card-space) var(--card-pad);
   /* the design re-added a hairline on the cards (0.5px, dt_color-otl-ter) */
   border: 0.5px solid var(--rule);
@@ -842,6 +849,11 @@ body::before {
   /* stacked, the copy fills the card, so the bleeding Slackbot would sit on
      top of the description */
   .pf-feature__bleed { display: none; }
+
+  /* Stacked, the card is as tall as its copy — 630 on the Visual Design card
+     at 375 — and .pf-feature--framed clips its overflow, so holding the 560
+     cap here would cut the bottom of the copy and its CTA off the card. */
+  .pf-feature--framed { max-height: none; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
