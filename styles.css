@@ -13,13 +13,13 @@
      readable grey rather than borrowing --ink-faint (which fails 4.5:1) */
   --ink-mute: #77757a;
   --accent: #00B5E1;
-  /* 10:175 — the Home marker. The frame lays #ffbaa9 over the word at
+  /* 10:175 — the Home marker. The frame lays #ffcb89 over the word at
      multiply; this is that colour already multiplied through the paper
      (#fbf9f6) so the bar needs no blend mode of its own. It must not use one:
      a mix-blend-mode anywhere inside .pf-nav makes the nav an isolated group,
      and the dropdown's backdrop-filter can then only sample what is inside the
      nav — nothing — so the frosted menu silently stopped blurring. */
-  --marker-home: #fbb6a3;
+  --marker-home: #fbc684;
   /* Per-project card tints (309:11432, 303:202155), held as channels so the
      gradients can set their own alpha. */
   --tint-salesforce: 0, 161, 224;
