@@ -147,8 +147,8 @@ body::after {
      Width still comes off the column, so the wave keeps the frame's scale and
      stays overlapped with the cards rather than drifting into the margin. */
   right: 0;
-  width: calc(0.80302 * min(100%, var(--content-max)));
-  aspect-ratio: 803.02 / 597.78;
+  width: calc(0.8247 * min(100%, var(--content-max)));
+  aspect-ratio: 824.7 / 679.92;
 
   /* Set by the script from the first card's top edge rather than from the
      frame's y. The artwork is fully transparent for its top 38.4% — its dots
@@ -157,21 +157,24 @@ body::after {
      subtracts that dead band plus a peek. This is the 1000-wide fallback. */
   top: var(--wave-top, 416px);
 
-  /* contain, not cover: the box and the artwork share an aspect ratio, so
-     cover only risks cropping the wave's soft edges on a rounding error */
-  background: url("assets/decor/hero-wave.webp") no-repeat center / contain;
-  /* Normal blend at 20%, which is what 391:118960 specifies — the generator
-     emits mix-blend-multiply when a node carries it (as 10:175 does) and emits
-     none here. The artwork has its own alpha, so there is no light ground to
-     knock out and nothing to gain from multiplying. */
-  opacity: 0.2;
+  /* cover, and the crop is intentional: 444:120631 is a 824.7x679.92 frame
+     over a 1372x980 image, so the frame is taller in proportion than the art
+     and Figma crops it left and right. contain would letterbox it instead and
+     shrink the wave. */
+  background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
+  /* 70%, up from the old artwork's 20% — this mesh is far finer, so it needs
+     the weight. Normal blend: the generator emits mix-blend-multiply when a
+     node carries one (as 10:175 does) and emits none here, and the artwork has
+     its own alpha so there is no ground to knock out. */
+  opacity: 0.7;
 
-  /* Aerial perspective: a distant plane reads softer than the page on top of
-     it, so the dots get a touch of blur to sit behind the content rather than
-     on it. Small on purpose — the dots are only a few px across and more than
-     this smears them into a haze. The artwork's own margins give the blur
-     somewhere to spread, so nothing is clipped at the element box. */
-  filter: blur(1.5px);
+  /* 444:120631 paints a paper-coloured gradient over its own bottom-right to
+     fade the mesh out. Done as a mask rather than an overlay so it fades to
+     whatever the page actually is underneath — the paper is a gradient, so a
+     flat overlay colour would show as a patch. Angle and stops are the
+     frame's; the overlay's transparent end is the mask's opaque end. */
+  -webkit-mask-image: linear-gradient(157.13deg, #000 60.411%, transparent 88.359%);
+  mask-image: linear-gradient(157.13deg, #000 60.411%, transparent 88.359%);
 
   /* parallax, driven by --wave-shift (see index.html). translate3d so the
      shift stays on the compositor and does not relayout on every frame. */

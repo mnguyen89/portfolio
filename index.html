@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=ef8dd843">
+<link rel="stylesheet" href="styles.css?v=56845efb">
 </head>
 <body>
 
@@ -415,12 +415,12 @@
   const timespan = document.querySelector('.pf-hero__span');
   if (!hero) return;
 
-  // The wave artwork is fully transparent down to 38.4% of its height (its
-  // dots start at row 200 of 521), so it cannot be placed by its box: at the
-  // frame's own y the dots begin 35px below the first card's top edge and
-  // nothing shows above it. Place it off the card instead, discounting that
-  // dead band, so the dots clear the card's top edge and peek above it.
-  const DOTS_START = 0.384;
+  // The wave artwork is fully transparent down to 38.06% of its height (its
+  // dots start at row 373 of 980), so it cannot be placed by its box: placed
+  // by the box, the dots begin below the first card's top edge and nothing
+  // shows above it. Place it off the card instead, discounting that dead
+  // band, so the dots clear the card's top edge and peek above it.
+  const DOTS_START = 0.3806;
 
   // The peek fills the gap between the timespan line and the card rather than
   // being a fixed number of pixels, so it is as large as it can be and still
