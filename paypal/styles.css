@@ -707,6 +707,13 @@ body {
   .cs-backdrop { padding: 0; }
   .cs-panel { border-radius: 0; min-height: 100%; }
   .cs { border-radius: 0; }
+
+  /* Phones only. The 96px floor in :root held on all the way down, leaving
+     just 183px of content on a 375 phone; visual-design/ and system/ floor
+     at 20 and are the reference. Scoped here rather than lowered in :root
+     because that floor binds up to a 671px container — tablet width, not
+     just mobile. */
+  .cs { --cs-gutter: clamp(20px, 22.2cqi - 53px, 160px); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
