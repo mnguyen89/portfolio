@@ -173,9 +173,14 @@ body::after {
   -webkit-mask-image: linear-gradient(157.13deg, #000 60.411%, transparent 88.359%);
   mask-image: linear-gradient(157.13deg, #000 60.411%, transparent 88.359%);
 
+  /* Rotated counter-clockwise so the mesh meets the card's top edge on a
+     diagonal instead of running into it square, which read as a hard clip.
+     Applied after the translate so the parallax still moves straight down. */
+  --wave-tilt: -8deg;
+
   /* parallax, driven by --wave-shift (see index.html). translate3d so the
      shift stays on the compositor and does not relayout on every frame. */
-  transform: translate3d(0, var(--wave-shift, 0px), 0);
+  transform: translate3d(0, var(--wave-shift, 0px), 0) rotate(var(--wave-tilt));
   will-change: transform;
   pointer-events: none;
 }
