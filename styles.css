@@ -137,18 +137,14 @@ body::after {
      through the card's 0.8 white. Behind is what the design looks like. */
   z-index: 0;
 
-  /* Pinned to the window edge, not the content column. Two reasons. The
-     column anchoring the frame uses put the right edge at 107.6% of the
-     column, which html's overflow-x then sheared 68px off at 893 wide. And the
-     artwork is hard-cropped on both vertical edges — mean alpha is ~24 in both
-     column 0 and column 699 of 700, so it is a band built to bleed off-canvas,
-     not a shape with soft sides. Any right inset inside the window therefore
-     puts that crop on screen as a sliced-off edge. Its left crop lands behind
-     the first card, which paints over it.
-
-     Width still comes off the column, so the wave keeps the frame's scale and
-     stays overlapped with the cards rather than drifting into the margin. */
-  right: 0;
+  /* 444:120631's own box: x 277.35 in the 1000 column, 824.7 wide, so its
+     right edge runs 10.2% of the column past the column and bleeds off canvas.
+     Anchored to the column, not to the window edge as the previous artwork
+     was — pinning it right was what put the mesh ~100px too far left. */
+  left: calc(
+    max(0px, (100% - min(100%, var(--content-max))) / 2)
+    + 0.27735 * min(100%, var(--content-max))
+  );
   width: calc(0.8247 * min(100%, var(--content-max)));
   aspect-ratio: 824.7 / 679.92;
 
@@ -159,10 +155,9 @@ body::after {
      subtracts that dead band plus a peek. This is the 1000-wide fallback. */
   top: var(--wave-top, 416px);
 
-  /* cover, and the crop is intentional: 444:120631 is a 824.7x679.92 frame
-     over a 1372x980 image, so the frame is taller in proportion than the art
-     and Figma crops it left and right. contain would letterbox it instead and
-     shrink the wave. */
+  /* cover, and the crop is intentional: the box is proportionally taller than
+     the 1372x980 artwork, so it crops left and right. contain would letterbox
+     and shrink the mesh instead. */
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
   /* 70%, up from the old artwork's 20% — this mesh is far finer, so it needs
      the weight. Normal blend: the generator emits mix-blend-multiply when a

@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=11b9efac">
+<link rel="stylesheet" href="styles.css?v=782cc3e2">
 </head>
 <body>
 
@@ -426,9 +426,16 @@
   // above the card. The design's render shows ~215px, so the frame's image
   // fill must be cropped vertically too, which cover cannot reproduce. The
   // box is shifted up to land the same on-screen result instead.
+  // Fitted to the design's render rather than read off the node's y. Measuring
+  // ink density in the render, the mesh's first trace sits 220px above the
+  // card's top edge, within x 720..1000 where the mesh actually is. (An
+  // earlier read of 357px was the avatar's shadow, not the mesh — the avatar
+  // spans 261..409px above the card, right across that band.) With the box
+  // cropping the artwork under cover, 220px of clearance puts the box top
+  // 0.7032 of its height above the card.
   const DOTS_START = 0.3796;
-  const CREST_ABOVE_CARD = 0.3172;
-  const ABOVE_CARD = DOTS_START + CREST_ABOVE_CARD;
+  const CREST_ABOVE_CARD = 0.3236;
+  const ABOVE_CARD = 0.7032;
 
   // Drifting down eats the crest, so the budget is what is above the card
   // less this much, keeping a clear crest for the whole time the card's top
