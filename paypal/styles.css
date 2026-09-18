@@ -714,6 +714,12 @@ body {
      because that floor binds up to a 671px container — tablet width, not
      just mobile. */
   .cs { --cs-gutter: clamp(20px, 22.2cqi - 53px, 160px); }
+
+  /* Same floor problem, and it bit harder: .cs-gallery pads --cs-media + 16
+     on each side, so a 96px floor spent 224 of a 375 panel on padding and
+     left the two illustration columns about 65px each. 15px keeps the
+     gutter's proportion (20 is to the 160 ceiling as 15 is to 120). */
+  .cs { --cs-media: clamp(15px, 16.7cqi - 40px, 120px); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
