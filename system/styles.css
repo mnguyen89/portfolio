@@ -1,0 +1,800 @@
+/* Design Systems — Slack education system + PayPal UI token system.
+   Shares the modal shell, type ramp and gutter with the other three case
+   studies. Layout follows the Figma frame "Design Systems" (367:112838).
+
+   Unlike the Slack and PayPal studies, this page stays on white and neutral
+   grey throughout — it spans two companies, so borrowing either one's brand
+   colour would misread as belonging to that company. Separation comes from
+   alternating white and grey instead: open white, grey for the shared problem,
+   white for Slack, grey for PayPal, white to close.
+
+   This page is image-led — most blocks are a figure with a short caption rather
+   than prose with a supporting image — but it holds the same --cs-gutter as the
+   other three case studies. Only the band backgrounds and the hero visual run
+   wider; nothing here needs a full bleed, so nothing takes one. */
+
+:root {
+  --cs-ink: #1c1917;
+  --cs-ink-soft: #6b6661;
+  --cs-ink-mute: #5e5d60;
+  /* channels for the tapered divider and the hairlines */
+  --cs-outline-tertiary: 94 93 96;
+  --cs-surface: #ffffff;
+  --cs-surface-warm: #f7f5f0;
+  --cs-surface-grey: #f8f8f8;
+  /* the card inside a band, and the hairline it carries */
+  --cs-card: #f2f1ee;
+  --cs-hairline: rgb(var(--cs-outline-tertiary) / 0.18);
+  /* outline only, never a fill — the page itself stays neutral */
+  --cs-focus: #1e99ed;
+
+  --cs-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --cs-body: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --cs-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* 160px at the full 960px panel, as drawn; the floor is low enough that a
+     phone keeps a usable column rather than 183px between 96px gutters. */
+  --cs-gutter: clamp(20px, 22.2cqi - 53px, 160px);
+  --cs-radius: 10px;
+
+  /* Spacing scale, measured off the same frame:
+       83  between content blocks inside a section
+       100 between a section's copy and its first block
+       200 around the rule
+       250 the major break into a new project section */
+  --cs-block: 83px;
+  --cs-lede: 100px;
+  --cs-rhythm: 200px;
+  --cs-section: 348px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #d9d9d9;
+  font-family: var(--cs-body);
+  line-height: 1.6;
+  color: var(--cs-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Modal shell ---------- */
+
+.cs-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(0px, 3vw, 100px);
+  background: rgba(29, 28, 29, 0.7);
+  backdrop-filter: blur(5px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* The query container lives on the panel, not on .cs, so the rules below can
+   restyle .cs itself — an element is never matched against its own container. */
+.cs-panel {
+  container-type: inline-size;
+  position: relative;
+  width: min(960px, 100%);
+  background: var(--cs-surface);
+  border-radius: var(--cs-radius);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
+}
+
+.cs-close {
+  position: sticky;
+  top: 20px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  /* negative bottom margin cancels the button's own line box so the article starts flush */
+  margin: 20px 20px -60px auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  color: var(--cs-ink);
+  cursor: pointer;
+}
+
+.cs-close:hover { background: #fff; }
+.cs-close:focus-visible { outline: 2px solid var(--cs-focus); outline-offset: 2px; }
+
+.cs-close svg {
+  width: 18px; height: 18px;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round;
+}
+
+.cs {
+  overflow: hidden;
+  border-radius: var(--cs-radius);
+  /* rebound by the container queries below, so every block that references the
+     scale moves together rather than each one being restated */
+  --cs-block: 83px;
+  --cs-lede: 100px;
+  --cs-rhythm: 200px;
+  --cs-section: 348px;
+}
+
+/* ---------- Hero ---------- */
+
+.cs-open {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  padding-top: 80px;
+}
+
+.cs-hero {
+  padding: 0 var(--cs-gutter);
+  text-align: center;
+}
+
+/* a raised white card holding the 48px mark; centred by the hero's text-align */
+.cs-hero__icon {
+  display: inline-flex;
+  margin: 0 0 26.67px;
+  padding: 12px;
+  border: 0.8px solid rgba(94, 93, 96, 0.13);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 1px 1px rgba(28, 25, 23, 0.08),
+    0 3px 8px rgba(28, 25, 23, 0.16);
+}
+
+.cs-hero__icon img { display: block; width: 48px; height: 48px; }
+
+.cs-hero__title {
+  margin: 0 0 12px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(30px, 4.2cqi, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-hero__lede {
+  margin: 0 auto;
+  max-width: 620px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--cs-ink-soft);
+}
+
+.cs-heroVisual {
+  display: grid;
+  place-items: center;
+  padding: 100px 2.78% 133px;
+  background: linear-gradient(-23.5deg, var(--cs-surface-warm) 5%, #ffffff 71.4%);
+}
+
+/* The component grid is drawn 1297 wide in a 960 panel. It keeps that ratio
+   and overflows; .cs has overflow:hidden, so the panel crops it exactly as the
+   frame does. */
+.cs-heroVisual { overflow: hidden; }
+.cs-heroVisual .cs-shot { width: 100%; max-width: 640px; }
+.cs-heroVisual .cs-shot--bleed { width: 135.1cqi; max-width: none; }
+.cs-shot--bleed img { border-radius: 0; }
+
+/* ---------- At a glance ----------
+   One per project, titled with the project name: Slack opens the page, PayPal
+   sits in the white gap ahead of the grey band. Both are this same block on the
+   same surface — no variant, so the spacing and pill styling cannot drift. */
+
+.cs-glance { padding: var(--cs-lede) var(--cs-gutter) 0; text-align: center; }
+
+/* A glance that follows a band already has that band's bottom padding above
+   it; together they make one rhythm rather than two. */
+.cs-band + .cs-glance { padding-top: var(--cs-lede); }
+
+/* A glance that runs straight into a band needs its own clearance from that
+   band's hard colour edge: the band's top padding sits inside the colour, so it
+   does nothing for the pills above it. Without this the last pill row touches
+   the edge. Half a rhythm, matching the white the premise leaves above the
+   problem band. */
+.cs-glance:has(+ .cs-band) { padding-bottom: 150px; }
+
+/* Each glance is badged with its company mark in the same raised tile the hero
+   uses, so a section announces which project it belongs to before the title.
+   Both glances sit on the panel white — the grey bands start after them. */
+.cs-glance__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* fixed 72 rather than padding: the 0.8px stroke sits inside the box, so
+     padding plus border would make the tile 73.6 */
+  width: 72px;
+  height: 72px;
+  margin: 0 0 34px;
+  border: 0.8px solid rgba(94, 93, 96, 0.13);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 1px 1px rgba(28, 25, 23, 0.08),
+    0 3px 8px rgba(28, 25, 23, 0.16);
+}
+
+.cs-glance__logo img { display: block; width: 40px; height: 40px; }
+
+/* the PayPal mark is not square — pin the height, let the width follow */
+.cs-glance__logo img.is-tall { width: 33.2px; height: 40px; }
+
+.cs-glance__title {
+  margin: 0 0 75px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-tag {
+  padding: 10px 28px;
+  border-radius: 70px;
+  background: var(--cs-surface-warm);
+  font-family: var(--cs-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.15;
+  color: var(--cs-ink-mute);
+}
+
+/* the short centred rule between blocks */
+.cs-rule {
+  width: 480px;
+  max-width: calc(100% - 2 * var(--cs-gutter));
+  height: 1px;
+  margin: var(--cs-lede) auto 0;
+  border: 0;
+  /* tapered, peaking at the middle */
+  background: linear-gradient(
+    90deg,
+    rgb(var(--cs-outline-tertiary) / 0) 0%,
+    rgb(var(--cs-outline-tertiary) / 0.11) 18%,
+    rgb(var(--cs-outline-tertiary) / 0.2) 50%,
+    rgb(var(--cs-outline-tertiary) / 0.11) 82%,
+    rgb(var(--cs-outline-tertiary) / 0) 100%
+  );
+}
+
+/* ---------- Copy ---------- */
+
+.cs-copy { padding: 0 var(--cs-gutter); }
+
+.cs-copy__title {
+  margin: 0 0 20px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(22px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: var(--cs-ink);
+}
+
+/* the in-section subhead above a grid or list */
+.cs-copy__sub {
+  margin: 0 0 4px;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(17px, 1.98cqi, 19px);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--cs-ink);
+}
+
+.cs-copy__kicker {
+  display: block;
+  margin: 0 0 14px;
+  font-family: var(--cs-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cs-ink-mute);
+}
+
+.cs-copy__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--cs-ink-soft);
+}
+
+.cs-copy__sub + .cs-copy__body { margin-top: 14px; }
+.cs-copy__body + .cs-copy__body { margin-top: 24px; }
+.cs-copy__body em { font-style: italic; color: var(--cs-ink); }
+
+/* ---------- Shots + plates ----------
+   .cs-shot fills whatever column it is in. .cs-plate is the image-led figure:
+   it runs on the wider plate gutter and carries its caption underneath. */
+
+.cs-shot { margin: 0; }
+
+.cs-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.cs-plate {
+  margin: 0;
+  padding: 0 var(--cs-gutter);
+}
+
+.cs-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Diagrams and small components are drawn with their own margins, so they get a
+   neutral field rather than bleeding into the section. The field is whichever
+   neutral the band is not, so the plate stays distinguishable behind it. */
+.cs-plate--wide img {
+  padding: var(--plate-pad, 3%);
+  background: var(--cs-surface-grey);
+}
+
+.cs-band--grey .cs-plate--wide img { background: var(--cs-surface); }
+
+/* The documentation sheet is portrait and long. Capping its width keeps the
+   9pt body text inside it legible instead of stretching it to the panel. */
+.cs-plate--sheet img {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-hairline);
+}
+
+.cs-band--grey .cs-plate--sheet img { background: var(--cs-surface); }
+
+/* The sheet is currently a labelled placeholder rather than the export, so the
+   slot keeps the sheet's portrait ratio and width cap. Swapping the <span
+   class="cs-ph"> back for the <img> needs no other change. */
+.cs-plate--sheet .cs-ph {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* ---------- In-product strip ----------
+   Two real screens side by side, both landscape, so the crop stays legible at
+   half the panel. They share a field and a ratio so the row reads as one
+   exhibit rather than two unrelated grabs. */
+
+.cs-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  margin: 0;
+  padding: 0 var(--cs-gutter);
+  list-style: none;
+}
+
+.cs-strip__shot { margin: 0; }
+
+.cs-strip__shot img {
+  display: block;
+  width: 100%;
+  /* height:auto is load-bearing — the img carries HTML width/height attributes,
+     which map to a presentational height that beats aspect-ratio unless an
+     author rule resets it. Without it the tile renders at intrinsic height. */
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 10px;
+  background: var(--cs-surface-grey);
+}
+
+.cs-band--grey .cs-strip__shot img { background: var(--cs-surface); }
+
+.cs-strip__cap {
+  margin-top: 14px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--cs-ink-soft);
+}
+
+.cs-plate__cap {
+  margin: 22px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cs-ink-soft);
+}
+
+.cs-plate__cap code,
+.cs-plate__cap strong { color: var(--cs-ink); }
+
+.cs-plate__cap code {
+  font-family: var(--cs-mono);
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgb(var(--cs-outline-tertiary) / 0.1);
+}
+
+.cs-band--grey .cs-plate__cap code { background: rgb(var(--cs-outline-tertiary) / 0.14); }
+
+/* Two-up pair, used for the New-vs-Tip exhibit */
+.cs-shots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0;
+}
+
+.cs-shots img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+
+.cs-shots figcaption { grid-column: 1 / -1; }
+
+.cs-shot__cap {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cs-ink-soft);
+}
+
+.cs-shot__cap strong { color: var(--cs-ink); }
+
+/* ---------- Image placeholder ----------
+   Grey slot standing in for artwork not yet exported, matching the other case
+   studies. The label is the spec for what belongs there, so it ships in the
+   markup rather than a comment. */
+
+.cs-ph {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 20px 24px;
+  width: 100%;
+  aspect-ratio: var(--ph-ratio, 16 / 10);
+  border-radius: 10px;
+  background: var(--cs-surface-grey);
+  border: 1px dashed var(--cs-hairline);
+}
+
+.cs-band--grey .cs-ph { background: var(--cs-surface); }
+
+.cs-ph__label {
+  max-width: 30ch;
+  font-family: var(--cs-body);
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-align: center;
+  text-wrap: balance;
+  color: #78726c;
+}
+
+/* ---------- Premise + problems ---------- */
+
+.cs-premise {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-block);
+  padding-top: var(--cs-rhythm);
+}
+
+/* The problems used to sit on a grey band; in the reworked frame the whole
+   premise is on white and only the PayPal band carries a tint. */
+.cs-problemSet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-block);
+  padding: 0 var(--cs-gutter);
+}
+
+.cs-problems {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cs-problem { padding: 0; }
+
+.cs-problem__num {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--cs-ink-mute);
+}
+
+.cs-problem__title {
+  margin: 0 0 8px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--cs-ink);
+}
+
+.cs-problem__body {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cs-ink-soft);
+}
+
+/* ---------- Project bands ----------
+   One per company, alternating white and neutral grey rather than carrying a
+   brand colour. */
+
+.cs-band {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-block);
+  padding: var(--cs-section) 0 0;
+  color: var(--cs-ink);
+}
+
+.cs-band--grey { padding-bottom: 160px; background: var(--cs-surface-grey); }
+
+/* a subhead introduces the block right below it, so it closes the gap */
+/* A section's opening copy gets --cs-lede (100) to its first block; a subhead
+   gets half that, since it labels the block right under it. */
+.cs-band > .cs-copy:first-of-type { margin-bottom: calc(var(--cs-lede) - var(--cs-block)); }
+.cs-premise > .cs-copy:first-of-type { margin-bottom: calc(var(--cs-lede) - var(--cs-block)); }
+.cs-band .cs-copy:has(.cs-copy__sub) { margin-bottom: calc(50px - var(--cs-block)); }
+
+/* ---------- Pattern cards ----------
+   Five patterns, each a picture plus the one condition that should make you
+   reach for it. The sixth cell is a note, not a pattern. */
+
+.cs-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 72px 24px;
+  margin: 0;
+  padding: 0 var(--cs-gutter);
+  list-style: none;
+}
+
+.cs-card { display: flex; flex-direction: column; }
+
+.cs-card__shot {
+  display: grid;
+  place-items: center;
+  margin: 0 0 16px;
+  padding: 16px;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--cs-surface-grey);
+}
+
+.cs-band--grey .cs-card__shot { background: var(--cs-surface); }
+
+.cs-card__shot img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.cs-card .cs-ph { margin-bottom: 16px; }
+
+.cs-card__title {
+  margin: 0 0 6px;
+  font-family: var(--cs-display);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--cs-ink);
+}
+
+.cs-card__body {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cs-ink-soft);
+}
+
+/* the trailing note cell: no image, so it aligns to the card text instead */
+.cs-card--note {
+  justify-content: flex-end;
+  padding-bottom: 2px;
+}
+
+.cs-card--note .cs-card__body {
+  padding-left: 16px;
+  border-left: 2px solid var(--cs-hairline);
+  color: var(--cs-ink-mute);
+}
+
+/* ---------- Principles ----------
+   Question then answer, so the gate reads as a checklist rather than prose. */
+
+.cs-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: rule;
+}
+
+.cs-rule-item {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 2px 10px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--cs-hairline);
+  counter-increment: rule;
+}
+
+.cs-rule-item:first-child { border-top: 1px solid var(--cs-hairline); }
+
+.cs-rule-item::before {
+  content: counter(rule);
+  grid-row: 1 / span 2;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--cs-ink-mute);
+}
+
+.cs-rule-item__q {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cs-ink);
+}
+
+.cs-rule-item__a {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cs-ink-soft);
+}
+
+/* ---------- Outcomes ---------- */
+
+.cs-stat__figure {
+  display: block;
+  font-family: var(--cs-display);
+  font-weight: 800;
+  font-size: clamp(24px, 2.92cqi, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+
+.cs-stat__label {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cs-ink-soft);
+}
+
+/* The outcomes card sits inside a band. With no colour to separate it, a warm
+   neutral plus a hairline does the work the darker shade used to. */
+.cs-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px;
+  margin: 0 var(--cs-gutter);
+  padding: 64px 64px 70px;
+  list-style: none;
+  background: var(--cs-card);
+  border: 1px solid var(--cs-hairline);
+  border-radius: 24px;
+}
+
+.cs-outcomes .cs-stat__figure { font-size: clamp(26px, 3.33cqi, 32px); }
+
+/* ---------- Close ---------- */
+
+.cs-close-section { padding: var(--cs-section) 0 0; }
+
+/* ---------- Scroll-in reveal ----------
+   Hidden state is scoped to .cs-reveal, added at runtime, so the page still
+   renders if the script never runs. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .cs-reveal [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .cs-reveal [data-reveal].is-revealed { opacity: 1; transform: none; }
+  .cs-close { transition: background 0.15s ease; }
+}
+
+/* ---------- Responsive ---------- */
+
+@container (max-width: 860px) {
+  .cs { --cs-block: 64px; --cs-lede: 72px; --cs-rhythm: 132px; --cs-section: 200px; }
+  .cs-open { padding-top: 64px; gap: 48px; }
+  .cs-glance__title { margin-bottom: 56px; }
+  .cs-glance__logo { margin-bottom: 28px; }
+  .cs-premise { gap: 64px; }
+  .cs-band--grey { padding-bottom: 120px; }
+  .cs-cards { gap: 52px 24px; }
+  .cs-band .cs-copy:has(.cs-copy__sub) { margin-bottom: -40px; }
+  .cs-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cs-strip { gap: 16px; }
+  .cs-close-section { padding-top: 104px; }
+  .cs-outcomes { padding: 40px 36px 44px; gap: 32px; }
+}
+
+@container (max-width: 640px) {
+  .cs { --cs-block: 48px; --cs-lede: 52px; --cs-rhythm: 88px; --cs-section: 132px; }
+  .cs-open { padding-top: 56px; gap: 40px; }
+  .cs-glance__title { margin-bottom: 40px; }
+  .cs-glance__logo { margin-bottom: 24px; }
+  .cs-premise { gap: 44px; }
+  .cs-heroVisual { padding: 56px 16px 64px; }
+  .cs-band--grey { padding-bottom: 88px; }
+  .cs-problems { grid-template-columns: 1fr; gap: 28px; }
+  .cs-shots { grid-template-columns: 1fr; }
+  .cs-shots--band { margin-bottom: 40px; }
+  .cs-band { padding-block: 80px 64px; gap: 48px; }
+  .cs-band .cs-copy:has(.cs-copy__sub) { margin-bottom: -30px; }
+  .cs-cards { grid-template-columns: 1fr; gap: 32px; }
+  .cs-card--note { justify-content: flex-start; }
+  .cs-strip { grid-template-columns: 1fr; gap: 28px; }
+  .cs-outcomes {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 32px 28px 36px;
+    border-radius: 16px;
+  }
+  .cs-close-section { padding-top: 80px; }
+}
+
+@container (max-width: 420px) {
+  .cs-tag { padding: 8px 16px; font-size: 15px; }
+}
+
+@media (max-width: 640px) {
+  .cs-backdrop { padding: 0; }
+  .cs-panel { border-radius: 0; min-height: 100%; }
+  .cs { border-radius: 0; }
+}
+
+/* ---------- Project nav ----------
+   The shared component (../shared/project-nav.css) already carries 50 of top
+   padding. This page closes on the white panel, hence --onLight in the markup. */
+.cs-projectNav { margin-top: 150px; }
