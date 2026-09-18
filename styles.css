@@ -130,10 +130,12 @@ img { max-width: 100%; }
 body::after {
   content: "";
   position: absolute;
-  /* Behind .pf-hero / .pf-band / .pf-footer, which all sit at z-index 1, so
-     the cards paint over the wave. The wave is instead positioned so its dots
-     clear the first card's top edge and peek out above it — see --wave-top. */
-  z-index: 0;
+  /* Over the content. 444:120631 is the last child of 11:4, so the frame
+     paints it above every section — the mesh crosses the first card rather
+     than being clipped by it. Above .pf-hero / .pf-band / .pf-footer at
+     z-index 1, below .pf-nav at 3 so an open menu still covers it, and far
+     below .pf-modal at 50. */
+  z-index: 2;
 
   /* Pinned to the window edge, not the content column. Two reasons. The
      column anchoring the frame uses put the right edge at 107.6% of the
