@@ -26,7 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <!-- versioned: the dev server sends only Last-Modified, so browsers apply
      heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=13b5e304">
+<link rel="stylesheet" href="styles.css?v=11b9efac">
 </head>
 <body>
 
@@ -414,27 +414,30 @@
   const firstCard = document.querySelector('#work-new-team-activation .pf-feature');
   if (!hero) return;
 
-  // 444:120631 sits at a fixed offset above the first card in the frame:
-  // its top is 0.39328 of its own height above the card's top edge, which is
-  // the same relationship at any width because both scale with the column.
-  // Measured off the card rather than written as the frame's y, because the
-  // nav's height is a clamp and the sections reflow, so the frame's absolute
-  // y does not survive a resize. That offset leaves only ~9px of mesh above
-  // the card — the frame's own figure — because the mesh is meant to cross
-  // the card, not peek over it.
-  const ABOVE_CARD = 0.39328;
+  // Placed so the VISIBLE crest lands where the design's render puts it:
+  // ~215px above the first card's top edge at the 1000 column, which is
+  // 0.3172 of the wave's height. Measured off the card, not written as the
+  // frame's y, because the nav's height is a clamp and the sections reflow.
+  //
+  // Not the frame's box offset of 0.39328. The artwork is transparent down to
+  // 0.3796 of its height (its dots start at row 372 of 980, by three separate
+  // measures), so with background-size: cover — which crops this 1372x980 art
+  // horizontally and not vertically — that offset puts the crest only 9px
+  // above the card. The design's render shows ~215px, so the frame's image
+  // fill must be cropped vertically too, which cover cannot reproduce. The
+  // box is shifted up to land the same on-screen result instead.
+  const DOTS_START = 0.3796;
+  const CREST_ABOVE_CARD = 0.3172;
+  const ABOVE_CARD = DOTS_START + CREST_ABOVE_CARD;
 
-  // The frame ends the wave above the card's bottom edge, and that gap is the
-  // whole parallax budget: the wave now paints over the content, so drifting
-  // past the first card would trail a 70% mesh across the second section,
-  // which the frame never does. Measured against the real card rather than
-  // the frame's 0.21691 of wave height — that fraction assumes the frame's
-  // 560 card, and ours is shorter, so it overshot the bottom edge by 14px.
-  // The rate is then derived from the budget so the drift is one continuous
-  // speed for as long as the wave is on screen, rather than running out and
-  // locking to the page part way down.
+  // Drifting down eats the crest, so the budget is what is above the card
+  // less this much, keeping a clear crest for the whole time the card's top
+  // edge is on screen. The rate is derived from the budget so the drift is
+  // one continuous speed rather than running out and locking to the page.
+  const MIN_CREST = 60;
   let driftBudget = 0;
   let rate = 0;
+  let cardTopDoc = Infinity;
 
   // Both decorations are measured rather than hard-coded: the nav's height is
   // a clamp, and the sections reflow, so neither the frame's y values nor a
@@ -449,9 +452,9 @@
 
       root.style.setProperty('--wave-top', waveTop + 'px');
 
-      const waveBottom = waveTop + waveH;
-      driftBudget = Math.max(0, cardTop + rect.height - waveBottom);
-      rate = waveBottom > 0 ? driftBudget / waveBottom : 0;
+      cardTopDoc = cardTop;
+      driftBudget = Math.max(0, CREST_ABOVE_CARD * waveH - MIN_CREST);
+      rate = cardTop > 0 ? driftBudget / cardTop : 0;
     } else {
       root.style.setProperty('--wave-top', (hero.offsetTop + 441.23) + 'px');
     }
@@ -469,7 +472,11 @@
 
   const drift = () => {
     frame = 0;
-    const shift = Math.min(window.scrollY * rate, driftBudget);
+    // Past cardTopDoc the card's top edge is off screen and the crest no
+    // longer constrains anything, so the budget grows at the same rate and the
+    // lag continues seamlessly instead of locking to the page.
+    const y = window.scrollY;
+    const shift = Math.min(y * rate, driftBudget + Math.max(0, y - cardTopDoc) * rate);
     root.style.setProperty('--wave-shift', shift.toFixed(2) + 'px');
   };
 

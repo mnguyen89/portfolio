@@ -130,12 +130,12 @@ img { max-width: 100%; }
 body::after {
   content: "";
   position: absolute;
-  /* Over the content. 444:120631 is the last child of 11:4, so the frame
-     paints it above every section — the mesh crosses the first card rather
-     than being clipped by it. Above .pf-hero / .pf-band / .pf-footer at
-     z-index 1, below .pf-nav at 3 so an open menu still covers it, and far
-     below .pf-modal at 50. */
-  z-index: 2;
+  /* Behind the content, at z-index 0 against .pf-hero / .pf-band /
+     .pf-footer at 1. The frame has 444:120631 as its last child, which paints
+     above everything, but the design's own render shows the mesh cresting
+     above the first card and then disappearing behind it — only a faint ghost
+     through the card's 0.8 white. Behind is what the design looks like. */
+  z-index: 0;
 
   /* Pinned to the window edge, not the content column. Two reasons. The
      column anchoring the frame uses put the right edge at 107.6% of the
