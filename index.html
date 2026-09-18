@@ -437,10 +437,11 @@
   const CREST_ABOVE_CARD = 0.3236;
   const ABOVE_CARD = 0.7032;
 
-  // Sits 32px lower than the measured fit. A flat pixel nudge, not folded
-  // into the fraction above, so it stays 32px at every width instead of
-  // scaling with the column.
-  const NUDGE_DOWN = 32;
+  // Offset from the measured fit, positive = lower. A flat pixel nudge, not
+  // folded into the fraction above, so it does not scale with the column.
+  // Negative lifts the mesh without moving the cards, which stay where the
+  // hero's bottom padding puts them.
+  const NUDGE_DOWN = -32;
 
   // Drifting down eats the crest, so the budget is what is above the card
   // less this much, keeping a clear crest for the whole time the card's top
