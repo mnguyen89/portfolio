@@ -435,7 +435,10 @@ body::before {
   flex-direction: column;
   align-items: center;
   gap: 50px;
-  padding: clamp(32px, 6.667vw, 66.67px) var(--gutter) clamp(56px, 14vw, 140px);
+  /* the +24 drops the project cards — and everything after them — by 24px
+     without touching the hero's own rhythm */
+  padding: clamp(32px, 6.667vw, 66.67px) var(--gutter)
+           calc(clamp(56px, 14vw, 140px) + 24px);
   text-align: center;
 }
 
@@ -857,7 +860,7 @@ body::before {
 
   .pf-band--card { padding: 20px var(--gutter); }
   .pf-feature--framed { padding: var(--card-space) clamp(20px, 6vw, 83.33px); }
-  .pf-hero { padding-bottom: clamp(48px, 12vw, 110px); }
+  .pf-hero { padding-bottom: calc(clamp(48px, 12vw, 110px) + 24px); }
 
   /* the split halves stack too — two class names outrank the rule above, so
      they need restating here */
