@@ -128,10 +128,13 @@ button { font: inherit; color: inherit; }
   padding: clamp(8px, 12vh, 100px) var(--vs-gutter) clamp(16px, 9vh, 96px);
 }
 
+/* Raised like a floating action button: a tight contact shadow plus a soft,
+   wider one below */
 .vs-hero__avatar {
   width: clamp(72px, 14vh, 132px);
   height: clamp(72px, 14vh, 132px);
   border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(28, 25, 23, .10), 0 10px 28px rgba(28, 25, 23, .18);
 }
 
 .vs-hero__title {
@@ -255,7 +258,7 @@ button { font: inherit; color: inherit; }
 /* Each row: the number column (flush with "Selected Works"), then the
    progress line, then the row's indent. */
 .vs-row {
-  --vs-num-col: 36px;   /* number (20) + 16 to the line */
+  --vs-num-col: 56px;   /* an open row's 32px number (~38) + 16 to the line */
   --vs-pad: var(--vs-row-indent);
   position: relative;
   padding: 20px 0 20px calc(var(--vs-num-col) + var(--vs-pad));
@@ -308,22 +311,25 @@ body.is-modalOpen .vs-row__fill,
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
 
 /* 01–05, left of the progress line and flush with "Selected Works", so the
-   line and the projects read as indented from the heading, in the headline
-   face. 24px = the row's 20 top padding + half the 22px closed title - half
-   this 14px line: centred on a closed row, and when a row opens it stays at
-   that same distance from the top. */
+   line and the projects read as indented from the heading. Same face, size
+   and weight as the row's title, and it grows with the title when the row
+   opens. Its colour comes from the title button, which dims closed rows.
+   21px = the row's 20 top padding + half the 22px closed title - half the
+   number's 19.8px line: centred on a closed row, and when a row opens it
+   keeps that same distance from the top. */
 .vs-row__num {
   position: absolute;
-  top: 24px;
+  top: 21px;
   left: 0;
-  width: 20px;
-  font: 600 14px/1 var(--vs-display);
+  font-family: var(--vs-display);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.015em;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -.01em;
-  color: var(--vs-muted);
-  transition: color .4s;
+  transition: font-size .6s var(--vs-ease);
 }
-.vs-row.is-active .vs-row__num { color: var(--vs-ink); }
+.vs-row.is-active .vs-row__num { font-size: 32px; font-weight: 700; }
 
 .vs-row__logo {
   flex: none;
@@ -475,8 +481,8 @@ body.is-modalOpen .vs-row__fill,
 /* Same 22px as the inactive project logos, set in a little from the
    carousel's progress line: about half the line-to-logo gap in the rows, so
    it reads as part of that rhythm. The envelope's outline sits 3px inside its
-   box, and the line sits 36px in past the project numbers: 36 + 16 - 3. */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 49px; }
+   box, and the line sits 56px in past the project numbers: 56 + 16 - 3. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 69px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
@@ -586,7 +592,8 @@ body.is-modalOpen { overflow: hidden; }
 
   .vs-row.is-active { padding-top: 40px; padding-bottom: 40px; --vs-pad: 32px; }
   .vs-row__name { white-space: normal; }
-  .vs-row.is-active .vs-row__name { font-size: 26px; }
+  .vs-row.is-active .vs-row__name,
+  .vs-row.is-active .vs-row__num { font-size: 26px; }
   .vs-row__inner { padding-left: 0; }
 
   .vs-footer {
