@@ -308,11 +308,13 @@ body.is-modalOpen .vs-row__fill,
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
 
 /* 01–05, left of the progress line and flush with "Selected Works", so the
-   line and the projects read as indented from the heading. Top-aligned with
-   the start of each row's segment of the line, in the headline face. */
+   line and the projects read as indented from the heading, in the headline
+   face. 24px = the row's 20 top padding + half the 22px closed title - half
+   this 14px line: centred on a closed row, and when a row opens it stays at
+   that same distance from the top. */
 .vs-row__num {
   position: absolute;
-  top: 0;
+  top: 24px;
   left: 0;
   width: 20px;
   font: 600 14px/1 var(--vs-display);
