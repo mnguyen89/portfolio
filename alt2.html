@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="alt2.css?v=90ae5aac">
+<link rel="stylesheet" href="alt2.css?v=1e2d9af1">
 </head>
 <body>
 
@@ -33,6 +33,9 @@
      unchanged; they open as ordinary pages from here rather than as modals. -->
 <div class="vs">
   <div class="vs-first">
+    <!-- The dots wave from the default homepage, used once: it rises behind
+         "Selected works" and fades into the projects below. Decorative. -->
+    <div class="vs-wave" aria-hidden="true"></div>
     <header class="vs-header">
       <nav class="vs-nav" aria-label="Primary">
         <a href="assets/minh-nguyen-resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
@@ -81,7 +84,7 @@
     </div>
   </div>
 
-  <section class="vs-work" id="work" aria-label="Selected works" data-work>
+  <section class="vs-work is-offscreen" id="work" aria-label="Selected works" data-work>
     <div class="vs-work__grid">
       <button class="vs-play" type="button" aria-label="Pause" data-play>
         <svg class="vs-play__pause" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="2.5" height="9" rx="1" fill="#1c1917"/><rect x="7.5" y="1.5" width="2.5" height="9" rx="1" fill="#1c1917"/></svg>
@@ -100,7 +103,7 @@
               <div class="vs-row__inner">
                 <span class="vs-row__meta">Slack</span>
                 <p class="vs-row__desc">Streamlined the team onboarding experience to increase early adoption and engagement, helping newly created workspaces get up and running smoothly with key tools and messaging features.</p>
-                <a class="vs-cta" href="slack/index.html">See project <span aria-hidden="true">→</span></a>
+                <a class="vs-cta" href="slack/index.html" data-case-study data-case-title="Slack New Team Activation">See project <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -116,7 +119,7 @@
               <div class="vs-row__inner">
                 <span class="vs-row__meta">PayPal · Mid 2021</span>
                 <p class="vs-row__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
-                <a class="vs-cta" href="paypal/index.html">See project <span aria-hidden="true">→</span></a>
+                <a class="vs-cta" href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">See project <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -132,7 +135,7 @@
               <div class="vs-row__inner">
                 <span class="vs-row__meta">Slack, PayPal · 2021–2026</span>
                 <p class="vs-row__desc">Two systems: the in-product education system at Slack — five patterns and one rule for choosing between them, shipped as Education Kit — and PayPal’s UI token system, where one naming structure fed a guidelines site, a Sketch kit and JSON tokens into component libraries for iOS, Android and web.</p>
-                <a class="vs-cta" href="system/index.html">See project <span aria-hidden="true">→</span></a>
+                <a class="vs-cta" href="system/index.html" data-case-study data-case-title="Systems Design">See project <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -148,7 +151,7 @@
               <div class="vs-row__inner">
                 <span class="vs-row__meta">Various · 2012–2018</span>
                 <p class="vs-row__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
-                <a class="vs-cta" href="visual-design/index.html">See project <span aria-hidden="true">→</span></a>
+                <a class="vs-cta" href="visual-design/index.html" data-case-study data-case-title="Visual Design">See project <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -208,6 +211,12 @@
 <div class="vs-toast" role="status" aria-live="polite" data-toast hidden>
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>
   <span>Copied to clipboard</span>
+</div>
+
+<!-- Case studies are authored as standalone modal pages, so they load in an
+     overlay here and stay linkable on their own URL. -->
+<div class="vs-modal" hidden>
+  <iframe class="vs-modal__frame" title="Case study" src="about:blank"></iframe>
 </div>
 
 <script>
@@ -313,6 +322,16 @@
   work.addEventListener('mouseenter', () => work.classList.add('is-hoverPaused'));
   work.addEventListener('mouseleave', () => work.classList.remove('is-hoverPaused'));
 
+  // The story holds at the start until the projects are on screen, and
+  // pauses again whenever they scroll away.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      work.classList.toggle('is-offscreen', !entry.isIntersecting);
+    }, { threshold: 0.4 }).observe(work);
+  } else {
+    work.classList.remove('is-offscreen');
+  }
+
   document.querySelectorAll('.vs-cta[aria-disabled="true"]').forEach(a =>
     a.addEventListener('click', e => e.preventDefault()));
 
@@ -357,6 +376,120 @@
     if (navigator.clipboard) navigator.clipboard.writeText(EMAIL).then(copied, copied);
     else copied();
   }));
+})();
+</script>
+
+<script>
+// Case-study overlay, carried over from the default homepage (index.html).
+(function () {
+  const modal = document.querySelector('.vs-modal');
+  const frame = modal.querySelector('.vs-modal__frame');
+  let lastFocus = null;
+
+  // Captured before the first pushState. Every href on this page is relative,
+  // so once the address bar reads /paypal/ the document's base has moved and
+  // "slack/index.html" would resolve to /paypal/slack/index.html. Resolving
+  // against HOME instead keeps the links correct for the whole session.
+  const HOME = new URL(location.href);
+  const homeUrl = HOME.pathname + HOME.search;
+
+  // An open project is addressed by a hash — /portfolio/#paypal — so the page
+  // that loads is always the portfolio itself and a shared link lands here
+  // with the project already open. A path like /paypal/ cannot do that on a
+  // static host: it is a real file, so the server hands over the standalone
+  // case study and the portfolio never renders. The hash is never sent to the
+  // server at all, so index.html is always what gets served.
+  //
+  // paypal/index.html -> "paypal". Works on the relative hrefs here and on the
+  // absolute pathname the iframe reports, at a domain root or in /portfolio/.
+  const slugOf = (href) => new URL(href, HOME).pathname
+    .replace(/\/index\.html$/, '').split('/').filter(Boolean).pop();
+
+  const linkForSlug = (slug) => Array.from(document.querySelectorAll('[data-case-study]'))
+    .find((l) => slugOf(l.getAttribute('href')) === slug);
+
+  // Assigning frame.src pushes an entry onto the JOINT session history, so the
+  // first Back press stepped the iframe instead of closing the overlay. A
+  // same-origin location.replace() swaps the document without an entry, which
+  // leaves our own pushState as the thing Back actually undoes. Links the user
+  // clicks inside the case study still add entries, so Back walks back through
+  // the footer nav first and only then closes — which is what you'd expect.
+  const load = (url) => {
+    try { frame.contentWindow.location.replace(url); }
+    catch (_) { frame.src = url; }
+  };
+
+  const open = (href, title, track) => {
+    lastFocus = document.activeElement;
+    frame.title = title || 'Case study';
+    load(new URL(href, HOME).href);
+    modal.hidden = false;
+    document.body.classList.add('is-modalOpen');
+    frame.focus();
+    const slug = slugOf(href);
+    if (track !== false && location.hash.slice(1) !== slug) {
+      history.pushState(null, '', '#' + slug);
+    }
+  };
+
+  const close = (track) => {
+    if (modal.hidden) return;
+    modal.hidden = true;
+    load('about:blank');
+    document.body.classList.remove('is-modalOpen');
+    if (lastFocus) lastFocus.focus();
+    if (track !== false && location.hash) {
+      history.pushState(null, '', homeUrl);
+    }
+  };
+
+  // Progressive enhancement: without JS these are ordinary links to the page.
+  document.querySelectorAll('[data-case-study]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      open(link.getAttribute('href'), link.dataset.caseTitle);
+    });
+  });
+
+  // The footer nav inside a case study walks to the next project within the
+  // iframe, so re-read the frame's own location on every load and keep the
+  // address bar honest — otherwise it would still claim the project you
+  // entered on. Same-origin, so this is readable; guarded anyway.
+  frame.addEventListener('load', () => {
+    if (modal.hidden) return;
+    let path;
+    try { path = frame.contentWindow.location.pathname; } catch (_) { return; }
+    if (!path || path === 'blank') return;
+    const slug = slugOf(path);
+    if (!slug || slug === location.hash.slice(1)) return;
+    const link = linkForSlug(slug);
+    if (link) frame.title = link.dataset.caseTitle || frame.title;
+    history.replaceState(null, '', '#' + slug);
+  });
+
+  // The case study renders its own scrim and close button, so it tells us when
+  // to dismiss rather than us drawing a second chrome on top of it.
+  addEventListener('message', (e) => {
+    if (e.source === frame.contentWindow && e.data && e.data.type === 'case-study:close') close();
+  });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  // The hash is the single source of truth, so the same routine serves the
+  // first paint, Back/forward, and anyone editing the address bar by hand.
+  const sync = () => {
+    let slug = '';
+    try { slug = decodeURIComponent(location.hash.slice(1)); } catch (_) {}
+    const link = slug && linkForSlug(slug);
+    if (link) open(link.getAttribute('href'), link.dataset.caseTitle, false);
+    else close(false);
+  };
+
+  addEventListener('popstate', sync);
+  addEventListener('hashchange', sync);
+
+  // A shared link arrives with the project in the hash: open it on arrival.
+  sync();
 })();
 </script>
 </body>
