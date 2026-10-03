@@ -253,21 +253,13 @@ button { font: inherit; color: inherit; }
 }
 
 /* Each row: the number column (flush with "Selected Works"), then the
-   progress line, then the row's indent. The indent is a registered custom
-   property so the number, which is placed from it, glides with the row as
-   it opens rather than jumping. */
-@property --vs-pad {
-  syntax: '<length>';
-  inherits: true;
-  initial-value: 34px;
-}
-
+   progress line, then the row's indent. */
 .vs-row {
   --vs-num-col: 36px;   /* number (20) + 16 to the line */
   --vs-pad: var(--vs-row-indent);
   position: relative;
   padding: 20px 0 20px calc(var(--vs-num-col) + var(--vs-pad));
-  transition: padding-top .6s var(--vs-ease), padding-bottom .6s var(--vs-ease), --vs-pad .6s var(--vs-ease);
+  transition: padding .6s var(--vs-ease);
 }
 .vs-row.is-active { padding-top: 72px; padding-bottom: 72px; --vs-pad: 52px; }
 
@@ -300,7 +292,6 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-row__title {
-  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -317,17 +308,16 @@ body.is-modalOpen .vs-row__fill,
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
 
 /* 01–05, left of the progress line and flush with "Selected Works", so the
-   line and the projects read as indented from the heading. Placed from the
-   title so it stays centred on it, then pushed back past the row's indent
-   and the line. */
+   line and the projects read as indented from the heading. Top-aligned with
+   the start of each row's segment of the line, in the headline face. */
 .vs-row__num {
   position: absolute;
-  top: 50%;
-  right: calc(100% + var(--vs-pad) + 16px);
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
   width: 20px;
-  font: 500 12px var(--vs-mono);
-  letter-spacing: .06em;
+  font: 600 14px/1 var(--vs-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
   color: var(--vs-muted);
   transition: color .4s;
 }
