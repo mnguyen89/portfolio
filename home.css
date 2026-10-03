@@ -550,6 +550,16 @@ body.is-modalOpen .vs-row__fill,
   background: var(--vs-hover);
   color: var(--vs-ink);
 }
+.vs-menu__panel { display: flex; flex-direction: column; gap: 2px; }
+.vs-menu__panel[hidden] { display: none; }
+.vs-menu__chev { margin-left: auto; color: var(--vs-muted); }
+/* the arrow and the new-tab icons sit closer to the edge than text does */
+.vs-menu__item[data-menu-step="send"],
+.vs-menu__item[target="_blank"] { padding-right: 14px; }
+/* opens in a new tab: a quiet hint on the right, well back from the label */
+.vs-menu__ext { margin-left: auto; opacity: .3; }
+.vs-menu__logo { flex: none; width: 16px; height: 16px; object-fit: contain; }
+.vs-menu__back { color: var(--vs-secondary); }
 .vs-menu__copy { font-weight: 500; }
 .vs-menu__addr { color: var(--vs-muted); }
 
