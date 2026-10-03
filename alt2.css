@@ -409,9 +409,7 @@ body.is-modalOpen .vs-row__fill,
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  /* Indented to the project list: the mail icon centres on the row logos
-     and the label starts where the titles do. */
-  padding: 160px var(--vs-gutter) 72px calc(var(--vs-gutter) + var(--vs-row-indent));
+  padding: 160px var(--vs-gutter) 72px;
 }
 
 .vs-footer__copy {
@@ -453,9 +451,10 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-contact__icon { flex: none; }
-/* Same 22px as the inactive project logos, then the rows' 16px
-   logo-to-title gap (8 here + the button's 8) */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin-right: 8px; }
+/* Same 22px as the inactive project logos. The envelope's outline sits 3px
+   inside its box, so pull it left to line its edge up with the carousel's
+   progress line. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 -3px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
