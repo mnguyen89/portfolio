@@ -75,7 +75,7 @@ button { font: inherit; color: inherit; }
   position: absolute;
   z-index: 0;
   right: -14%;
-  bottom: -12%;
+  bottom: 6%;
   width: 82%;
   aspect-ratio: 1372 / 980;
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
