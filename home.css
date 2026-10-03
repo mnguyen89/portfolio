@@ -594,12 +594,10 @@ body.is-modalOpen { overflow: hidden; }
   border: 0;
 }
 
-/* ---- Mid-size windows: still two columns, but the indents either side of
-   the line and the gap to the picture tighten so the copy keeps its width. */
+/* ---- Mid-size windows: still two columns; the gap to the picture tightens
+   so the copy keeps its width. The indents around the line stay as wide. */
 
 @media (min-width: 861px) and (max-width: 1199px) {
-  :root { --vs-row-indent: 28px; }
-  .vs-row.is-active { --vs-pad: 36px; }
   .vs-work__grid { gap: 40px; }
 }
 
