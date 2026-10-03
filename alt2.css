@@ -17,6 +17,8 @@
   --vs-ease: cubic-bezier(.4, 0, .2, 1);
   --vs-reveal: cubic-bezier(.2, .8, .2, 1);
   --vs-gutter: 72px;
+  /* inactive project row: track to logo */
+  --vs-row-indent: 34px;
 
   --vs-display: 'Bricolage Grotesque', sans-serif;
   --vs-mono: 'Geist Mono', monospace;
@@ -252,7 +254,7 @@ button { font: inherit; color: inherit; }
 
 .vs-row {
   position: relative;
-  padding: 20px 0 20px 34px;
+  padding: 20px 0 20px var(--vs-row-indent);
   transition: padding .6s var(--vs-ease);
 }
 .vs-row.is-active { padding: 72px 0 72px 52px; }
@@ -403,7 +405,9 @@ body.is-modalOpen .vs-row__fill,
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 160px var(--vs-gutter) 72px;
+  /* Indented to the project list: the mail icon centres on the row logos
+     and the label starts where the titles do. */
+  padding: 160px var(--vs-gutter) 72px calc(var(--vs-gutter) + var(--vs-row-indent));
 }
 
 .vs-footer__copy {
@@ -445,6 +449,9 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-contact__icon { flex: none; }
+/* 16px icon centred in the 22px logo column (3 each side), then the rows'
+   16px logo-to-title gap: 3 + 16 + 11 + 8 = 38 = 22 + 16 */
+.vs-contact--flat .vs-contact__icon { margin: 0 11px 0 3px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
@@ -534,9 +541,11 @@ body.is-modalOpen { overflow: hidden; }
    pieces in one column so nothing overflows on a phone. */
 
 @media (max-width: 860px) {
-  :root { --vs-gutter: 24px; }
+  :root { --vs-gutter: 24px; --vs-row-indent: 24px; }
 
-  .vs-nav { gap: 20px; }
+  /* the Contact pill with its icon only just fits beside three links */
+  .vs-nav { gap: 14px; }
+  .vs-contact--nav { padding: 10px 14px 10px 12px; }
   .vs-hero__title { font-size: clamp(34px, 7vw, 60px); }
   /* "Shaping products through" is wider than a phone at this size */
   .vs-hero__title .vs-nowrap:first-child { white-space: normal; }
@@ -551,7 +560,6 @@ body.is-modalOpen { overflow: hidden; }
   .vs-play { top: 0; right: 0; }
 
   .vs-row.is-active { padding: 40px 0 40px 32px; }
-  .vs-row { padding-left: 24px; }
   .vs-row__name { white-space: normal; }
   .vs-row.is-active .vs-row__name { font-size: 26px; }
   .vs-row__inner { padding-left: 0; }
@@ -562,6 +570,12 @@ body.is-modalOpen { overflow: hidden; }
     padding-top: 96px;
     padding-bottom: 48px;
   }
+}
+
+/* Smallest phones: the nav pill drops its icon to fit beside the links */
+@media (max-width: 360px) {
+  .vs-nav { gap: 10px; }
+  .vs-contact--nav .vs-contact__icon { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
