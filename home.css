@@ -128,13 +128,10 @@ button { font: inherit; color: inherit; }
   padding: clamp(8px, 12vh, 100px) var(--vs-gutter) clamp(16px, 9vh, 96px);
 }
 
-/* Raised like a floating action button: a tight contact shadow plus a soft,
-   wider one below */
 .vs-hero__avatar {
   width: clamp(72px, 14vh, 132px);
   height: clamp(72px, 14vh, 132px);
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(28, 25, 23, .10), 0 10px 28px rgba(28, 25, 23, .18);
 }
 
 .vs-hero__title {
@@ -267,11 +264,13 @@ button { font: inherit; color: inherit; }
   --vs-pad: var(--vs-row-indent);
   position: relative;
   padding: 20px 0 20px calc(var(--vs-num-col) + var(--vs-pad));
-  transition: padding .6s var(--vs-ease);
+  min-height: 0;
+  transition: padding .6s var(--vs-ease), min-height .6s var(--vs-ease);
 }
 /* An open row starts 42px down; its number follows to stay centred on the
-   42px title (42 + 21 - 17.6 = 45) */
-.vs-row.is-active { padding-top: 42px; padding-bottom: 96px; --vs-pad: 52px; }
+   title line (42 + 18 - 17.6 = 42) */
+/* and is never shorter than 480px, however short its copy */
+.vs-row.is-active { padding-top: 42px; padding-bottom: 96px; min-height: 480px; --vs-pad: 52px; }
 
 .vs-row__track,
 .vs-row__fill {
@@ -316,6 +315,10 @@ body.is-modalOpen .vs-row__fill,
   transition: gap .6s var(--vs-ease), opacity .2s;
 }
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
+/* Closed rows come up to full strength on hover or keyboard focus, logo in
+   colour, as a preview of opening them */
+.vs-row__title:hover,
+.vs-row__title:focus-visible { opacity: 1; }
 
 /* 01–05, in the column left of the progress line, right-aligned as far
    off it as the closed rows' logos are on the other side, so the line and the projects read as indented from "Selected Works".
@@ -338,7 +341,7 @@ body.is-modalOpen .vs-row__fill,
   font-variant-numeric: tabular-nums;
   transition: font-size .6s var(--vs-ease), top .6s var(--vs-ease);
 }
-.vs-row.is-active .vs-row__num { top: 45px; font-size: 32px; font-weight: 700; }
+.vs-row.is-active .vs-row__num { top: 42px; font-size: 32px; font-weight: 700; }
 
 .vs-row__logo {
   flex: none;
@@ -348,7 +351,17 @@ body.is-modalOpen .vs-row__fill,
   filter: grayscale(1) brightness(.7);
   transition: width .6s var(--vs-ease), height .6s var(--vs-ease), filter .4s;
 }
-.vs-row.is-active .vs-row__logo { width: 42px; height: 42px; filter: none; }
+/* 36px: the square logos read larger than type of the same size, so this
+   sits optically level with the 32px title rather than towering over it */
+.vs-row.is-active .vs-row__logo { width: 36px; height: 36px; filter: none; }
+/* Logos that fill their box edge to edge (PayPal's P) read larger than the
+   ones with air inside; shrink them to sit at the same optical size... */
+.vs-row__logo--solid { transform: scale(.91); }
+/* and wide ones (the Salesforce cloud) fit their width and come out short,
+   so they scale up */
+.vs-row__logo--wide { transform: scale(1.11); }
+.vs-row__title:hover .vs-row__logo,
+.vs-row__title:focus-visible .vs-row__logo { filter: none; }
 
 .vs-row__name {
   font-family: var(--vs-display);
@@ -374,12 +387,12 @@ body.is-modalOpen .vs-row__fill,
   min-height: 0;
 }
 
-/* 70px = active logo (42) + gap (28), so the copy sits under the title */
+/* 64px = active logo (36) + gap (28), so the copy sits under the title */
 .vs-row__inner {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 0 0 70px;
+  padding: 16px 0 0 64px;
 }
 
 .vs-row__meta {

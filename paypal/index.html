@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&family=Inter:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=fdb83d5e">
+<link rel="stylesheet" href="styles.css?v=9a6b2760">
 <link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
 </head>
 <body>
@@ -42,13 +42,20 @@
         <p class="cs-hero__lede">Redesigning the new-user experience to help millions of customers understand and adopt PayPal’s new digital wallet design.</p>
       </header>
 
+      <!-- The stage (plate + screen) keeps the plate's shape and scales as one,
+           so the phone always fits. Behind the plate, the PayPal shapes from
+           Figma (190:93308) carry on past its edges, so the band stays full
+           bleed at any height. -->
       <div class="cs-heroVisual">
-        <img class="cs-heroVisual__plate" src="assets/mockups/hero-stage.webp" width="1920" height="1588"
-             alt="" aria-hidden="true" fetchpriority="high">
-        <span class="cs-plateScreen cs-heroVisual__screen">
-          <img src="assets/screens/hero-poster.webp" width="542" height="1174" alt="Redesigned PayPal home screen welcoming a new user with Send Money and Find Deals shortcuts, a setup checklist and a $5 gift offer." fetchpriority="high" data-anim-src="assets/screens/hero-anim.webp" data-anim-on-load>
-          <span class="cs-plateScreen__notch" aria-hidden="true"></span>
-        </span>
+        <div class="cs-heroVisual__stage">
+          <img class="cs-heroVisual__bag" src="assets/mockups/hero-bag.svg" alt="" aria-hidden="true">
+          <img class="cs-heroVisual__plate" src="assets/mockups/hero-stage.webp" width="1920" height="1588"
+               alt="" aria-hidden="true" fetchpriority="high">
+          <span class="cs-plateScreen cs-heroVisual__screen">
+            <img src="assets/screens/hero-poster.webp" width="542" height="1174" alt="Redesigned PayPal home screen welcoming a new user with Send Money and Find Deals shortcuts, a setup checklist and a $5 gift offer." fetchpriority="high" data-anim-src="assets/screens/hero-anim.webp" data-anim-on-load>
+            <span class="cs-plateScreen__notch" aria-hidden="true"></span>
+          </span>
+        </div>
       </div>
 
       <section class="cs-keywords" aria-labelledby="cs-keywords-title">

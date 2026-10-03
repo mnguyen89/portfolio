@@ -156,6 +156,39 @@ body {
   /* 190:93307 exports exactly on its box, blobs and long shadow included */
   aspect-ratio: 960 / 794;
   overflow: hidden;
+  /* what the plate's own ground fades through, for the band past its sides:
+     white on the left, warm grey down the right */
+  background: linear-gradient(-23.2deg, #f8f7f3 5%, #ffffff 71.4%);
+}
+
+/* Plate + phone screen as one unit, always the plate's own shape: full
+   height of the band, centred. The screen's percentages are of this box. */
+.cs-heroVisual__stage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  aspect-ratio: 1920 / 1588;
+  transform: translateX(-50%);
+}
+
+/* The two PayPal shapes, placed where Figma frame 190:93308 sits relative to
+   the hero box (x -567.5, y 409, 1677.5 x 1400 against 960 x 794). The plate
+   draws the same shapes inside its bounds; past them, these carry on. */
+.cs-heroVisual__bag {
+  position: absolute;
+  left: -59.115%;
+  top: 51.511%;
+  width: 174.74%;
+  height: 176.32%;
+  max-width: none;
+}
+/* The plate's own ground fades out over its outer 6% each side, so it melts
+   into the band; the shapes there are drawn identically underneath. */
+.cs-heroVisual__stage > .cs-heroVisual__plate {
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
 
 .cs-heroVisual__plate {

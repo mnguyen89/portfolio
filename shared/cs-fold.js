@@ -13,9 +13,10 @@
      its padding;
    - a bleed picture wider than the panel (Systems): it keeps its width, and
      the band's padding gives way instead;
-   - PayPal's plate, whose phone screen is positioned in percentages of the
-     band: the plate keeps its size and the band crops it at the fold, top
-     kept, with the screen pinned in pixels so it stays on the phone. */
+   - PayPal's plate, with the phone screen laid over it: plate and screen sit
+     in one stage that keeps the plate's shape and is always the band's full
+     height, so the whole phone scales to fit; the band's own background is
+     the plate with its edges extended, which fills the sides. */
 (() => {
   if (window.__csFold) return;
   window.__csFold = true;
@@ -25,8 +26,7 @@
   const panel = document.querySelector('.cs-panel');
   if (!band || !scroller || !panel) return;
 
-  const plate = band.querySelector('.cs-heroVisual__plate');
-  const screen = band.querySelector('.cs-heroVisual__screen');
+  const plate = band.querySelector('.cs-heroVisual__stage');
   const pic = plate ? null : band.firstElementChild;
   const bleed = !!(pic && pic.matches('.cs-shot--bleed'));
   const MIN_PAD = 32;         // bleed heroes: the least padding left above and below
@@ -44,8 +44,6 @@
     band.style.height = band.style.aspectRatio = '';
     band.style.paddingTop = band.style.paddingBottom = '';
     if (pic) pic.style.width = '';
-    if (plate) plate.style.height = '';
-    if (screen) screen.style.top = screen.style.height = '';
   };
 
   const fit = () => {
@@ -57,13 +55,8 @@
     const h = Math.round(Math.max(MIN, Math.min(scroller.clientHeight - top, b.height * MAX_GROWTH)));
 
     if (plate) {
-      if (h >= b.height) return;
-      const s = screen && getComputedStyle(screen);
-      const sTop = s && s.top, sHeight = s && s.height;
       band.style.aspectRatio = 'auto';
       band.style.height = h + 'px';
-      plate.style.height = b.height + 'px';
-      if (screen) { screen.style.top = sTop; screen.style.height = sHeight; }
       return;
     }
 
