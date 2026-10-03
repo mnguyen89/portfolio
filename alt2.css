@@ -414,7 +414,7 @@ body.is-modalOpen .vs-row__fill,
 .vs-contact {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   padding: 8px 20px 8px 8px;
   border: 0;
   border-radius: 99px;
@@ -430,12 +430,11 @@ body.is-modalOpen .vs-row__fill,
   box-shadow: 0 2px 4px rgba(28, 25, 23, .1), 0 8px 24px rgba(28, 25, 23, .14);
 }
 
-/* The nav copy of the footer pill: same surface, no avatar, so the padding
-   evens out where the image used to sit. */
-.vs-contact--nav { padding: 12px 18px; }
+/* The nav copy of the footer button, on a white pill */
+.vs-contact--nav { padding: 12px 18px 12px 16px; }
 
-/* Footer: no surface at all, just the avatar, label and caret, flush with
-   the column edge. The avatar still colours in on hover and while open. */
+/* Footer: no surface at all, just the icon, label and caret, flush with
+   the column edge. */
 .vs-contact--flat,
 .vs-contact--flat:hover {
   padding: 0;
@@ -443,15 +442,7 @@ body.is-modalOpen .vs-row__fill,
   box-shadow: none;
 }
 
-.vs-contact__mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  filter: grayscale(1);
-  transition: filter .35s ease;
-}
-.vs-contact:hover .vs-contact__mark,
-.vs-contact[aria-expanded="true"] .vs-contact__mark { filter: grayscale(0); }
+.vs-contact__icon { flex: none; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
