@@ -252,19 +252,31 @@ button { font: inherit; color: inherit; }
   list-style: none;
 }
 
-.vs-row {
-  position: relative;
-  padding: 20px 0 20px var(--vs-row-indent);
-  transition: padding .6s var(--vs-ease);
+/* Each row: the number column (flush with "Selected Works"), then the
+   progress line, then the row's indent. The indent is a registered custom
+   property so the number, which is placed from it, glides with the row as
+   it opens rather than jumping. */
+@property --vs-pad {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 34px;
 }
-.vs-row.is-active { padding: 72px 0 72px 52px; }
+
+.vs-row {
+  --vs-num-col: 36px;   /* number (20) + 16 to the line */
+  --vs-pad: var(--vs-row-indent);
+  position: relative;
+  padding: 20px 0 20px calc(var(--vs-num-col) + var(--vs-pad));
+  transition: padding-top .6s var(--vs-ease), padding-bottom .6s var(--vs-ease), --vs-pad .6s var(--vs-ease);
+}
+.vs-row.is-active { padding-top: 72px; padding-bottom: 72px; --vs-pad: 52px; }
 
 .vs-row__track,
 .vs-row__fill {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: var(--vs-num-col);
   width: 4px;
   border-radius: 99px;
   background: var(--vs-track);
@@ -288,6 +300,7 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-row__title {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -303,10 +316,15 @@ body.is-modalOpen .vs-row__fill,
 }
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
 
-/* 01–05, just right of the progress line, so the projects read as indented
-   from "Selected Works" */
+/* 01–05, left of the progress line and flush with "Selected Works", so the
+   line and the projects read as indented from the heading. Placed from the
+   title so it stays centred on it, then pushed back past the row's indent
+   and the line. */
 .vs-row__num {
-  flex: none;
+  position: absolute;
+  top: 50%;
+  right: calc(100% + var(--vs-pad) + 16px);
+  transform: translateY(-50%);
   width: 20px;
   font: 500 12px var(--vs-mono);
   letter-spacing: .06em;
@@ -349,13 +367,12 @@ body.is-modalOpen .vs-row__fill,
   min-height: 0;
 }
 
-/* 118px = number (20) + gap (28) + active logo (42) + gap (28), so the
-   copy sits under the title */
+/* 70px = active logo (42) + gap (28), so the copy sits under the title */
 .vs-row__inner {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 0 0 118px;
+  padding: 16px 0 0 70px;
 }
 
 .vs-row__meta {
@@ -466,8 +483,8 @@ body.is-modalOpen .vs-row__fill,
 /* Same 22px as the inactive project logos, set in a little from the
    carousel's progress line: about half the line-to-logo gap in the rows, so
    it reads as part of that rhythm. The envelope's outline sits 3px inside its
-   box, hence 16 - 3. */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 13px; }
+   box, and the line sits 36px in past the project numbers: 36 + 16 - 3. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 49px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
@@ -575,7 +592,7 @@ body.is-modalOpen { overflow: hidden; }
   .vs-stage { order: -1; height: 300px; }
   .vs-play { top: 0; right: 0; }
 
-  .vs-row.is-active { padding: 40px 0 40px 32px; }
+  .vs-row.is-active { padding-top: 40px; padding-bottom: 40px; --vs-pad: 32px; }
   .vs-row__name { white-space: normal; }
   .vs-row.is-active .vs-row__name { font-size: 26px; }
   .vs-row__inner { padding-left: 0; }
