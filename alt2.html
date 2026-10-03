@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="alt2.css?v=3bb21697">
+<link rel="stylesheet" href="alt2.css?v=0ed5963e">
 </head>
 <body>
 
@@ -187,7 +187,6 @@
   </section>
 
   <footer class="vs-footer">
-    <p class="vs-footer__copy">© 2026 Minh Nguyen. All rights reserved.</p>
     <div class="vs-menuWrap" data-menu>
       <button class="vs-contact vs-contact--flat" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="contact-menu" data-menu-trigger>
         <img class="vs-contact__mark" src="assets/logos/mark.svg" alt="" width="30" height="30">
@@ -205,6 +204,7 @@
         </a>
       </div>
     </div>
+    <p class="vs-footer__copy">© 2026 Minh Nguyen. All rights reserved.</p>
   </footer>
 </div>
 
@@ -247,8 +247,8 @@
   }, 2600);
 
   /* Dots wave: drifts down at 30% of the scroll speed so it trails the
-     page, and fades out over the first 60% of the first screen. The fade
-     still runs under reduced motion; the drift does not. */
+     page, and goes out of focus (blurs up to 10px) over the first 60% of the
+     first screen. The blur still runs under reduced motion; the drift does not. */
   const wave = document.querySelector('.vs-wave');
   const first = document.querySelector('.vs-first');
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -256,8 +256,8 @@
   const drift = () => {
     ticking = false;
     const h = first.offsetHeight;
-    const fade = Math.min(1, scrollY / (h * 0.6));
-    wave.style.opacity = (0.7 * (1 - fade)).toFixed(3);
+    const blur = Math.min(1, scrollY / (h * 0.6)) * 10;
+    wave.style.filter = blur ? `blur(${blur.toFixed(1)}px)` : '';
     if (!still) {
       wave.style.setProperty('--vs-wave-shift', (Math.min(scrollY, h) * 0.3).toFixed(1) + 'px');
     }

@@ -472,7 +472,7 @@ body.is-modalOpen .vs-row__fill,
 }
 .vs-menu[hidden] { display: none; }
 .vs-menu--down { top: calc(100% + 12px); }
-.vs-menu--up { bottom: calc(100% + 12px); }
+.vs-menu--up { left: 0; right: auto; bottom: calc(100% + 12px); }
 
 .vs-menu__item {
   display: flex;
@@ -564,12 +564,11 @@ body.is-modalOpen { overflow: hidden; }
   .vs-row__inner { padding-left: 0; }
 
   .vs-footer {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
     padding-top: 96px;
     padding-bottom: 48px;
   }
-  .vs-menu--up { right: auto; left: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
