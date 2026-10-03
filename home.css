@@ -500,8 +500,10 @@ body.is-modalOpen .vs-row__fill,
 
 /* Footer: no surface at all, just the icon, label and caret, flush with
    the column edge. */
+/* same size as the copyright opposite */
 .vs-contact--flat,
 .vs-contact--flat:hover {
+  font-size: 13.33px;
   padding: 0;
   background: none;
   box-shadow: none;
@@ -622,17 +624,15 @@ body.is-modalOpen { overflow: hidden; }
 
   .vs-row { --vs-num-col: calc(3.3333vw + var(--vs-num-gap)); }
   .vs-row.is-active { --vs-pad: 4.3333vw; }
-  .vs-row__title { gap: 1.3333vw; }
+  /* Closed rows keep their full-size 18px title, number and 22px logo: 18px
+     is the smallest a project title gets at any width. Open rows scale, but
+     never below that. */
   .vs-row.is-active .vs-row__title { gap: 2.3333vw; }
-  .vs-row__name,
-  .vs-row__num { font-size: 1.5vw; }
   .vs-row.is-active .vs-row__name,
-  .vs-row.is-active .vs-row__num { font-size: 2.6667vw; }
-  .vs-row__logo { width: 1.8333vw; height: 1.8333vw; }
+  .vs-row.is-active .vs-row__num { font-size: max(18px, 2.6667vw); }
   .vs-row.is-active .vs-row__logo { width: 3vw; height: 3vw; }
-  /* numbers stay centred on the title line as both scale */
-  .vs-row__num { top: calc(20px + .0917vw); }
-  .vs-row.is-active .vs-row__num { top: calc(42px + .0333vw); }
+  /* the open number stays centred on its title line as both scale */
+  .vs-row.is-active .vs-row__num { top: calc(42px + 1.5vw - max(9.9px, 1.4667vw)); }
   .vs-row__inner { padding-left: 5.3333vw; }
 
   /* right-aligned with the numbers, as at full size (40 - 22 + 3 = 21 there) */
