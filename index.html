@@ -3,15 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- ?alt2 opens the alternate homepage (alt2.html, direction 3c). -->
+<!-- ?alt2 opens the previous homepage (alt2.html). -->
 <script>if (new URLSearchParams(location.search).has('alt2')) location.replace('alt2.html' + location.search + location.hash);</script>
 <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg">
 <title>Minh Nguyen — Product Design</title>
 <meta name="description" content="Product design portfolio of Minh Nguyen — onboarding, activation and education work at Slack, PayPal and Salesforce.">
-<!-- Link previews. Scrapers do not run JS and never receive the #slug, so a
-     shared /#paypal link previews with the card below; the per-project cards
-     apply to the standalone /paypal/ URLs. Absolute by spec - update BASE here
-     if the site ever moves to a custom domain. -->
 <link rel="canonical" href="https://mnguyen89.github.io/portfolio/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Minh Nguyen — Product Design">
@@ -25,277 +21,421 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-<!-- versioned: the dev server sends only Last-Modified, so browsers apply
-     heuristic freshness and serve a stale stylesheet. Bump on every CSS edit. -->
-<link rel="stylesheet" href="styles.css?v=90bac0c7">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="home.css?v=8fd56be2">
 </head>
 <body>
 
-<header class="pf-nav">
-  <nav class="pf-nav__group" aria-label="Primary">
-    <a class="pf-nav__link is-current" href="#" aria-current="page">Home</a>
-    <!-- Work is a disclosure menu. The list ships hidden and the ARIA wiring is
-         added by script, so without JS the trigger stays an ordinary link to
-         the Selected work heading rather than flashing an unstyled list. -->
-    <div class="pf-nav__menu">
-      <a class="pf-nav__link pf-nav__link--menu" href="#work">
-        Work
-        <img class="pf-nav__caret" src="assets/logos/caret-down.svg" alt="" width="17" height="17">
-      </a>
-      <!-- Options with a case study carry data-case-study, so the modal script
-           picks them up exactly as it does the in-page "See project" buttons.
-           The rest have no page yet and stay in-page jumps, tagged so the
-           difference in behaviour is visible rather than surprising. -->
-      <ul class="pf-nav__dropdown" id="work-menu" hidden>
-        <li><a href="slack/index.html" data-case-study data-case-title="Slack New Team Activation">New Team Activation</a></li>
-        <li><a href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">Digital Wallet NUX</a></li>
-        <li><a href="#work-ai-crm-email">AI CRM and Email <span class="pf-nav__soon">Soon</span></a></li>
-        <li><a href="system/index.html" data-case-study data-case-title="Systems Design">Systems design</a></li>
-        <li><a href="visual-design/index.html" data-case-study data-case-title="Visual Design">Visual Design</a></li>
-      </ul>
-    </div>
-  </nav>
-  <div class="pf-nav__group">
-    <!-- Second disclosure menu; the caret moves inside the trigger so it can
-         rotate on open, as it does on Work. Without JS this stays a link to
-         the footer, where the same details live.
-         Resume is the Figma frame 1:1617 exported to PDF — linking the Figma
-         node itself would need file access the public doesn't have. -->
-    <div class="pf-nav__menu">
-      <a class="pf-nav__link pf-nav__link--menu" href="#contact">
-        My info
-        <img class="pf-nav__caret" src="assets/logos/caret-down.svg" alt="" width="17" height="17">
-      </a>
-      <ul class="pf-nav__dropdown pf-nav__dropdown--right" id="info-menu" hidden>
-        <li><a href="https://www.linkedin.com/in/minh-nguyen-15b89652/" target="_blank" rel="noopener noreferrer"><span class="pf-nav__icon pf-nav__icon--linkedin" aria-hidden="true"></span>LinkedIn</a></li>
-        <li><a href="https://dribbble.com/nguyenm1989" target="_blank" rel="noopener noreferrer"><span class="pf-nav__icon pf-nav__icon--dribbble" aria-hidden="true"></span>Dribbble</a></li>
-        <li><a href="assets/minh-nguyen-resume.pdf" target="_blank" rel="noopener noreferrer"><span class="pf-nav__icon pf-nav__icon--resume" aria-hidden="true"></span>Resume</a></li>
-      </ul>
+<!-- Homepage direction 3c, "Vertical Stories". Case studies open in an
+     overlay (script at the bottom), as they do on the previous homepage. -->
+<div class="vs">
+  <div class="vs-first">
+    <!-- The dots wave from the default homepage, used once: it rises behind
+         "Selected works" and fades into the projects below. Decorative. -->
+    <div class="vs-wave" aria-hidden="true"></div>
+    <header class="vs-header">
+      <nav class="vs-nav" aria-label="Primary">
+        <a href="assets/minh-nguyen-resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="https://www.linkedin.com/in/minh-nguyen-15b89652/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://dribbble.com/nguyenm1989" target="_blank" rel="noopener noreferrer">Dribbble</a>
+        <div class="vs-menuWrap" data-menu>
+          <button class="vs-contact vs-contact--nav" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="email-menu" data-menu-trigger>
+            <svg class="vs-contact__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
+            <span>Contact</span>
+            <svg class="vs-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="vs-menu vs-menu--down" role="menu" id="email-menu" hidden>
+            <button class="vs-menu__item" type="button" role="menuitem" data-copy-email>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+              <span class="vs-menu__copy">Copy&nbsp; &nbsp;<span class="vs-menu__addr">nguyenm1989@gmail.com</span></span>
+            </button>
+            <a class="vs-menu__item" role="menuitem" href="mailto:nguyenm1989@gmail.com" data-menu-close>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 10.5 13.5"/><path d="M21.5 2.5 14.5 21.5l-4-8-8-4z"/></svg>
+              <span>Send Email</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="vs-hero">
+      <img class="vs-hero__avatar" src="assets/logos/avatar.svg" alt="Minh Nguyen" width="132" height="132">
+      <!-- The rotator is decorative motion; screen readers get the full line
+           from the hidden copy instead of whichever phrase is showing. -->
+      <h1 class="vs-hero__title">
+        Hi, I'm Minh.<br>
+        <span class="vs-visuallyHidden">Shaping experiences through product design, systems thinking, design strategy, and visual craft.</span>
+        <span aria-hidden="true"><span class="vs-nowrap">Shaping experiences through</span> <span class="vs-nowrap"><span class="vs-rotator" data-rotator>
+          <span class="vs-phrase is-current" style="--hue: oklch(0.44 0.13 262)">product design,</span>
+          <span class="vs-phrase" style="--hue: oklch(0.66 0.16 45)">systems thinking,</span>
+          <span class="vs-phrase" style="--hue: oklch(0.55 0.12 160)">design strategy,</span>
+          <span class="vs-phrase is-prev" style="--hue: oklch(0.62 0.14 232)"><span class="vs-phrase__lead">and </span>visual craft.</span>
+        </span></span></span>
+      </h1>
+    </section>
+
+    <div class="vs-worksRow">
+      <h2 class="vs-worksRow__title">Selected Works</h2>
+      <button class="vs-iconBtn" type="button" aria-label="Scroll to selected work" data-scroll-work>
+        <img src="assets/logos/arrow-right.svg" alt="" width="18" height="18">
+      </button>
     </div>
   </div>
-</header>
 
-<main>
-  <section class="pf-hero">
-    <div class="pf-hero__text">
-      <h1 class="pf-hero__name">Minh Nguyen</h1>
-      <p class="pf-hero__role">Product Design</p>
+  <section class="vs-work is-offscreen" id="work" aria-label="Selected Works" data-work>
+    <div class="vs-work__grid">
+      <button class="vs-play" type="button" aria-label="Pause" data-play>
+        <svg class="vs-play__pause" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="2.5" height="9" rx="1" fill="#1c1917"/><rect x="7.5" y="1.5" width="2.5" height="9" rx="1" fill="#1c1917"/></svg>
+        <svg class="vs-play__play" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.8v8.4a.6.6 0 0 0 .9.5l6.6-4.2a.6.6 0 0 0 0-1L3.9 1.3a.6.6 0 0 0-.9.5z" fill="#1c1917"/></svg>
+      </button>
+
+      <ol class="vs-list">
+        <li class="vs-row is-active" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="true" aria-controls="work-1">
+            <img class="vs-row__logo" src="assets/logos/slack.svg" alt="Slack">
+            <span class="vs-row__name">New Team Activation</span>
+          </button>
+          <div class="vs-row__details" id="work-1">
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Slack · 2023–2026</span>
+                <p class="vs-row__desc">Streamlined the team onboarding experience to increase early adoption and engagement, helping newly created workspaces get up and running smoothly with key tools and messaging features.</p>
+                <a class="vs-cta" href="slack/index.html" data-case-study data-case-title="Slack New Team Activation">See Project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
+            <img class="vs-row__logo" src="assets/logos/systems-design-slack.svg" alt="Slack">
+            <span class="vs-row__name">Education System</span>
+          </button>
+          <div class="vs-row__details" id="work-3" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Slack · 2025</span>
+                <p class="vs-row__desc">A system for how Slack teaches — turning hundreds of one-off messages into shared patterns that are easier for users to understand and teams to build.</p>
+                <a class="vs-cta" href="system/index.html" data-case-study data-case-title="Systems Design">See Project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-2">
+            <img class="vs-row__logo" src="assets/logos/paypal.webp" alt="PayPal">
+            <span class="vs-row__name">Digital Wallet NUX</span>
+          </button>
+          <div class="vs-row__details" id="work-2" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">PayPal · Mid 2021</span>
+                <p class="vs-row__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
+                <a class="vs-cta" href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">See Project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-4">
+            <img class="vs-row__logo" src="assets/logos/visual-design.svg" alt="Various">
+            <span class="vs-row__name">Visual Design</span>
+          </button>
+          <div class="vs-row__details" id="work-4" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Various · 2012–2018</span>
+                <p class="vs-row__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
+                <a class="vs-cta" href="visual-design/index.html" data-case-study data-case-title="Visual Design">See Project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-5">
+            <img class="vs-row__logo" src="assets/logos/salesforce.webp" alt="Salesforce">
+            <span class="vs-row__name">AI CRM and Email</span>
+          </button>
+          <div class="vs-row__details" id="work-5" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Salesforce · 2016–2018</span>
+                <p class="vs-row__desc">Following a major reorganization, our team designed a desktop email product from scratch to fill key gaps in the Salesforce ecosystem and optimize the core sales workflow.</p>
+                <a class="vs-cta" href="#" aria-disabled="true">Coming Soon</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <!-- One image per row, in the same order. All load up front so switching
+           rows never waits on the network. -->
+      <div class="vs-stage">
+        <img class="vs-stage__img vs-stage__img--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" data-stage>
+        <img class="vs-stage__img vs-stage__img--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" data-stage hidden>
+      </div>
     </div>
-    <img class="pf-hero__avatar" src="assets/logos/avatar.svg" alt="Minh Nguyen" width="148" height="148">
-    <p class="pf-hero__span">Since 2012 &nbsp;&rarr;&nbsp; Present</p>
   </section>
 
-  <h2 class="pf-visuallyHidden" id="work">Selected work</h2>
-
-  <!-- Order, sides and card rhythm follow Figma 11:4: the design alternates
-       card + copy-left with plain band + media-left. -->
-
-  <!-- 1 — Slack, New Team Activation (302:201986 — card, copy left) -->
-  <section class="pf-band pf-band--card" id="work-new-team-activation">
-    <article class="pf-feature pf-feature--framed pf-feature--solo">
-      <div class="pf-feature__body">
-        <img class="pf-feature__logo" src="assets/logos/slack.svg" alt="Slack" width="40" height="40">
-        <h3 class="pf-feature__title">New Team Activation</h3>
-        <p class="pf-feature__desc">Streamlined the team onboarding experience to increase early adoption and engagement, helping newly created workspaces get up and running smoothly with key tools and messaging features.</p>
-        <a class="pf-cta" href="slack/index.html" data-case-study data-case-title="Slack New Team Activation">
-          See project
-          <img src="assets/logos/arrow-right.svg" alt="" width="13" height="13">
+  <footer class="vs-footer">
+    <div class="vs-menuWrap" data-menu>
+      <button class="vs-contact vs-contact--flat" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="contact-menu" data-menu-trigger>
+        <svg class="vs-contact__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
+        <span>Contact Me</span>
+        <svg class="vs-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 6.5 5 3.5 8 6.5" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="vs-menu vs-menu--up" role="menu" id="contact-menu" hidden>
+        <button class="vs-menu__item" type="button" role="menuitem" data-copy-email>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+          <span class="vs-menu__copy">Copy&nbsp; &nbsp;<span class="vs-menu__addr">nguyenm1989@gmail.com</span></span>
+        </button>
+        <a class="vs-menu__item" role="menuitem" href="mailto:nguyenm1989@gmail.com" data-menu-close>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 10.5 13.5"/><path d="M21.5 2.5 14.5 21.5l-4-8-8-4z"/></svg>
+          <span>Send Email</span>
         </a>
       </div>
-      <!-- 386:117555 — the design drops the screenshot from this card; a rotated
-           Slackbot bleeds off the bottom-right instead, clipped by the card.
-           Purely decorative, so it stays out of the accessibility tree. -->
-      <img class="pf-feature__bleed" src="assets/projects/slackbot.webp" alt="" aria-hidden="true"
-           width="600" height="600" loading="lazy" decoding="async">
-    </article>
-  </section>
+    </div>
+    <p class="vs-footer__copy">© 2026 Minh Nguyen. All rights reserved.</p>
+  </footer>
+</div>
 
-  <!-- 2 — PayPal, Digital Wallet NUX (282:101895 — plain band, media left) -->
-  <section class="pf-band" id="work-digital-wallet-nux">
-    <article class="pf-feature">
-      <div class="pf-feature__media">
-        <img src="assets/projects/digital-wallet-nux.webp" width="1054" height="840"
-             alt="PayPal crypto detail screen on an iPhone with gold coin illustrations." loading="lazy" decoding="async">
-      </div>
-      <div class="pf-feature__body">
-        <img class="pf-feature__logo pf-feature__logo--tall" src="assets/logos/paypal.webp" alt="PayPal" width="1280" height="1543">
-        <h3 class="pf-feature__title">Digital Wallet NUX</h3>
-        <p class="pf-feature__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
-        <a class="pf-cta" href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">
-          See project
-          <img src="assets/logos/arrow-right.svg" alt="" width="13" height="13">
-        </a>
-      </div>
-    </article>
-  </section>
-
-  <!-- 3 — Salesforce, AI CRM and Email (309:11432 — card, copy left) -->
-  <section class="pf-band pf-band--card" id="work-ai-crm-email">
-    <article class="pf-feature pf-feature--framed pf-feature--split pf-feature--mediaRight">
-      <div class="pf-feature__body">
-        <img class="pf-feature__logo pf-feature__logo--wide" src="assets/logos/salesforce.webp" alt="Salesforce" width="1280" height="896">
-        <h3 class="pf-feature__title">AI CRM and Email</h3>
-        <p class="pf-feature__desc">Following a major reorganization, our team designed a desktop email product from scratch to fill key gaps in the Salesforce ecosystem and optimize the core sales workflow.</p>
-        <span class="pf-cta is-soon" aria-disabled="true">Coming soon</span>
-      </div>
-      <div class="pf-feature__media">
-        <img src="assets/projects/ai-crm-email.webp" width="1164" height="750"
-             alt="Salesforce desktop email client with an AI-assisted inbox." loading="lazy" decoding="async">
-      </div>
-    </article>
-  </section>
-
-  <!-- 4 — Design systems (309:11499 — plain band, media left). Spans PayPal and
-       Slack work, so it takes a neutral grid mark rather than one company's
-       logo. The case study lives at system/ and carries both projects. -->
-  <section class="pf-band" id="work-systems-design">
-    <article class="pf-feature">
-      <div class="pf-feature__media">
-        <img src="assets/projects/design-systems.webp" width="1200" height="539"
-             alt="Design system pipeline: discovery and design feeding a guidelines site, Sketch kit and JSON tokens, which build pp-components libraries for iOS, Android and web apps."
-             loading="lazy" decoding="async">
-      </div>
-      <div class="pf-feature__body">
-        <span class="pf-feature__tile"><img src="assets/logos/systems-design.svg" alt="" width="48" height="48"></span>
-        <h3 class="pf-feature__title">Systems design</h3>
-        <p class="pf-feature__desc">Two systems: the in-product education system at Slack — five patterns and one rule for choosing between them, shipped as Education Kit — and PayPal’s UI token system, where one naming structure fed a guidelines site, a Sketch kit and JSON tokens into component libraries for iOS, Android and web.</p>
-        <a class="pf-cta" href="system/index.html" data-case-study data-case-title="Systems Design">
-          See project
-          <img src="assets/logos/arrow-right.svg" alt="" width="13" height="13">
-        </a>
-      </div>
-    </article>
-  </section>
-
-  <!-- 5 — Visual Design (303:202155 — card, copy left) -->
-  <section class="pf-band pf-band--card" id="work-visual-design">
-    <article class="pf-feature pf-feature--framed pf-feature--split pf-feature--bleedBottom pf-feature--mediaRight">
-      <div class="pf-feature__body">
-        <!-- spans several employers, so a neutral mark rather than one logo -->
-        <span class="pf-feature__tile"><img src="assets/logos/visual-design.svg" alt="" width="48" height="48"></span>
-        <h3 class="pf-feature__title">Visual Design</h3>
-        <p class="pf-feature__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
-        <a class="pf-cta" href="visual-design/index.html" data-case-study data-case-title="Visual Design">
-          See project
-          <img src="assets/logos/arrow-right.svg" alt="" width="13" height="13">
-        </a>
-      </div>
-      <div class="pf-feature__media">
-        <img src="assets/projects/visual-design.webp" width="1048" height="994"
-             alt="SoundHound 200 million users celebration illustration." loading="lazy" decoding="async">
-      </div>
-    </article>
-  </section>
-</main>
-
-<footer class="pf-footer" id="contact">
-  <p class="pf-footer__note">© 2026 Minh Nguyen. All rights reserved.</p>
-  <div class="pf-footer__contact">
-    <img class="pf-footer__mark" src="assets/logos/mark.svg" alt="" width="30" height="30">
-    <a class="pf-nav__link" href="mailto:nguyenm1989@gmail.com">Contact nguyenm1989@gmail.com</a>
-  </div>
-</footer>
+<div class="vs-toast" role="status" aria-live="polite" data-toast hidden>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>
+  <span>Copied to Clipboard</span>
+</div>
 
 <!-- Case studies are authored as standalone modal pages, so they load in an
      overlay here and stay linkable on their own URL. -->
-<div class="pf-modal" hidden>
-  <iframe class="pf-modal__frame" title="Case study" src="about:blank"></iframe>
+<div class="vs-modal" hidden>
+  <iframe class="vs-modal__frame" title="Case study" src="about:blank"></iframe>
 </div>
 
 <script>
-(function () {
-  const menus = Array.from(document.querySelectorAll('.pf-nav__menu'));
-  if (!menus.length) return;
+(() => {
+  const EMAIL = 'nguyenm1989@gmail.com';
 
-  const all = menus.map((menu) => {
-    const trigger = menu.querySelector('.pf-nav__link--menu');
-    const list = menu.querySelector('.pf-nav__dropdown');
-    const items = Array.from(list.querySelectorAll('a'));
+  /* Rotating phrase. All phrases share one grid cell; the cell's width
+     animates to the measured width of whichever phrase is current. */
+  const rotator = document.querySelector('[data-rotator]');
+  const phrases = [...rotator.children];
+  let phraseIndex = 0;
+  let phraseWidths = [];
+  const measure = () => {
+    phraseWidths = phrases.map(p => Math.ceil(p.getBoundingClientRect().width) + 1);
+    rotator.style.width = `calc(${phraseWidths[phraseIndex]}px + .08em)`;
+  };
+  measure();
+  if (document.fonts) document.fonts.ready.then(measure);
+  addEventListener('resize', measure);
+  setInterval(() => {
+    const prev = phraseIndex;
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    phrases.forEach((p, i) => {
+      p.classList.toggle('is-current', i === phraseIndex);
+      p.classList.toggle('is-prev', i === prev);
+    });
+    rotator.style.width = `calc(${phraseWidths[phraseIndex]}px + .08em)`;
+  }, 2600);
 
-    // Promote the link to a disclosure trigger only now that the script is live.
-    trigger.setAttribute('aria-haspopup', 'true');
-    trigger.setAttribute('aria-controls', list.id);
-    trigger.setAttribute('aria-expanded', 'false');
+  /* Dots wave: drifts down at 30% of the scroll speed so it trails the
+     page, and fades out over the first 60% of the first screen. The fade
+     still runs under reduced motion; the drift does not. */
+  const wave = document.querySelector('.vs-wave');
+  const first = document.querySelector('.vs-first');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ticking = false;
+  const drift = () => {
+    ticking = false;
+    const h = first.offsetHeight;
+    const p = Math.min(1, scrollY / (h * 0.6));
+    wave.style.opacity = (0.85 * (1 - p)).toFixed(3);
+    if (!still) {
+      wave.style.setProperty('--vs-wave-shift', (Math.min(scrollY, h) * 0.3).toFixed(1) + 'px');
+    }
+  };
+  addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(drift); }
+  }, { passive: true });
+  addEventListener('resize', drift);
+  drift();
 
-    const isOpen = () => !list.hidden;
+  /* Scroll to the projects */
+  const work = document.querySelector('[data-work]');
+  document.querySelector('[data-scroll-work]').addEventListener('click', () => {
+    scrollTo({ top: work.getBoundingClientRect().top + scrollY - 24, behavior: 'smooth' });
+  });
 
-    const setOpen = (open, focusIndex) => {
-      list.hidden = !open;
-      menu.classList.toggle('is-open', open);
-      trigger.setAttribute('aria-expanded', String(open));
-      if (open && typeof focusIndex === 'number') items[focusIndex].focus();
+  /* Project carousel. Each row's fill runs 6s, then the next row takes over.
+     A click pins a row and stops autoplay for 3 minutes; Pause stops it until
+     Play is pressed. */
+  const rows = [...document.querySelectorAll('[data-row]')];
+  const stages = [...document.querySelectorAll('[data-stage]')];
+  const playBtn = document.querySelector('[data-play]');
+  let activeIndex = 0;
+  let userPaused = false;
+  let manual = false;
+  let resumeTimer;
+
+  const sync = () => {
+    const stopped = userPaused || manual;
+    work.classList.toggle('is-userPaused', userPaused);
+    work.classList.toggle('is-manual', manual);
+    playBtn.classList.toggle('is-stopped', stopped);
+    playBtn.setAttribute('aria-label', stopped ? 'Play' : 'Pause');
+  };
+
+  // A fresh fill element restarts the animation from 0.
+  const restartFill = () => {
+    work.querySelectorAll('.vs-row__fill').forEach(f => f.remove());
+    const fill = document.createElement('span');
+    fill.className = 'vs-row__fill';
+    fill.addEventListener('animationend', () => select((activeIndex + 1) % rows.length));
+    rows[activeIndex].insertBefore(fill, rows[activeIndex].children[1]);
+  };
+
+  /* Centre the picture on the open row rather than on the whole list. The
+     rows resize over 0.6s, so the stage follows them frame by frame for that
+     long. Stacked on phones, so off there. */
+  const stage = document.querySelector('.vs-stage');
+  const stacked = matchMedia('(max-width: 860px)');
+  let shift = 0;
+  let alignFrame = 0;
+  const place = () => {
+    if (stacked.matches) { shift = 0; stage.style.transform = ''; return; }
+    const r = rows[activeIndex].getBoundingClientRect();
+    const s = stage.getBoundingClientRect();
+    const natural = s.top - shift + s.height / 2;
+    shift = r.top + r.height / 2 - natural;
+    stage.style.transform = `translateY(${shift.toFixed(1)}px)`;
+  };
+  const alignStage = () => {
+    cancelAnimationFrame(alignFrame);
+    const end = performance.now() + 700;
+    const tick = () => {
+      place();
+      if (performance.now() < end) alignFrame = requestAnimationFrame(tick);
     };
+    tick();
+  };
+  addEventListener('resize', place);
+  stacked.addEventListener('change', place);
 
-    const close = (returnFocus) => {
-      if (!isOpen()) return;
-      setOpen(false);
-      if (returnFocus) trigger.focus();
-    };
-
-    return { menu, trigger, list, items, isOpen, setOpen, close };
-  });
-
-  const closeOthers = (keep) => all.forEach((m) => { if (m !== keep) m.close(); });
-
-  all.forEach((m) => {
-    m.trigger.addEventListener('click', (e) => {
-      // let cmd/ctrl/shift-click fall through to the trigger's plain href
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-      e.preventDefault();
-      if (m.isOpen()) { m.close(); return; }
-      closeOthers(m);
-      m.setOpen(true);
+  const select = i => {
+    activeIndex = i;
+    rows.forEach((row, j) => {
+      const on = j === i;
+      row.classList.toggle('is-active', on);
+      row.querySelector('.vs-row__title').setAttribute('aria-expanded', on);
+      row.querySelector('.vs-row__details').inert = !on;
     });
+    stages.forEach((img, j) => { img.hidden = j !== i; });
+    restartFill();
+    alignStage();
+  };
 
-    // Enter already fires click on a link; Space and the arrows do not.
-    m.trigger.addEventListener('keydown', (e) => {
-      if (e.key === ' ') { e.preventDefault(); m.isOpen() ? m.close() : (closeOthers(m), m.setOpen(true)); }
-      else if (e.key === 'ArrowDown') { e.preventDefault(); closeOthers(m); m.setOpen(true, 0); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); closeOthers(m); m.setOpen(true, m.items.length - 1); }
-    });
-
-    m.list.addEventListener('keydown', (e) => {
-      const i = m.items.indexOf(document.activeElement);
-      if (i === -1) return;
-      if (e.key === 'ArrowDown') { e.preventDefault(); m.items[(i + 1) % m.items.length].focus(); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); m.items[(i - 1 + m.items.length) % m.items.length].focus(); }
-      else if (e.key === 'Home') { e.preventDefault(); m.items[0].focus(); }
-      else if (e.key === 'End') { e.preventDefault(); m.items[m.items.length - 1].focus(); }
-    });
-
-    m.items.forEach((item) => {
-      item.addEventListener('click', () => {
-        const href = item.getAttribute('href');
-        m.close();
-        // In-page options focus the section they land on, so the jump is
-        // announced and the next Tab continues from there. Everything else —
-        // a case study, an external profile — hands off to its own handler or
-        // to the browser, so focus goes back to the trigger.
-        if (!href.startsWith('#') || href === '#') { m.trigger.focus(); return; }
-        const target = document.querySelector(href);
-        if (!target) return;
-        target.setAttribute('tabindex', '-1');
-        target.focus({ preventScroll: true });
-      });
-    });
-
-    m.menu.addEventListener('focusout', (e) => {
-      if (!m.menu.contains(e.relatedTarget)) m.close();
+  rows.forEach((row, i) => {
+    row.querySelector('.vs-row__title').addEventListener('click', () => {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        if (userPaused) return;
+        manual = false;
+        sync();
+        restartFill();
+      }, 180000);
+      manual = true;
+      sync();
+      select(i);
     });
   });
 
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') all.forEach((m) => m.close(true)); });
-  addEventListener('click', (e) => {
-    all.forEach((m) => { if (!m.menu.contains(e.target)) m.close(); });
+  playBtn.addEventListener('click', () => {
+    clearTimeout(resumeTimer);
+    if (!userPaused && !manual) {
+      userPaused = true;
+    } else {
+      userPaused = false;
+      manual = false;
+      restartFill();
+    }
+    sync();
   });
+
+  // No hover pause: it froze the story whenever the pointer rested anywhere
+  // over the section, with nothing on screen to say so. Pause and a click
+  // on a row are the explicit ways to stop it.
+
+  // The story holds at the start until the projects are on screen, and
+  // pauses again whenever they scroll away.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      work.classList.toggle('is-offscreen', !entry.isIntersecting);
+    }, { threshold: 0.4 }).observe(work);
+  } else {
+    work.classList.remove('is-offscreen');
+  }
+
+  document.querySelectorAll('.vs-cta[aria-disabled="true"]').forEach(a =>
+    a.addEventListener('click', e => e.preventDefault()));
+
+  sync();
+  restartFill();
+  place();
+  if (document.fonts) document.fonts.ready.then(place);
+  addEventListener('load', place);
+
+  /* Email menus (header and footer behave the same) */
+  const menus = [...document.querySelectorAll('[data-menu]')];
+  const setOpen = (wrap, open) => {
+    wrap.querySelector('[data-menu-trigger]').setAttribute('aria-expanded', open);
+    wrap.querySelector('[role="menu"]').hidden = !open;
+  };
+  const closeAll = () => menus.forEach(m => setOpen(m, false));
+
+  menus.forEach(wrap => {
+    const trigger = wrap.querySelector('[data-menu-trigger]');
+    trigger.addEventListener('click', () => setOpen(wrap, trigger.getAttribute('aria-expanded') !== 'true'));
+    wrap.querySelectorAll('[data-menu-close]').forEach(a => a.addEventListener('click', () => setOpen(wrap, false)));
+  });
+
+  document.addEventListener('mousedown', e => {
+    menus.forEach(m => { if (!m.contains(e.target)) setOpen(m, false); });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    const open = menus.find(m => !m.querySelector('[role="menu"]').hidden);
+    if (!open) return;
+    closeAll();
+    open.querySelector('[data-menu-trigger]').focus();
+  });
+
+  /* Copy + toast */
+  const toast = document.querySelector('[data-toast]');
+  let toastTimer;
+  const copied = () => {
+    closeAll();
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 2200);
+  };
+  document.querySelectorAll('[data-copy-email]').forEach(btn => btn.addEventListener('click', () => {
+    if (navigator.clipboard) navigator.clipboard.writeText(EMAIL).then(copied, copied);
+    else copied();
+  }));
 })();
 </script>
 
 <script>
+// Case-study overlay, carried over from the default homepage (index.html).
 (function () {
-  const modal = document.querySelector('.pf-modal');
-  const frame = modal.querySelector('.pf-modal__frame');
+  const modal = document.querySelector('.vs-modal');
+  const frame = modal.querySelector('.vs-modal__frame');
   let lastFocus = null;
 
   // Captured before the first pushState. Every href on this page is relative,
@@ -404,122 +544,5 @@
   sync();
 })();
 </script>
-
-<script>
-// Dots wave parallax (391:118960). The wave is body::after, and JS cannot
-// touch a pseudo-element directly, so both values are passed down as custom
-// properties on :root and consumed in styles.css.
-(() => {
-  const root = document.documentElement;
-  const hero = document.querySelector('.pf-hero');
-  const halftoneBand = document.querySelector('#work-ai-crm-email');
-  const firstCard = document.querySelector('#work-new-team-activation .pf-feature');
-  if (!hero) return;
-
-  // Placed so the VISIBLE crest lands where the design's render puts it:
-  // ~215px above the first card's top edge at the 1000 column, which is
-  // 0.3172 of the wave's height. Measured off the card, not written as the
-  // frame's y, because the nav's height is a clamp and the sections reflow.
-  //
-  // Not the frame's box offset of 0.39328. The artwork is transparent down to
-  // 0.3796 of its height (its dots start at row 372 of 980, by three separate
-  // measures), so with background-size: cover — which crops this 1372x980 art
-  // horizontally and not vertically — that offset puts the crest only 9px
-  // above the card. The design's render shows ~215px, so the frame's image
-  // fill must be cropped vertically too, which cover cannot reproduce. The
-  // box is shifted up to land the same on-screen result instead.
-  // Fitted to the design's render rather than read off the node's y. Measuring
-  // ink density in the render, the mesh's first trace sits 220px above the
-  // card's top edge, within x 720..1000 where the mesh actually is. (An
-  // earlier read of 357px was the avatar's shadow, not the mesh — the avatar
-  // spans 261..409px above the card, right across that band.) With the box
-  // cropping the artwork under cover, 220px of clearance puts the box top
-  // 0.7032 of its height above the card.
-  const DOTS_START = 0.3796;
-  const CREST_ABOVE_CARD = 0.3236;
-  const ABOVE_CARD = 0.7032;
-
-  // Offset from the measured fit, positive = lower. A flat pixel nudge, not
-  // folded into the fraction above, so it does not scale with the column.
-  // Negative lifts the mesh without moving the cards, which stay where the
-  // hero's bottom padding puts them.
-  const NUDGE_DOWN = 0;
-
-  // Drifting down eats the crest, so the budget is what is above the card
-  // less this much, keeping a clear crest for the whole time the card's top
-  // edge is on screen. The rate is derived from the budget so the drift is
-  // one continuous speed rather than running out and locking to the page.
-  const MIN_CREST = 60;
-  let driftBudget = 0;
-  let rate = 0;
-  let cardTopDoc = Infinity;
-
-  // Both decorations are measured rather than hard-coded: the nav's height is
-  // a clamp, and the sections reflow, so neither the frame's y values nor a
-  // fixed offset from the hero stays correct across widths.
-  const place = () => {
-    if (firstCard) {
-      // the wave's height comes from its aspect-ratio, so it tracks the column
-      const waveH = parseFloat(getComputedStyle(document.body, '::after').height) || 0;
-      const rect = firstCard.getBoundingClientRect();
-      const cardTop = rect.top + window.scrollY;
-      const waveTop = cardTop - ABOVE_CARD * waveH + NUDGE_DOWN;
-
-      root.style.setProperty('--wave-top', waveTop + 'px');
-
-      cardTopDoc = cardTop;
-      // the nudge eats into the crest, so the drift budget follows it down
-      driftBudget = Math.max(0, CREST_ABOVE_CARD * waveH - NUDGE_DOWN - MIN_CREST);
-      rate = cardTop > 0 ? driftBudget / cardTop : 0;
-    } else {
-      root.style.setProperty('--wave-top', (hero.offsetTop + 441.23) + 'px');
-    }
-    // The halftone is on body so its multiply can reach the paper, so it no
-    // longer inherits the AI CRM band's box. Reproduce the bottom:-80px it had
-    // there: its 690px box ends 80px below the band.
-    if (halftoneBand) {
-      const bottom = halftoneBand.offsetTop + halftoneBand.offsetHeight + 80;
-      root.style.setProperty('--halftone-top', (bottom - 690) + 'px');
-    }
-  };
-
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let frame = 0;
-
-  const drift = () => {
-    frame = 0;
-    // Past cardTopDoc the card's top edge is off screen and the crest no
-    // longer constrains anything, so the budget grows at the same rate and the
-    // lag continues seamlessly instead of locking to the page.
-    const y = window.scrollY;
-    const shift = Math.min(y * rate, driftBudget + Math.max(0, y - cardTopDoc) * rate);
-    root.style.setProperty('--wave-shift', shift.toFixed(2) + 'px');
-  };
-
-  const onScroll = () => { if (!frame) frame = requestAnimationFrame(drift); };
-
-  const sync = () => {
-    if (motion.matches) {
-      removeEventListener('scroll', onScroll);
-      if (frame) { cancelAnimationFrame(frame); frame = 0; }
-      root.style.setProperty('--wave-shift', '0px');
-    } else {
-      addEventListener('scroll', onScroll, { passive: true });
-      drift();
-    }
-  };
-
-  place();
-  addEventListener('resize', place);
-  // The placement is measured off the first card, so anything that moves the
-  // card invalidates it. Web fonts land after this script runs and reflow the
-  // hero, so re-measure once they are ready (and on load, for images).
-  addEventListener('load', place);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
-  motion.addEventListener('change', sync);
-  sync();
-})();
-</script>
-
 </body>
 </html>

@@ -1,3 +1,6 @@
+/* shared copy template: eyebrow, title, body, stats callout */
+@import url("../shared/cs-content.css");
+
 :root {
   --cs-ink: #1c1917;
   --cs-ink-soft: #6b6661;

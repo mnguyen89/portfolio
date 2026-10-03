@@ -1,3 +1,6 @@
+/* shared copy template: eyebrow, title, body, stats callout */
+@import url("../shared/cs-content.css");
+
 /* Slack — New Team Activation case study.
    Mirrors the PayPal case study's shell and type ramp. Layout follows the Figma
    frame "Slack" (262:101090): a light opening, a grey band for the problems,

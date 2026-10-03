@@ -1,0 +1,60 @@
+/* Case-study copy template, shared by every case study.
+
+   A copy block is: an optional eyebrow, the title, the body, and optionally
+   a row of stats as a callout underneath. Modelled on the Slack premise
+   ("Problem" / More teams were joining Slack…).
+
+   Each page @imports this at the top of its own styles.css rather than
+   linking it, because the Slack page is encrypted at build time and its
+   <head> cannot change without a rebuild; the stylesheet it already loads
+   can. Imported rules come before the page's own, so every selector here is
+   scoped one level deeper than the page rule it overrides. */
+
+/* Eyebrow. .cs-copy__kicker is the older name on Systems Design; both read
+   the same now. */
+.cs .cs-copy__eyebrow,
+.cs .cs-copy .cs-copy__kicker {
+  display: block;
+  margin: 0 0 12px;
+  font-family: var(--cs-body);
+  font-size: 13.33px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #a39d96;
+}
+.cs .cs-copy--onDark .cs-copy__eyebrow,
+.cs .cs-copy--onDark .cs-copy__kicker { color: rgba(255, 255, 255, .6); }
+
+/* Titles break where the measure runs out, not balanced into even lines */
+.cs .cs-copy .cs-copy__title { text-wrap: wrap; }
+
+/* Body: one size, an airier line and one measure everywhere, wide blocks
+   included */
+.cs .cs-copy .cs-copy__body {
+  max-width: 520px;
+  font-size: 13.33px;
+  line-height: 2;
+}
+
+/* Stats callout under a copy block: two 220px columns, 40px apart, with
+   lighter, larger figures. No margin of its own: on Slack the stats are their
+   own section, and the page's section gap alone gives the template's spacing. */
+.cs .cs-stats {
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  column-gap: 40px;
+  row-gap: 24px;
+  margin-top: 0;
+}
+.cs .cs-stats .cs-stat__figure {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.cs .cs-stats .cs-stat__label { margin-top: 8px; }
+
+@container (max-width: 640px) {
+  .cs .cs-stats { grid-template-columns: minmax(0, 1fr); }
+  .cs .cs-stats .cs-stat__figure { font-size: 32px; }
+}

@@ -1,3 +1,6 @@
+/* shared copy template: eyebrow, title, body, stats callout */
+@import url("../shared/cs-content.css");
+
 /* Design Systems — Slack education system + PayPal UI token system.
    Shares the modal shell, type ramp and gutter with the other three case
    studies. Layout follows the Figma frame "Design Systems" (367:112838).
