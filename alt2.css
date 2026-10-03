@@ -451,10 +451,11 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-contact__icon { flex: none; }
-/* Same 22px as the inactive project logos. The envelope's outline sits 3px
-   inside its box, so pull it left to line its edge up with the carousel's
-   progress line. */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 -3px; }
+/* Same 22px as the inactive project logos, set in a little from the
+   carousel's progress line: about half the line-to-logo gap in the rows, so
+   it reads as part of that rhythm. The envelope's outline sits 3px inside its
+   box, hence 16 - 3. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 13px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
