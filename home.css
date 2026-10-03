@@ -7,7 +7,7 @@
   --vs-black: #1d1c1d;
   --vs-body: #4a4540;
   --vs-secondary: #6b6661;
-  --vs-hero-grey: #aaa49d;
+  --vs-hero-grey: #8a847d;   /* 3.55:1 on the page; #aaa49d was 2.4:1 */
   --vs-muted: #a39d96;
   --vs-fill: #7d7771;   /* active progress bar: dark grey, clearly short of black */
   --vs-track: rgba(28, 25, 23, .12);
@@ -270,8 +270,8 @@ button { font: inherit; color: inherit; }
 }
 /* An open row starts 42px down; its number follows to stay centred on the
    title line (42 + 18 - 17.6 = 42) */
-/* and is never shorter than 480px, however short its copy */
-.vs-row.is-active { padding-top: 42px; padding-bottom: 96px; min-height: 480px; --vs-pad: 52px; }
+/* and is never shorter than 400px, however short its copy */
+.vs-row.is-active { padding-top: 42px; padding-bottom: 40px; min-height: 400px; --vs-pad: 52px; }
 
 .vs-row__track,
 .vs-row__fill {
@@ -504,10 +504,11 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-contact__icon { flex: none; }
-/* Same 22px as the inactive project logos, flush with the column edge like
-   the copyright opposite. The envelope's outline sits 3px inside its box, so
-   it is pulled 3px left to put the drawn edge on the line. */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 -3px; }
+/* Same 22px as the inactive project logos, in the project number column:
+   right-aligned with the numbers, which end 40px in. The envelope's outline
+   sits ~3px inside its box, so the box overhangs by that much to put the
+   drawn edge on the numbers' edge: 40 - 22 + 3 = 21. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 21px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 

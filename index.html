@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- soft password gate for the whole site (see shared/gate.js) -->
+<script src="shared/gate.js"></script>
 <!-- ?alt2 opens the previous homepage (alt2.html). -->
 <script>if (new URLSearchParams(location.search).has('alt2')) location.replace('alt2.html' + location.search + location.hash);</script>
 <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg">
@@ -22,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="home.css?v=d576bc50">
+<link rel="stylesheet" href="home.css?v=8d178782">
 </head>
 <body>
 
@@ -66,10 +68,14 @@
         Minh Nguyen&nbsp;–<br>
         <span class="vs-visuallyHidden">Shaping experiences through product design, systems thinking, design strategy, and visual craft.</span>
         <span aria-hidden="true"><span class="vs-nowrap">Shaping experiences through</span> <span class="vs-nowrap"><span class="vs-rotator" data-rotator>
-          <span class="vs-phrase is-current" style="--hue: oklch(0.44 0.13 262)">product design,</span>
-          <span class="vs-phrase" style="--hue: oklch(0.66 0.16 45)">systems thinking,</span>
-          <span class="vs-phrase" style="--hue: oklch(0.55 0.12 160)">design strategy,</span>
-          <span class="vs-phrase is-prev" style="--hue: oklch(0.62 0.14 232)"><span class="vs-phrase__lead">and </span>visual craft.</span>
+          <!-- Semi-analogous around the teal (hue 232), which leads: then cobalt
+               and violet stepping round the wheel, and jade, which sits next to
+               the teal again as the cycle loops. Rich but not neon: chroma held
+               below each hue's maximum. -->
+          <span class="vs-phrase is-current" style="--hue: oklch(0.62 0.14 232)">product design,</span>
+          <span class="vs-phrase" style="--hue: oklch(0.48 0.16 264)">systems thinking,</span>
+          <span class="vs-phrase" style="--hue: oklch(0.48 0.15 292)">design strategy,</span>
+          <span class="vs-phrase is-prev" style="--hue: oklch(0.54 0.11 168)"><span class="vs-phrase__lead">and </span>visual craft.</span>
         </span></span></span>
       </h1>
     </section>
