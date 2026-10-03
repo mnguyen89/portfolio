@@ -500,11 +500,10 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-contact__icon { flex: none; }
-/* Same 22px as the inactive project logos, set in a little from the
-   carousel's progress line: about half the line-to-logo gap in the rows, so
-   it reads as part of that rhythm. The envelope's outline sits 3px inside its
-   box, and the line sits past the project number column: col + 16 - 3. */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 calc(40px + var(--vs-row-indent) - 4px + 13px); }
+/* Same 22px as the inactive project logos, flush with the column edge like
+   the copyright opposite. The envelope's outline sits 3px inside its box, so
+   it is pulled 3px left to put the drawn edge on the line. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 -3px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
