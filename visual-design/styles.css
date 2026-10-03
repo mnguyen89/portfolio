@@ -1,5 +1,6 @@
-/* shared copy template: eyebrow, title, body, stats callout */
+/* shared copy template (eyebrow, title, body, stats) and modal shell */
 @import url("../shared/cs-content.css");
+@import url("../shared/cs-shell.css");
 
 /* Visual Design — 2012–2018 retrospective.
    Shares the modal shell, type ramp and gutter with the Slack and PayPal case

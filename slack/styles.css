@@ -1,5 +1,6 @@
-/* shared copy template: eyebrow, title, body, stats callout */
+/* shared copy template (eyebrow, title, body, stats) and modal shell */
 @import url("../shared/cs-content.css");
+@import url("../shared/cs-shell.css");
 
 /* Slack — New Team Activation case study.
    Mirrors the PayPal case study's shell and type ramp. Layout follows the Figma

@@ -1,5 +1,6 @@
-/* shared copy template: eyebrow, title, body, stats callout */
+/* shared copy template (eyebrow, title, body, stats) and modal shell */
 @import url("../shared/cs-content.css");
+@import url("../shared/cs-shell.css");
 
 /* Design Systems — Slack education system + PayPal UI token system.
    Shares the modal shell, type ramp and gutter with the other three case

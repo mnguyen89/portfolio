@@ -1,0 +1,31 @@
+/* Case-study modal shell, shared by every case study.
+
+   The close button hangs outside the panel, 20px off its right edge and
+   level with its top, on the scrim. It is still the panel's first child and
+   still sticky, so it follows the reader down the page; a negative right
+   margin is what carries it past the edge.
+
+   Imported at the top of each page's styles.css (see cs-content.css for why),
+   so selectors are one level more specific than the page's .cs-close. */
+
+@media (min-width: 1104px) {
+  /* 1104 = the 960 panel plus 72 a side: the button's 44 and 20 gap, and 8
+     to spare. Narrower than that the panel fills the window, so the button
+     stays inside its corner as before. */
+  /* top: 0 because the sticky offset is measured inside the scrim's padding,
+     which is exactly where the panel starts */
+  .cs-panel .cs-close {
+    top: 0;
+    width: 44px;
+    height: 44px;
+    margin: 0 -64px -44px auto;
+    background: #fff;
+    backdrop-filter: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .14);
+  }
+  .cs-panel .cs-close svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.6;
+  }
+}
