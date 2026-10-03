@@ -69,6 +69,8 @@ button { font: inherit; color: inherit; }
 }
 .vs-first > :not(.vs-wave),
 .vs-work { position: relative; z-index: 1; }
+/* above the hero, so the Contact menu that drops over it stays hoverable */
+.vs-first > .vs-header { z-index: 2; }
 
 /* hero-wave-1775 is transparent for its top ~38%, so the box sits high and
    the dots start level with the bottom of the headline. Same opacity and
