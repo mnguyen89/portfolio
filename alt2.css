@@ -393,6 +393,8 @@ body.is-modalOpen .vs-row__fill,
   object-fit: contain;
 }
 .vs-stage__img[hidden] { display: none; }
+/* screenshots on their own tinted ground */
+.vs-stage__img--rounded { border-radius: 20px; }
 .vs-stage__img--slackbot {
   max-width: 75%;
   max-height: 75%;

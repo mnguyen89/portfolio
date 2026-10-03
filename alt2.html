@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="alt2.css?v=5a4e7ee6">
+<link rel="stylesheet" href="alt2.css?v=9c9546fb">
 </head>
 <body>
 
@@ -111,6 +111,22 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
+            <img class="vs-row__logo" src="assets/logos/systems-design-slack.svg" alt="Slack">
+            <span class="vs-row__name">Education System</span>
+          </button>
+          <div class="vs-row__details" id="work-3" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Slack · 2025</span>
+                <p class="vs-row__desc">A system for how Slack teaches — turning hundreds of one-off messages into shared patterns that are easier for users to understand and teams to build.</p>
+                <a class="vs-cta" href="system/index.html" data-case-study data-case-title="Systems Design">See Project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-2">
             <img class="vs-row__logo" src="assets/logos/paypal.webp" alt="PayPal">
             <span class="vs-row__name">Digital Wallet NUX</span>
@@ -121,22 +137,6 @@
                 <span class="vs-row__meta">PayPal · Mid 2021</span>
                 <p class="vs-row__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
                 <a class="vs-cta" href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">See Project <span aria-hidden="true">→</span></a>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="vs-row" data-row>
-          <span class="vs-row__track"></span>
-          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
-            <img class="vs-row__logo" src="assets/logos/systems-design.svg" alt="Slack, PayPal">
-            <span class="vs-row__name">Systems Design</span>
-          </button>
-          <div class="vs-row__details" id="work-3" inert>
-            <div class="vs-row__clip">
-              <div class="vs-row__inner">
-                <span class="vs-row__meta">Slack, PayPal · 2021–2026</span>
-                <p class="vs-row__desc">Two systems: the in-product education system at Slack — five patterns and one rule for choosing between them, shipped as Education Kit — and PayPal’s UI token system, where one naming structure fed a guidelines site, a Sketch kit and JSON tokens into component libraries for iOS, Android and web.</p>
-                <a class="vs-cta" href="system/index.html" data-case-study data-case-title="Systems Design">See Project <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -179,8 +179,8 @@
            rows never waits on the network. -->
       <div class="vs-stage">
         <img class="vs-stage__img vs-stage__img--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" data-stage>
+        <img class="vs-stage__img vs-stage__img--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" data-stage hidden>
-        <img class="vs-stage__img" src="assets/projects/design-systems.webp" alt="Design system pipeline diagram" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" data-stage hidden>
       </div>
