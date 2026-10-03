@@ -9,7 +9,7 @@
   --vs-secondary: #6b6661;
   --vs-hero-grey: #aaa49d;
   --vs-muted: #a39d96;
-  --vs-fill: #57524c;
+  --vs-fill: #7d7771;   /* active progress bar: dark grey, clearly short of black */
   --vs-track: rgba(28, 25, 23, .12);
   --vs-hover: rgba(28, 25, 23, .06);
   --vs-link-hover: #00a0c8;
@@ -18,7 +18,7 @@
   --vs-reveal: cubic-bezier(.2, .8, .2, 1);
   --vs-gutter: 72px;
   /* inactive project row: track to logo */
-  --vs-row-indent: 34px;
+  --vs-row-indent: 44px;
 
   --vs-display: 'Bricolage Grotesque', sans-serif;
   --vs-mono: 'Geist Mono', monospace;
@@ -218,7 +218,9 @@ button { font: inherit; color: inherit; }
 .vs-work__grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  /* The list carries ~200px of number, line and indent before its copy
+     starts, so it takes the larger share; descriptions stay near 400px */
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 72px;
   align-items: center;
   min-height: 560px;
@@ -258,15 +260,18 @@ button { font: inherit; color: inherit; }
 /* Each row: the number column (flush with "Selected Works"), then the
    progress line, then the row's indent. */
 .vs-row {
-  --vs-num-col: 56px;   /* an open row's 32px number (~38) + 16 to the line */
+  /* The number sits as far left of the line as a closed row's logo sits
+     right of it: the indent less the 4px line. */
+  --vs-num-gap: calc(var(--vs-row-indent) - 4px);
+  --vs-num-col: calc(40px + var(--vs-num-gap));   /* room for an open row's 32px number (~38) */
   --vs-pad: var(--vs-row-indent);
   position: relative;
   padding: 20px 0 20px calc(var(--vs-num-col) + var(--vs-pad));
   transition: padding .6s var(--vs-ease);
 }
-/* 18px top on an open row lines its 42px title up with the number: both
-   centred 39px down */
-.vs-row.is-active { padding-top: 18px; padding-bottom: 96px; --vs-pad: 52px; }
+/* An open row starts 42px down; its number follows to stay centred on the
+   42px title (42 + 21 - 17.6 = 45) */
+.vs-row.is-active { padding-top: 42px; padding-bottom: 96px; --vs-pad: 52px; }
 
 .vs-row__track,
 .vs-row__fill {
@@ -312,19 +317,18 @@ body.is-modalOpen .vs-row__fill,
 }
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
 
-/* 01–05, in the column left of the progress line, right-aligned 16px off
-   it, so the line and the projects read as indented from "Selected Works".
+/* 01–05, in the column left of the progress line, right-aligned as far
+   off it as the closed rows' logos are on the other side, so the line and the projects read as indented from "Selected Works".
    Same face, size
    and weight as the row's title, and it grows with the title when the row
    opens. Its colour comes from the title button, which dims closed rows.
    21px = the row's 20 top padding + half the 22px closed title - half the
-   number's 19.8px line: centred on a closed row, and when a row opens it
-   keeps that same distance from the top. */
+   number's 19.8px line, so it is centred on a closed row. */
 .vs-row__num {
   position: absolute;
   top: 21px;
   left: 0;
-  width: calc(var(--vs-num-col) - 16px);
+  width: calc(var(--vs-num-col) - var(--vs-num-gap));
   text-align: right;
   font-family: var(--vs-display);
   font-size: 18px;
@@ -332,9 +336,9 @@ body.is-modalOpen .vs-row__fill,
   line-height: 1.1;
   letter-spacing: -.015em;
   font-variant-numeric: tabular-nums;
-  transition: font-size .6s var(--vs-ease);
+  transition: font-size .6s var(--vs-ease), top .6s var(--vs-ease);
 }
-.vs-row.is-active .vs-row__num { font-size: 32px; font-weight: 700; }
+.vs-row.is-active .vs-row__num { top: 45px; font-size: 32px; font-weight: 700; }
 
 .vs-row__logo {
   flex: none;
@@ -486,8 +490,8 @@ body.is-modalOpen .vs-row__fill,
 /* Same 22px as the inactive project logos, set in a little from the
    carousel's progress line: about half the line-to-logo gap in the rows, so
    it reads as part of that rhythm. The envelope's outline sits 3px inside its
-   box, and the line sits 56px in past the project numbers: 56 + 16 - 3. */
-.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 69px; }
+   box, and the line sits past the project number column: col + 16 - 3. */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin: 0 8px 0 calc(40px + var(--vs-row-indent) - 4px + 13px); }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
@@ -573,6 +577,15 @@ body.is-modalOpen { overflow: hidden; }
   border: 0;
 }
 
+/* ---- Mid-size windows: still two columns, but the indents either side of
+   the line and the gap to the picture tighten so the copy keeps its width. */
+
+@media (min-width: 861px) and (max-width: 1199px) {
+  :root { --vs-row-indent: 28px; }
+  .vs-row.is-active { --vs-pad: 36px; }
+  .vs-work__grid { gap: 40px; }
+}
+
 /* ---- Narrow screens. The handoff is desktop-only; this keeps the same
    pieces in one column so nothing overflows on a phone. */
 
@@ -595,7 +608,7 @@ body.is-modalOpen { overflow: hidden; }
   .vs-stage { order: -1; height: 300px; }
   .vs-play { top: 0; right: 0; }
 
-  .vs-row.is-active { padding-top: 18px; padding-bottom: 56px; --vs-pad: 32px; }
+  .vs-row.is-active { padding-top: 42px; padding-bottom: 56px; --vs-pad: 32px; }
   .vs-row__name { white-space: normal; }
   .vs-row.is-active .vs-row__name,
   .vs-row.is-active .vs-row__num { font-size: 26px; }
