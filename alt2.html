@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="alt2.css?v=7839e0e1">
+<link rel="stylesheet" href="alt2.css?v=5a4e7ee6">
 </head>
 <body>
 
@@ -248,8 +248,8 @@
   }, 2600);
 
   /* Dots wave: drifts down at 30% of the scroll speed so it trails the
-     page, and goes out of focus (blurs up to 10px and fades out) over the first 60%
-     of the first screen. The blur and fade still run under reduced motion; the drift does not. */
+     page, and fades out over the first 60% of the first screen. The fade
+     still runs under reduced motion; the drift does not. */
   const wave = document.querySelector('.vs-wave');
   const first = document.querySelector('.vs-first');
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -258,8 +258,7 @@
     ticking = false;
     const h = first.offsetHeight;
     const p = Math.min(1, scrollY / (h * 0.6));
-    wave.style.filter = p ? `blur(${(p * 10).toFixed(1)}px)` : '';
-    wave.style.opacity = (0.7 * (1 - p)).toFixed(3);
+    wave.style.opacity = (0.85 * (1 - p)).toFixed(3);
     if (!still) {
       wave.style.setProperty('--vs-wave-shift', (Math.min(scrollY, h) * 0.3).toFixed(1) + 'px');
     }
@@ -304,6 +303,33 @@
     rows[activeIndex].insertBefore(fill, rows[activeIndex].children[1]);
   };
 
+  /* Centre the picture on the open row rather than on the whole list. The
+     rows resize over 0.6s, so the stage follows them frame by frame for that
+     long. Stacked on phones, so off there. */
+  const stage = document.querySelector('.vs-stage');
+  const stacked = matchMedia('(max-width: 860px)');
+  let shift = 0;
+  let alignFrame = 0;
+  const place = () => {
+    if (stacked.matches) { shift = 0; stage.style.transform = ''; return; }
+    const r = rows[activeIndex].getBoundingClientRect();
+    const s = stage.getBoundingClientRect();
+    const natural = s.top - shift + s.height / 2;
+    shift = r.top + r.height / 2 - natural;
+    stage.style.transform = `translateY(${shift.toFixed(1)}px)`;
+  };
+  const alignStage = () => {
+    cancelAnimationFrame(alignFrame);
+    const end = performance.now() + 700;
+    const tick = () => {
+      place();
+      if (performance.now() < end) alignFrame = requestAnimationFrame(tick);
+    };
+    tick();
+  };
+  addEventListener('resize', place);
+  stacked.addEventListener('change', place);
+
   const select = i => {
     activeIndex = i;
     rows.forEach((row, j) => {
@@ -314,6 +340,7 @@
     });
     stages.forEach((img, j) => { img.hidden = j !== i; });
     restartFill();
+    alignStage();
   };
 
   rows.forEach((row, i) => {
@@ -361,6 +388,9 @@
 
   sync();
   restartFill();
+  place();
+  if (document.fonts) document.fonts.ready.then(place);
+  addEventListener('load', place);
 
   /* Email menus (header and footer behave the same) */
   const menus = [...document.querySelectorAll('[data-menu]')];

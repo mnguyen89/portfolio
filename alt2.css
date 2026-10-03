@@ -75,8 +75,8 @@ button { font: inherit; color: inherit; }
 .vs-first > .vs-header { z-index: 2; }
 
 /* hero-wave-1775 is transparent for its top ~38%, so the box sits high and
-   the dots start level with the bottom of the headline. Same opacity and
-   -8deg tilt as on the default homepage; the mask fades it out as it
+   the dots start level with the bottom of the headline. Same -8deg tilt as on
+   the default homepage, a little darker; the mask fades it out as it
    reaches the projects. */
 .vs-wave {
   position: absolute;
@@ -86,7 +86,7 @@ button { font: inherit; color: inherit; }
   width: 82%;
   aspect-ratio: 1372 / 980;
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
-  opacity: .7;
+  opacity: .85;
   /* --vs-wave-shift is the parallax, set by the script on scroll */
   transform: translate3d(0, var(--vs-wave-shift, 0px), 0) rotate(-8deg);
   will-change: transform;
@@ -378,6 +378,7 @@ body.is-modalOpen .vs-row__fill,
 .vs-cta:hover { color: #fff; }
 .vs-cta[aria-disabled="true"] { cursor: default; }
 
+/* The script shifts the stage so the picture centres on the open row */
 .vs-stage {
   position: relative;
   height: 480px;
@@ -449,9 +450,9 @@ body.is-modalOpen .vs-row__fill,
 }
 
 .vs-contact__icon { flex: none; }
-/* 16px icon centred in the 22px logo column (3 each side), then the rows'
-   16px logo-to-title gap: 3 + 16 + 11 + 8 = 38 = 22 + 16 */
-.vs-contact--flat .vs-contact__icon { margin: 0 11px 0 3px; }
+/* Same 22px as the inactive project logos, then the rows' 16px
+   logo-to-title gap (8 here + the button's 8) */
+.vs-contact--flat .vs-contact__icon { width: 22px; height: 22px; margin-right: 8px; }
 
 /* ---- Email menus (header opens down, footer opens up) */
 
