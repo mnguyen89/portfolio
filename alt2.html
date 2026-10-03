@@ -372,6 +372,16 @@
   // address bar honest — otherwise it would still claim the project you
   // entered on. Same-origin, so this is readable; guarded anyway.
   frame.addEventListener('load', () => {
+    // Fit the case study's hero to the fold. Pages that load it themselves
+    // are left alone; the Slack page only gains the tag on a rebuild.
+    try {
+      const d = frame.contentDocument;
+      if (d && d.querySelector('[data-modal]') && !d.querySelector('script[src$="cs-fold.js"]')) {
+        const s = d.createElement('script');
+        s.src = new URL('shared/cs-fold.js', HOME).href;
+        d.body.appendChild(s);
+      }
+    } catch (_) {}
     if (modal.hidden) return;
     let path;
     try { path = frame.contentWindow.location.pathname; } catch (_) { return; }
