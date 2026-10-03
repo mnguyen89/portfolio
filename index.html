@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="home.css?v=c843e850">
+<link rel="stylesheet" href="home.css?v=bd0f3128">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
       <nav class="vs-nav" aria-label="Primary">
         <a href="assets/minh-nguyen-resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
         <a href="https://www.linkedin.com/in/minh-nguyen-15b89652/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://dribbble.com/nguyenm1989" target="_blank" rel="noopener noreferrer">Dribbble</a>
+        <a class="vs-nav__extra" href="https://dribbble.com/nguyenm1989" target="_blank" rel="noopener noreferrer">Dribbble</a>
         <div class="vs-menuWrap" data-menu>
           <button class="vs-contact vs-contact--nav" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="email-menu" data-menu-trigger>
             <svg class="vs-contact__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
@@ -124,6 +124,8 @@
       <ol class="vs-list">
         <li class="vs-row is-active" data-row>
           <span class="vs-row__track"></span>
+          <!-- phones only: the picture leads its project; wider screens use the stage -->
+          <img class="vs-row__pic vs-row__pic--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="true" aria-controls="work-1">
             <span class="vs-row__num" aria-hidden="true">01</span>
             <img class="vs-row__logo" src="assets/logos/slack.svg" alt="Slack">
@@ -132,8 +134,6 @@
           <div class="vs-row__details" id="work-1">
             <div class="vs-row__clip">
               <div class="vs-row__inner">
-                <!-- phones: the picture travels with its project; on wider screens the stage beside the list shows it -->
-                <img class="vs-row__pic vs-row__pic--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" loading="lazy">
                 <span class="vs-row__meta">Slack · 2023–2026</span>
                 <p class="vs-row__desc">Streamlined the team onboarding experience to increase early adoption and engagement, helping newly created workspaces get up and running smoothly with key tools and messaging features.</p>
                 <a class="vs-cta" href="slack/index.html" data-case-study data-case-title="Slack New Team Activation">See Project <span aria-hidden="true">→</span></a>
@@ -143,6 +143,7 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
+          <img class="vs-row__pic vs-row__pic--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
             <span class="vs-row__num" aria-hidden="true">02</span>
             <img class="vs-row__logo" src="assets/logos/systems-design-slack.svg" alt="Slack">
@@ -151,7 +152,6 @@
           <div class="vs-row__details" id="work-3" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
-                <img class="vs-row__pic vs-row__pic--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" loading="lazy">
                 <span class="vs-row__meta">Slack · 2025</span>
                 <p class="vs-row__desc">A system for how Slack teaches — turning hundreds of one-off messages into shared patterns that are easier for users to understand and teams to build.</p>
                 <a class="vs-cta" href="system/index.html" data-case-study data-case-title="Systems Design">See Project <span aria-hidden="true">→</span></a>
@@ -161,6 +161,7 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
+          <img class="vs-row__pic" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-2">
             <span class="vs-row__num" aria-hidden="true">03</span>
             <img class="vs-row__logo vs-row__logo--solid" src="assets/logos/paypal.webp" alt="PayPal">
@@ -169,7 +170,6 @@
           <div class="vs-row__details" id="work-2" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
-                <img class="vs-row__pic" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" loading="lazy">
                 <span class="vs-row__meta">PayPal · Mid 2021</span>
                 <p class="vs-row__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
                 <a class="vs-cta" href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">See Project <span aria-hidden="true">→</span></a>
@@ -179,6 +179,7 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
+          <img class="vs-row__pic" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-4">
             <span class="vs-row__num" aria-hidden="true">04</span>
             <img class="vs-row__logo" src="assets/logos/visual-design.svg" alt="Various">
@@ -187,7 +188,6 @@
           <div class="vs-row__details" id="work-4" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
-                <img class="vs-row__pic" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" loading="lazy">
                 <span class="vs-row__meta">Various · 2012–2018</span>
                 <p class="vs-row__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
                 <a class="vs-cta" href="visual-design/index.html" data-case-study data-case-title="Visual Design">See Project <span aria-hidden="true">→</span></a>
@@ -197,6 +197,7 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
+          <img class="vs-row__pic" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-5">
             <span class="vs-row__num" aria-hidden="true">05</span>
             <img class="vs-row__logo vs-row__logo--wide" src="assets/logos/salesforce.webp" alt="Salesforce">
@@ -205,7 +206,6 @@
           <div class="vs-row__details" id="work-5" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
-                <img class="vs-row__pic" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" loading="lazy">
                 <span class="vs-row__meta">Salesforce · 2016–2018</span>
                 <p class="vs-row__desc">Following a major reorganization, our team designed a desktop email product from scratch to fill key gaps in the Salesforce ecosystem and optimize the core sales workflow.</p>
                 <a class="vs-cta" href="#" aria-disabled="true">Coming Soon</a>
@@ -289,6 +289,7 @@
 <script>
 (() => {
   const EMAIL = 'nguyenm1989@gmail.com';
+
 
   /* Rotating phrase. All phrases share one grid cell; the cell's width
      animates to the measured width of whichever phrase is current. */
@@ -390,7 +391,10 @@
      rows resize over 0.6s, so the stage follows them frame by frame for that
      long. Stacked on phones, so off there. */
   const stage = document.querySelector('.vs-stage');
-  const stacked = matchMedia('(max-width: 860px)');
+  // below 720 the layout stacks into one column (matches home.css)
+  const stacked = matchMedia('(max-width: 719px)');
+  // phones (up to the widest iPhone) show every project open, one long scroll
+  const phone = matchMedia('(max-width: 440px)');
   let shift = 0;
   let alignFrame = 0;
   const place = () => {
@@ -412,14 +416,16 @@
   };
   addEventListener('resize', place);
   stacked.addEventListener('change', place);
+  phone.addEventListener('change', () => select(activeIndex));
 
   const select = i => {
     activeIndex = i;
     rows.forEach((row, j) => {
       const on = j === i;
       row.classList.toggle('is-active', on);
-      row.querySelector('.vs-row__title').setAttribute('aria-expanded', on);
-      row.querySelector('.vs-row__details').inert = !on;
+      const open = on || phone.matches;
+      row.querySelector('.vs-row__title').setAttribute('aria-expanded', open);
+      row.querySelector('.vs-row__details').inert = !open;
     });
     stages.forEach((img, j) => { img.hidden = j !== i; });
     restartFill();
@@ -471,7 +477,7 @@
     a.addEventListener('click', e => e.preventDefault()));
 
   sync();
-  restartFill();
+  select(activeIndex);
   place();
   if (document.fonts) document.fonts.ready.then(place);
   addEventListener('load', place);

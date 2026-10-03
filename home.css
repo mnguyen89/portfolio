@@ -63,9 +63,11 @@ button { font: inherit; color: inherit; }
 
 /* ---- First screen: header, hero and "Selected works" all fit one viewport */
 
+/* Fills the window, up to 1200px: on very tall windows the projects then
+   show below it instead of an empty stretch */
 .vs-first {
   position: relative;
-  min-height: 100svh;
+  min-height: min(100svh, 1200px);
   display: flex;
   flex-direction: column;
 }
@@ -181,10 +183,12 @@ button { font: inherit; color: inherit; }
   padding: 0 var(--vs-gutter) clamp(32px, 9vh, 96px);
 }
 
+/* An all-caps section label, medium weight: 21px (18px on phones) */
 .vs-worksRow__title {
   margin: 0;
-  font: 700 37px/1.12 var(--vs-display);
-  letter-spacing: -.02em;
+  font: 500 21px/1.15 var(--vs-display);
+  letter-spacing: .065em;
+  text-transform: uppercase;
   color: var(--vs-ink);
 }
 
@@ -604,18 +608,59 @@ body.is-modalOpen { overflow: hidden; }
   border: 0;
 }
 
-/* ---- Mid-size windows: still two columns; the gap to the picture tightens
-   so the copy keeps its width. The indents around the line stay as wide. */
+/* ---- 720-1199: the large layout, in proportion. Headings, project titles
+   and numbers, logos, the picture stage and the horizontal spacing around the
+   progress line scale with the window (each value is its 1200px size / 12,
+   in vw). Body copy, details, buttons and nav keep their normal size, and
+   vertical spacing stays in px. */
+@media (min-width: 720px) and (max-width: 1199px) {
+  :root { --vs-gutter: 6vw; --vs-row-indent: 3.6667vw; }
+  .vs-hero__title { font-size: 5vw; }
 
-@media (min-width: 861px) and (max-width: 1199px) {
-  .vs-work__grid { gap: 40px; }
+  .vs-work__grid { gap: 6vw; }
+  .vs-stage { height: 40vw; }
+
+  .vs-row { --vs-num-col: calc(3.3333vw + var(--vs-num-gap)); }
+  .vs-row.is-active { --vs-pad: 4.3333vw; }
+  .vs-row__title { gap: 1.3333vw; }
+  .vs-row.is-active .vs-row__title { gap: 2.3333vw; }
+  .vs-row__name,
+  .vs-row__num { font-size: 1.5vw; }
+  .vs-row.is-active .vs-row__name,
+  .vs-row.is-active .vs-row__num { font-size: 2.6667vw; }
+  .vs-row__logo { width: 1.8333vw; height: 1.8333vw; }
+  .vs-row.is-active .vs-row__logo { width: 3vw; height: 3vw; }
+  /* numbers stay centred on the title line as both scale */
+  .vs-row__num { top: calc(20px + .0917vw); }
+  .vs-row.is-active .vs-row__num { top: calc(42px + .0333vw); }
+  .vs-row__inner { padding-left: 5.3333vw; }
+
+  /* right-aligned with the numbers, as at full size (40 - 22 + 3 = 21 there) */
+  .vs-contact--flat .vs-contact__icon { margin-left: calc(3.3333vw - 19px); }
+}
+
+/* ---- Adaptive layout: below the large size, the least essential pieces go
+   first so what is left keeps its room. From 720 up the full layout holds,
+   numbers and logos included.
+   Below 720: no project numbers or title logos (decorative; their space
+   goes back to the copy), and the footer icon returns to the line. */
+@media (max-width: 719px) {
+  .vs-row { --vs-num-col: 0px; }
+  .vs-row__num { display: none; }
+  /* the logos beside the titles go too; the copy then starts under the title */
+  .vs-list .vs-row .vs-row__logo { display: none; }
+  .vs-row__inner { padding-left: 0; }
+  .vs-contact--flat .vs-contact__icon { margin-left: -3px; }
 }
 
 /* ---- Narrow screens. The handoff is desktop-only; this keeps the same
    pieces in one column so nothing overflows on a phone. */
 
-@media (max-width: 860px) {
-  :root { --vs-gutter: 24px; --vs-row-indent: 24px; }
+@media (max-width: 719px) {
+  /* Tablet (441-719): one column, still one project open at a time on the
+     line; the open project's picture sits above its title */
+  /* 40 from the line on closed rows (36 clear of its 4px), 48 when open */
+  :root { --vs-gutter: 24px; --vs-row-indent: 40px; }
 
   /* the Contact pill with its icon only just fits beside three links */
   .vs-nav { gap: 14px; }
@@ -623,29 +668,29 @@ body.is-modalOpen { overflow: hidden; }
   .vs-hero__title { font-size: clamp(34px, 7vw, 60px); }
   /* "Shaping products through" is wider than a phone at this size */
   .vs-hero__title .vs-nowrap:first-child { white-space: normal; }
-  .vs-worksRow__title { font-size: 30px; }
 
   .vs-work__grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
     min-height: 0;
   }
-  /* Stacked: no shared stage; each open project shows its own picture
-     between its title and its details */
+  /* Stacked: no shared stage; each project shows its own picture above
+     its title */
   .vs-stage { display: none; }
   .vs-row__pic {
     display: block;
     width: auto;
     max-width: 100%;
     max-height: 240px;
-    margin: 4px 0 8px;
+    margin: 0 0 20px;
     object-fit: contain;
   }
   .vs-row__pic--slackbot { max-height: 180px; border-radius: 28px; }
   .vs-row__pic--rounded { border-radius: 14px; }
+  .vs-row:not(.is-active) .vs-row__pic { display: none; }
   .vs-play { top: 0; right: 0; }
 
-  .vs-row.is-active { padding-top: 42px; padding-bottom: 56px; --vs-pad: 32px; }
+  .vs-row.is-active { padding-top: 42px; padding-bottom: 56px; --vs-pad: 48px; }
   .vs-row__name { white-space: normal; }
   .vs-row.is-active .vs-row__name,
   .vs-row.is-active .vs-row__num { font-size: 26px; }
@@ -657,6 +702,46 @@ body.is-modalOpen { overflow: hidden; }
     padding-top: 96px;
     padding-bottom: 48px;
   }
+}
+
+/* ---- Phones, up to the widest current iPhone (440px, iPhone 17 Pro Max /
+   Air). Also drop: the dots wave (decoration), autoplay and its pause button
+   (rows opening on their own while someone scrolls is jarring), the scroll
+   arrow beside "Selected Works", and Dribbble from the top bar. */
+@media (max-width: 440px) {
+  .vs-wave,
+  .vs-play,
+  .vs-iconBtn,
+  .vs-nav__extra { display: none; }
+
+  /* One long scroll: no progress line, every project open — picture, title,
+     details and button — stacked with room between them */
+  .vs-row__track,
+  .vs-row__fill { display: none; }
+  .vs-worksRow__title { font-size: 18px; }
+  .vs-list { gap: 128px; }
+  /* the case studies' tapered rule (.cs-rule), centred in each gap */
+  .vs-list .vs-row + .vs-row::before {
+    content: "";
+    position: absolute;
+    top: -64px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      rgb(94 93 96 / 0) 0%,
+      rgb(94 93 96 / .11) 18%,
+      rgb(94 93 96 / .2) 50%,
+      rgb(94 93 96 / .11) 82%,
+      rgb(94 93 96 / 0) 100%);
+  }
+  .vs-list .vs-row,
+  .vs-list .vs-row.is-active { padding: 0; min-height: 0; --vs-num-col: 0px; --vs-pad: 0px; }
+  .vs-list .vs-row .vs-row__title { gap: 16px; opacity: 1; cursor: default; }
+  .vs-list .vs-row .vs-row__logo { width: 32px; height: 32px; filter: none; }
+  .vs-list .vs-row .vs-row__name { font-size: 26px; font-weight: 700; }
+  .vs-list .vs-row .vs-row__details { grid-template-rows: 1fr; opacity: 1; }
+  .vs-list .vs-row .vs-row__pic { display: block; margin-bottom: 32px; }
 }
 
 /* Smallest phones: the nav pill drops its icon to fit beside the links */
