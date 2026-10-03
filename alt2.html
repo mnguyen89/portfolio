@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Alternate homepage, reached at /?alt2 (index.html forwards here). The
+     address bar is set back to ?alt2 so that is the URL people see and share;
+     both live in the same folder, so relative paths resolve the same. -->
+<script>history.replaceState(null, '', './' + (location.search || '?alt2') + location.hash);</script>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg">
+<title>Minh Nguyen — Product Design</title>
+<meta name="description" content="Product design portfolio of Minh Nguyen — onboarding, activation and education work at Slack, PayPal and Salesforce.">
+<link rel="canonical" href="https://mnguyen89.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Minh Nguyen — Product Design">
+<meta property="og:title" content="Minh Nguyen — Product Design">
+<meta property="og:description" content="Product design portfolio of Minh Nguyen — onboarding, activation and education work at Slack, PayPal and Salesforce.">
+<meta property="og:url" content="https://mnguyen89.github.io/portfolio/">
+<meta property="og:image" content="https://mnguyen89.github.io/portfolio/assets/og/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Three project thumbnails from the portfolio: a PayPal investing screen, a SoundHound 200 million users illustration, and an AI CRM email concept.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="alt2.css?v=90ae5aac">
+</head>
+<body>
+
+<!-- Homepage direction 3c, "Vertical Stories". The case-study pages are
+     unchanged; they open as ordinary pages from here rather than as modals. -->
+<div class="vs">
+  <div class="vs-first">
+    <header class="vs-header">
+      <nav class="vs-nav" aria-label="Primary">
+        <a href="assets/minh-nguyen-resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="https://www.linkedin.com/in/minh-nguyen-15b89652/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://dribbble.com/nguyenm1989" target="_blank" rel="noopener noreferrer">Dribbble</a>
+        <div class="vs-menuWrap" data-menu>
+          <button class="vs-email" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="email-menu" data-menu-trigger>
+            Email
+            <svg class="vs-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="vs-menu vs-menu--down" role="menu" id="email-menu" hidden>
+            <button class="vs-menu__item" type="button" role="menuitem" data-copy-email>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+              <span class="vs-menu__copy">Copy&nbsp; &nbsp;<span class="vs-menu__addr">nguyenm1989@gmail.com</span></span>
+            </button>
+            <a class="vs-menu__item" role="menuitem" href="mailto:nguyenm1989@gmail.com" data-menu-close>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 10.5 13.5"/><path d="M21.5 2.5 14.5 21.5l-4-8-8-4z"/></svg>
+              <span>Send email</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="vs-hero">
+      <img class="vs-hero__avatar" src="assets/logos/avatar.svg" alt="Minh Nguyen" width="132" height="132">
+      <!-- The rotator is decorative motion; screen readers get the full line
+           from the hidden copy instead of whichever phrase is showing. -->
+      <h1 class="vs-hero__title">
+        Hi, I'm Minh.<br>
+        <span class="vs-visuallyHidden">Shaping products through systems design, strategic thinking, and visual craft.</span>
+        <span aria-hidden="true"><span class="vs-nowrap">Shaping products through</span> <span class="vs-nowrap"><span class="vs-rotator" data-rotator>
+          <span class="vs-phrase is-current" style="--hue: oklch(0.44 0.13 262)">systems design,</span>
+          <span class="vs-phrase" style="--hue: oklch(0.66 0.16 45)">strategic thinking,</span>
+          <span class="vs-phrase is-prev" style="--hue: oklch(0.62 0.14 232)"><span class="vs-phrase__lead">and </span>visual craft.</span>
+        </span></span></span>
+      </h1>
+    </section>
+
+    <div class="vs-worksRow">
+      <h2 class="vs-worksRow__title">Selected works</h2>
+      <button class="vs-iconBtn" type="button" aria-label="Scroll to selected work" data-scroll-work>
+        <img src="assets/logos/arrow-right.svg" alt="" width="18" height="18">
+      </button>
+    </div>
+  </div>
+
+  <section class="vs-work" id="work" aria-label="Selected works" data-work>
+    <div class="vs-work__grid">
+      <button class="vs-play" type="button" aria-label="Pause" data-play>
+        <svg class="vs-play__pause" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="2.5" height="9" rx="1" fill="#1c1917"/><rect x="7.5" y="1.5" width="2.5" height="9" rx="1" fill="#1c1917"/></svg>
+        <svg class="vs-play__play" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.8v8.4a.6.6 0 0 0 .9.5l6.6-4.2a.6.6 0 0 0 0-1L3.9 1.3a.6.6 0 0 0-.9.5z" fill="#1c1917"/></svg>
+      </button>
+
+      <ol class="vs-list">
+        <li class="vs-row is-active" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="true" aria-controls="work-1">
+            <img class="vs-row__logo" src="assets/logos/slack.svg" alt="Slack">
+            <span class="vs-row__name">New Team Activation</span>
+          </button>
+          <div class="vs-row__details" id="work-1">
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Slack</span>
+                <p class="vs-row__desc">Streamlined the team onboarding experience to increase early adoption and engagement, helping newly created workspaces get up and running smoothly with key tools and messaging features.</p>
+                <a class="vs-cta" href="slack/index.html">See project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-2">
+            <img class="vs-row__logo" src="assets/logos/paypal.webp" alt="PayPal">
+            <span class="vs-row__name">Digital Wallet NUX</span>
+          </button>
+          <div class="vs-row__details" id="work-2" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">PayPal · Mid 2021</span>
+                <p class="vs-row__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
+                <a class="vs-cta" href="paypal/index.html">See project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
+            <img class="vs-row__logo" src="assets/logos/systems-design.svg" alt="Slack, PayPal">
+            <span class="vs-row__name">Systems design</span>
+          </button>
+          <div class="vs-row__details" id="work-3" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Slack, PayPal · 2021–2026</span>
+                <p class="vs-row__desc">Two systems: the in-product education system at Slack — five patterns and one rule for choosing between them, shipped as Education Kit — and PayPal’s UI token system, where one naming structure fed a guidelines site, a Sketch kit and JSON tokens into component libraries for iOS, Android and web.</p>
+                <a class="vs-cta" href="system/index.html">See project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-4">
+            <img class="vs-row__logo" src="assets/logos/visual-design.svg" alt="Various">
+            <span class="vs-row__name">Visual Design</span>
+          </button>
+          <div class="vs-row__details" id="work-4" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Various · 2012–2018</span>
+                <p class="vs-row__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
+                <a class="vs-cta" href="visual-design/index.html">See project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="vs-row" data-row>
+          <span class="vs-row__track"></span>
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-5">
+            <img class="vs-row__logo" src="assets/logos/salesforce.webp" alt="Salesforce">
+            <span class="vs-row__name">AI CRM and Email</span>
+          </button>
+          <div class="vs-row__details" id="work-5" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Salesforce</span>
+                <p class="vs-row__desc">Following a major reorganization, our team designed a desktop email product from scratch to fill key gaps in the Salesforce ecosystem and optimize the core sales workflow.</p>
+                <a class="vs-cta" href="#" aria-disabled="true">Coming soon</a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ol>
+
+      <!-- One image per row, in the same order. All load up front so switching
+           rows never waits on the network. -->
+      <div class="vs-stage">
+        <img class="vs-stage__img vs-stage__img--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" data-stage>
+        <img class="vs-stage__img" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/design-systems.webp" alt="Design system pipeline diagram" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" data-stage hidden>
+      </div>
+    </div>
+  </section>
+
+  <footer class="vs-footer">
+    <p class="vs-footer__copy">© 2026 Minh Nguyen. All rights reserved.</p>
+    <div class="vs-menuWrap" data-menu>
+      <button class="vs-contact" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="contact-menu" data-menu-trigger>
+        <img class="vs-contact__mark" src="assets/logos/mark.svg" alt="" width="30" height="30">
+        <span>Contact me</span>
+        <svg class="vs-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 6.5 5 3.5 8 6.5" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="vs-menu vs-menu--up" role="menu" id="contact-menu" hidden>
+        <button class="vs-menu__item" type="button" role="menuitem" data-copy-email>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+          <span class="vs-menu__copy">Copy&nbsp; &nbsp;<span class="vs-menu__addr">nguyenm1989@gmail.com</span></span>
+        </button>
+        <a class="vs-menu__item" role="menuitem" href="mailto:nguyenm1989@gmail.com" data-menu-close>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 10.5 13.5"/><path d="M21.5 2.5 14.5 21.5l-4-8-8-4z"/></svg>
+          <span>Send email</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="vs-toast" role="status" aria-live="polite" data-toast hidden>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg>
+  <span>Copied to clipboard</span>
+</div>
+
+<script>
+(() => {
+  const EMAIL = 'nguyenm1989@gmail.com';
+
+  /* Rotating phrase. All phrases share one grid cell; the cell's width
+     animates to the measured width of whichever phrase is current. */
+  const rotator = document.querySelector('[data-rotator]');
+  const phrases = [...rotator.children];
+  let phraseIndex = 0;
+  let phraseWidths = [];
+  const measure = () => {
+    phraseWidths = phrases.map(p => Math.ceil(p.getBoundingClientRect().width) + 1);
+    rotator.style.width = `calc(${phraseWidths[phraseIndex]}px + .08em)`;
+  };
+  measure();
+  if (document.fonts) document.fonts.ready.then(measure);
+  addEventListener('resize', measure);
+  setInterval(() => {
+    const prev = phraseIndex;
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    phrases.forEach((p, i) => {
+      p.classList.toggle('is-current', i === phraseIndex);
+      p.classList.toggle('is-prev', i === prev);
+    });
+    rotator.style.width = `calc(${phraseWidths[phraseIndex]}px + .08em)`;
+  }, 2600);
+
+  /* Scroll to the projects */
+  const work = document.querySelector('[data-work]');
+  document.querySelector('[data-scroll-work]').addEventListener('click', () => {
+    scrollTo({ top: work.getBoundingClientRect().top + scrollY - 24, behavior: 'smooth' });
+  });
+
+  /* Project carousel. Each row's fill runs 6s, then the next row takes over.
+     A click pins a row and stops autoplay for 3 minutes; Pause stops it until
+     Play is pressed. */
+  const rows = [...document.querySelectorAll('[data-row]')];
+  const stages = [...document.querySelectorAll('[data-stage]')];
+  const playBtn = document.querySelector('[data-play]');
+  let activeIndex = 0;
+  let userPaused = false;
+  let manual = false;
+  let resumeTimer;
+
+  const sync = () => {
+    const stopped = userPaused || manual;
+    work.classList.toggle('is-userPaused', userPaused);
+    work.classList.toggle('is-manual', manual);
+    playBtn.classList.toggle('is-stopped', stopped);
+    playBtn.setAttribute('aria-label', stopped ? 'Play' : 'Pause');
+  };
+
+  // A fresh fill element restarts the animation from 0.
+  const restartFill = () => {
+    work.querySelectorAll('.vs-row__fill').forEach(f => f.remove());
+    const fill = document.createElement('span');
+    fill.className = 'vs-row__fill';
+    fill.addEventListener('animationend', () => select((activeIndex + 1) % rows.length));
+    rows[activeIndex].insertBefore(fill, rows[activeIndex].children[1]);
+  };
+
+  const select = i => {
+    activeIndex = i;
+    rows.forEach((row, j) => {
+      const on = j === i;
+      row.classList.toggle('is-active', on);
+      row.querySelector('.vs-row__title').setAttribute('aria-expanded', on);
+      row.querySelector('.vs-row__details').inert = !on;
+    });
+    stages.forEach((img, j) => { img.hidden = j !== i; });
+    restartFill();
+  };
+
+  rows.forEach((row, i) => {
+    row.querySelector('.vs-row__title').addEventListener('click', () => {
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        if (userPaused) return;
+        manual = false;
+        sync();
+        restartFill();
+      }, 180000);
+      manual = true;
+      sync();
+      select(i);
+    });
+  });
+
+  playBtn.addEventListener('click', () => {
+    clearTimeout(resumeTimer);
+    if (!userPaused && !manual) {
+      userPaused = true;
+    } else {
+      userPaused = false;
+      manual = false;
+      restartFill();
+    }
+    sync();
+  });
+
+  work.addEventListener('mouseenter', () => work.classList.add('is-hoverPaused'));
+  work.addEventListener('mouseleave', () => work.classList.remove('is-hoverPaused'));
+
+  document.querySelectorAll('.vs-cta[aria-disabled="true"]').forEach(a =>
+    a.addEventListener('click', e => e.preventDefault()));
+
+  sync();
+  restartFill();
+
+  /* Email menus (header and footer behave the same) */
+  const menus = [...document.querySelectorAll('[data-menu]')];
+  const setOpen = (wrap, open) => {
+    wrap.querySelector('[data-menu-trigger]').setAttribute('aria-expanded', open);
+    wrap.querySelector('[role="menu"]').hidden = !open;
+  };
+  const closeAll = () => menus.forEach(m => setOpen(m, false));
+
+  menus.forEach(wrap => {
+    const trigger = wrap.querySelector('[data-menu-trigger]');
+    trigger.addEventListener('click', () => setOpen(wrap, trigger.getAttribute('aria-expanded') !== 'true'));
+    wrap.querySelectorAll('[data-menu-close]').forEach(a => a.addEventListener('click', () => setOpen(wrap, false)));
+  });
+
+  document.addEventListener('mousedown', e => {
+    menus.forEach(m => { if (!m.contains(e.target)) setOpen(m, false); });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    const open = menus.find(m => !m.querySelector('[role="menu"]').hidden);
+    if (!open) return;
+    closeAll();
+    open.querySelector('[data-menu-trigger]').focus();
+  });
+
+  /* Copy + toast */
+  const toast = document.querySelector('[data-toast]');
+  let toastTimer;
+  const copied = () => {
+    closeAll();
+    toast.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 2200);
+  };
+  document.querySelectorAll('[data-copy-email]').forEach(btn => btn.addEventListener('click', () => {
+    if (navigator.clipboard) navigator.clipboard.writeText(EMAIL).then(copied, copied);
+    else copied();
+  }));
+})();
+</script>
+</body>
+</html>
