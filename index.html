@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="home.css?v=3642b1a8">
+<link rel="stylesheet" href="home.css?v=d576bc50">
 </head>
 <body>
 
@@ -100,6 +100,8 @@
           <div class="vs-row__details" id="work-1">
             <div class="vs-row__clip">
               <div class="vs-row__inner">
+                <!-- phones: the picture travels with its project; on wider screens the stage beside the list shows it -->
+                <img class="vs-row__pic vs-row__pic--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" loading="lazy">
                 <span class="vs-row__meta">Slack · 2023–2026</span>
                 <p class="vs-row__desc">Streamlined the team onboarding experience to increase early adoption and engagement, helping newly created workspaces get up and running smoothly with key tools and messaging features.</p>
                 <a class="vs-cta" href="slack/index.html" data-case-study data-case-title="Slack New Team Activation">See Project <span aria-hidden="true">→</span></a>
@@ -117,6 +119,7 @@
           <div class="vs-row__details" id="work-3" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
+                <img class="vs-row__pic vs-row__pic--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" loading="lazy">
                 <span class="vs-row__meta">Slack · 2025</span>
                 <p class="vs-row__desc">A system for how Slack teaches — turning hundreds of one-off messages into shared patterns that are easier for users to understand and teams to build.</p>
                 <a class="vs-cta" href="system/index.html" data-case-study data-case-title="Systems Design">See Project <span aria-hidden="true">→</span></a>
@@ -134,6 +137,7 @@
           <div class="vs-row__details" id="work-2" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
+                <img class="vs-row__pic" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" loading="lazy">
                 <span class="vs-row__meta">PayPal · Mid 2021</span>
                 <p class="vs-row__desc">As part of PayPal’s initiative to position itself as an all-in-one financial app, our team redesigned the native onboarding experience — introducing updated navigation, features, and interface designs to new users.</p>
                 <a class="vs-cta" href="paypal/index.html" data-case-study data-case-title="PayPal Digital Wallet NUX">See Project <span aria-hidden="true">→</span></a>
@@ -151,6 +155,7 @@
           <div class="vs-row__details" id="work-4" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
+                <img class="vs-row__pic" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" loading="lazy">
                 <span class="vs-row__meta">Various · 2012–2018</span>
                 <p class="vs-row__desc">Some of my previous work of brand identity, interaction design, and side projects exploring visual craft, typography, and creative product solutions.</p>
                 <a class="vs-cta" href="visual-design/index.html" data-case-study data-case-title="Visual Design">See Project <span aria-hidden="true">→</span></a>
@@ -168,6 +173,7 @@
           <div class="vs-row__details" id="work-5" inert>
             <div class="vs-row__clip">
               <div class="vs-row__inner">
+                <img class="vs-row__pic" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" loading="lazy">
                 <span class="vs-row__meta">Salesforce · 2016–2018</span>
                 <p class="vs-row__desc">Following a major reorganization, our team designed a desktop email product from scratch to fill key gaps in the Salesforce ecosystem and optimize the core sales workflow.</p>
                 <a class="vs-cta" href="#" aria-disabled="true">Coming Soon</a>
@@ -269,6 +275,23 @@
     if (!ticking) { ticking = true; requestAnimationFrame(drift); }
   }, { passive: true });
   addEventListener('resize', drift);
+
+  /* Keep the dots clear of the headline. The wave scales with the window's
+     width, so on wide screens its crest climbs into the text. The crest, the
+     first row of dots, sits 0.244 of the wave's width below its box top once
+     the -8deg tilt is applied (the art is empty above 38% of its height).
+     If that is less than 32px under the headline, push the wave down. */
+  const title = document.querySelector('.vs-hero__title');
+  const hero = document.querySelector('.vs-hero');
+  const clearHeadline = () => {
+    const headlineBottom = hero.offsetTop + title.offsetTop + title.offsetHeight;
+    const crest = wave.offsetTop + 0.244 * wave.offsetWidth;
+    const push = Math.max(0, headlineBottom + 32 - crest);
+    wave.style.setProperty('--vs-wave-push', push.toFixed(1) + 'px');
+  };
+  clearHeadline();
+  if (document.fonts) document.fonts.ready.then(clearHeadline);
+  addEventListener('resize', clearHeadline);
   drift();
 
   /* Scroll to the projects */

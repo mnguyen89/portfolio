@@ -87,8 +87,9 @@ button { font: inherit; color: inherit; }
   aspect-ratio: 1372 / 980;
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
   opacity: .85;
-  /* --vs-wave-shift is the parallax, set by the script on scroll */
-  transform: translate3d(0, var(--vs-wave-shift, 0px), 0) rotate(-8deg);
+  /* --vs-wave-shift is the parallax, set by the script on scroll;
+     --vs-wave-push moves it down when the headline would reach it */
+  transform: translate3d(0, calc(var(--vs-wave-push, 0px) + var(--vs-wave-shift, 0px)), 0) rotate(-8deg);
   will-change: transform;
   -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
   mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
@@ -395,6 +396,9 @@ body.is-modalOpen .vs-row__fill,
   padding: 16px 0 0 64px;
 }
 
+/* Per-project picture, shown only when the layout stacks (below) */
+.vs-row__pic { display: none; }
+
 .vs-row__meta {
   font: 500 12px var(--vs-mono);
   letter-spacing: .06em;
@@ -617,7 +621,19 @@ body.is-modalOpen { overflow: hidden; }
     gap: 32px;
     min-height: 0;
   }
-  .vs-stage { order: -1; height: 300px; }
+  /* Stacked: no shared stage; each open project shows its own picture
+     between its title and its details */
+  .vs-stage { display: none; }
+  .vs-row__pic {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 240px;
+    margin: 4px 0 8px;
+    object-fit: contain;
+  }
+  .vs-row__pic--slackbot { max-height: 180px; border-radius: 28px; }
+  .vs-row__pic--rounded { border-radius: 14px; }
   .vs-play { top: 0; right: 0; }
 
   .vs-row.is-active { padding-top: 42px; padding-bottom: 56px; --vs-pad: 32px; }
