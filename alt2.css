@@ -77,13 +77,15 @@ button { font: inherit; color: inherit; }
 .vs-wave {
   position: absolute;
   z-index: 0;
-  right: -36%;
+  right: -25%;
   bottom: 6%;
   width: 82%;
   aspect-ratio: 1372 / 980;
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
   opacity: .7;
-  transform: rotate(-8deg);
+  /* --vs-wave-shift is the parallax, set by the script on scroll */
+  transform: translate3d(0, var(--vs-wave-shift, 0px), 0) rotate(-8deg);
+  will-change: transform;
   -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
   mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
   pointer-events: none;
@@ -109,18 +111,6 @@ button { font: inherit; color: inherit; }
   text-decoration: none;
 }
 .vs-nav > a:hover { color: var(--vs-link-hover); }
-
-.vs-email {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  font-weight: 600;
-  color: var(--vs-ink);
-}
 
 .vs-caret { transition: transform .2s; }
 [aria-expanded="true"] > .vs-caret { transform: rotate(180deg); }
@@ -440,6 +430,19 @@ body.is-modalOpen .vs-row__fill,
   box-shadow: 0 2px 4px rgba(28, 25, 23, .1), 0 8px 24px rgba(28, 25, 23, .14);
 }
 
+/* The nav copy of the footer pill: same surface, no avatar, so the padding
+   evens out where the image used to sit. */
+.vs-contact--nav { padding: 12px 18px; }
+
+/* Footer: no surface at all, just the avatar, label and caret, flush with
+   the column edge. The avatar still colours in on hover and while open. */
+.vs-contact--flat,
+.vs-contact--flat:hover {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+
 .vs-contact__mark {
   width: 30px;
   height: 30px;
@@ -475,7 +478,7 @@ body.is-modalOpen .vs-row__fill,
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 12px 28px 12px 16px;
   border: 0;
   border-radius: 10px;
   background: none;
