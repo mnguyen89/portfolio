@@ -303,6 +303,18 @@ body.is-modalOpen .vs-row__fill,
 }
 .vs-row.is-active .vs-row__title { gap: 28px; opacity: 1; }
 
+/* 01–05, just right of the progress line, so the projects read as indented
+   from "Selected Works" */
+.vs-row__num {
+  flex: none;
+  width: 20px;
+  font: 500 12px var(--vs-mono);
+  letter-spacing: .06em;
+  color: var(--vs-muted);
+  transition: color .4s;
+}
+.vs-row.is-active .vs-row__num { color: var(--vs-ink); }
+
 .vs-row__logo {
   flex: none;
   width: 22px;
@@ -337,12 +349,13 @@ body.is-modalOpen .vs-row__fill,
   min-height: 0;
 }
 
-/* 70px = active logo (42) + gap (28), so the copy sits under the title */
+/* 118px = number (20) + gap (28) + active logo (42) + gap (28), so the
+   copy sits under the title */
 .vs-row__inner {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 0 0 70px;
+  padding: 16px 0 0 118px;
 }
 
 .vs-row__meta {
