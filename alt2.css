@@ -280,7 +280,6 @@ button { font: inherit; color: inherit; }
 .vs-work.is-manual .vs-row__fill { animation: none; }
 body.is-modalOpen .vs-row__fill,
 .vs-work.is-offscreen .vs-row__fill,
-.vs-work.is-hoverPaused .vs-row__fill,
 .vs-work.is-userPaused .vs-row__fill { animation-play-state: paused; }
 
 @keyframes vs-progress {

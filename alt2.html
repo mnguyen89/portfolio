@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="alt2.css?v=015f9c87">
+<link rel="stylesheet" href="alt2.css?v=8fd56be2">
 </head>
 <body>
 
@@ -370,8 +370,9 @@
     sync();
   });
 
-  work.addEventListener('mouseenter', () => work.classList.add('is-hoverPaused'));
-  work.addEventListener('mouseleave', () => work.classList.remove('is-hoverPaused'));
+  // No hover pause: it froze the story whenever the pointer rested anywhere
+  // over the section, with nothing on screen to say so. Pause and a click
+  // on a row are the explicit ways to stop it.
 
   // The story holds at the start until the projects are on screen, and
   // pauses again whenever they scroll away.
