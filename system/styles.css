@@ -736,10 +736,10 @@ body {
 @media (prefers-reduced-motion: no-preference) {
   .cs-reveal [data-reveal] {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(10px);
     transition:
-      opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
-      transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      opacity 320ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
     transition-delay: var(--reveal-delay, 0ms);
   }
   .cs-reveal [data-reveal].is-revealed { opacity: 1; transform: none; }
@@ -802,3 +802,98 @@ body {
    The shared component (../shared/project-nav.css) already carries 50 of top
    padding. This page closes on the white panel, hence --onLight in the markup. */
 .cs-projectNav { margin-top: 150px; }
+
+/* ---------------------------------------------------------------- glance facts
+   The glance used to be a row of pills. It now carries labelled facts — role,
+   scope, surfaces, partners, shipped — which say more in the same space. Rows
+   are centred like the rest of the glance; the label column is fixed so the
+   values align into a second column rather than ragging. */
+.cs-facts {
+  display: grid;
+  gap: 14px 28px;
+  max-width: 560px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.cs-fact {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 28px;
+  align-items: baseline;
+}
+
+.cs-fact dt {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--cs-ink);
+}
+
+.cs-fact dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--cs-ink-soft, #5e5d60);
+}
+
+/* Below the fold of a narrow panel the two columns stop earning their keep. */
+@container (max-width: 520px) {
+  .cs-fact { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* The closing line of the case study — same size as body, but set apart so the
+   last thought reads as a statement rather than another paragraph. */
+.cs-copy__body--lead {
+  margin-top: 28px;
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+
+/* A fourth-level heading inside a group — Heads-Up, Guided Tour, Suggestions
+   sit under "Education for existing users", so they need to read as children
+   of that group rather than as peers of it. */
+.cs-copy__sub--minor {
+  font-size: clamp(16px, 1.9cqi, 18px);
+  color: var(--cs-ink-soft, #5e5d60);
+}
+
+/* The Figma exports already carry their own framing and whitespace, so the
+   plate's neutral field would read as a second, mismatched border around the
+   first. Bare plates drop it and let the artwork sit directly on the band. */
+.cs-plate--bare img {
+  padding: 0;
+  background: none;
+}
+
+.cs-band--grey .cs-plate--bare img { background: none; }
+
+/* Two screenshots shot at the same height but different widths. An even split
+   stretches the narrow one to 2.3x its pixels; sizing the columns to the
+   artwork's own proportions lands both at the height they were drawn at. */
+/* Both shots were drawn at a fixed size inside the 640 column — 366 and 194
+   wide with the gap making up the rest. Letting them fill the full panel width
+   magnified the Slack UI inside them well past the scale they were cropped for,
+   so the pair is pinned to the size it was designed at. */
+.cs-shots--uneven {
+  grid-template-columns: 366px 194px;
+  gap: 80px;
+  align-items: start;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+@container (max-width: 700px) {
+  .cs-shots--uneven { grid-template-columns: 366fr 194fr; gap: 24px; max-width: 100%; }
+}
+
+/* Exported at half the width of the other plates, so filling the column would
+   upscale it. Cap it at its own size and centre it instead. */
+.cs-plate--half img { max-width: 440px; margin-inline: auto; }
+
+/* A white band ran its content right up to the next band's colour edge — the
+   rules list and its hairline ended up half in the grey. Bands on the panel
+   white now close with the same clearance the tinted ones use. */
+.cs-band:not(.cs-band--grey) { padding-bottom: 160px; }
+.cs-premise { padding-bottom: 60px; }

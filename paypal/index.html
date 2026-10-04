@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&family=Inter:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=9a6b2760">
+<link rel="stylesheet" href="styles.css?v=a71baddd">
 <link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
 </head>
 <body>
@@ -264,7 +264,7 @@
             <a class="cs-projectNav__btn cs-projectNav__btn--next" href="../system/index.html" data-project-nav="next">
               <span class="cs-projectNav__text">
                 <span class="cs-projectNav__kicker">Next project</span>
-                <span class="cs-projectNav__title">Systems Design</span>
+                <span class="cs-projectNav__title">Education System</span>
               </span>
               <span class="cs-projectNav__icon">
                 <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
@@ -298,107 +298,44 @@
     if (e.key === 'Escape') modal.querySelector('[data-modal-close]').click();
   });
 
-  // Subtle scroll-in reveal. Elements are grouped so grids stagger row by row.
+  // Subtle scroll-in reveal. Elements reveal strictly top-down: targets are
+  // collected in document order, and each batch that scrolls into view gets a
+  // short stagger based on where it sits in that batch — not on how many
+  // elements precede it in the page, which used to push late items to
+  // multi-second delays.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const groups = [
-      { sel: '.cs-hero__logo, .cs-hero__title, .cs-hero__lede', stagger: 70 },
-      { sel: '.cs-heroVisual', stagger: 0 },
-      { sel: '.cs-keywords__title', stagger: 0 },
-      { sel: '.cs-tag', stagger: 35 },
-      { sel: '.cs-gallery img', stagger: 90 },
-      { sel: '.cs-copy > *', stagger: 70 },
-      { sel: '.cs-compare__item', stagger: 120 },
-      { sel: '.cs-flow__diagram', stagger: 0 },
-      { sel: '.cs-flow__matrix', stagger: 0 },
-      { sel: '.cs-launch__phones', stagger: 0 },
-      { sel: '.cs-outcome', stagger: 120 },
-      { sel: '.cs-rollout', stagger: 0 },
-      { sel: '.cs-launch__subtitle', stagger: 0 },
-      { sel: '.cs-valueGrid', stagger: 0 },
-      { sel: '.cs-projectNav__btn', stagger: 80 },
-    ];
+    const SELECTOR = [
+      '.cs-hero__icon', '.cs-hero__title', '.cs-hero__lede',
+      '.cs-heroVisual .cs-shot',
+      '.cs-glance__logo', '.cs-glance__title',
+      '.cs-tag', '.cs-fact',
+      '.cs-copy > *',
+      '.cs-shots--band', '.cs-problem', '.cs-plate',
+      '.cs-card', '.cs-rule-item',
+      '.cs-outcomes .cs-stat',
+      '.cs-projectNav__btn',
+    ].join(', ');
 
-    const targets = [];
-    groups.forEach(({ sel, stagger }) => {
-      document.querySelectorAll(sel).forEach((el, i) => {
-        el.setAttribute('data-reveal', '');
-        if (stagger) el.style.setProperty('--reveal-delay', `${i * stagger}ms`);
-        targets.push(el);
-      });
-    });
+    const STAGGER = 45;   // ms between neighbours in the same batch
+    const MAX_DELAY = 180; // never hold an element back longer than this
+
+    // querySelectorAll returns document order, so the list is already top-down.
+    const targets = [...document.querySelectorAll(SELECTOR)];
+    targets.forEach((el) => el.setAttribute('data-reveal', ''));
     document.documentElement.classList.add('cs-reveal');
 
     const revealer = new IntersectionObserver((entries) => {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (!isIntersecting) return;
-        target.classList.add('is-revealed');
-        revealer.unobserve(target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach(({ target }, i) => {
+          target.style.setProperty('--reveal-delay', Math.min(i * STAGGER, MAX_DELAY) + 'ms');
+          target.classList.add('is-revealed');
+          revealer.unobserve(target);
+        });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
 
     targets.forEach((el) => revealer.observe(el));
-  }
-
-  // Animated screens play through exactly once and hold the final frame — which is
-  // the same image as the poster, so nothing snaps at the end. The poster is never
-  // restored: doing that on viewport exit would amount to a loop.
-  // [data-anim-on-load] starts as soon as the asset is ready; the rest wait to be
-  // scrolled into view so they are actually seen.
-  const animated = document.querySelectorAll('[data-anim-src]');
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-
-  const play = (img) => {
-    if (img.dataset.played) return;
-    img.dataset.posterSrc = img.dataset.posterSrc || img.getAttribute('src');
-    img.dataset.played = '1';
-    img.setAttribute('src', img.dataset.animSrc);
-  };
-
-  // Preload so the still frame stays put instead of blanking while the animation
-  // downloads, and so playback starts at frame 0 rather than part-way through.
-  const preloadThenPlay = (img) => {
-    if (img.dataset.played || img.dataset.preloading || reduceMotion.matches) return;
-    img.dataset.preloading = '1';
-    const pre = new Image();
-    pre.onload = () => play(img);
-    pre.onerror = () => { delete img.dataset.preloading; };
-    pre.src = img.dataset.animSrc;
-  };
-
-  if (animated.length) {
-    const onLoad = [...animated].filter((i) => i.hasAttribute('data-anim-on-load'));
-    const onScroll = [...animated].filter((i) => !i.hasAttribute('data-anim-on-load'));
-
-    onLoad.forEach(preloadThenPlay);
-
-    if (onScroll.length) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(({ target, isIntersecting }) => {
-          if (!isIntersecting) return;
-          observer.unobserve(target);
-          preloadThenPlay(target);
-        });
-      }, { threshold: 0.35 });
-      onScroll.forEach((img) => observer.observe(img));
-    }
-
-    animated.forEach((img) => {
-      const button = img.closest('.cs-plateScreen')?.querySelector('[data-anim-play]');
-      if (!button) return;
-      button.hidden = !reduceMotion.matches;
-      button.addEventListener('click', () => {
-        play(img);
-        button.hidden = true;
-      });
-    });
-
-    reduceMotion.addEventListener('change', () => {
-      animated.forEach((img) => {
-        const button = img.closest('.cs-plateScreen')?.querySelector('[data-anim-play]');
-        if (button) button.hidden = !reduceMotion.matches || !!img.dataset.played;
-      });
-      if (!reduceMotion.matches) onLoad.forEach(preloadThenPlay);
-    });
   }
 </script>
 

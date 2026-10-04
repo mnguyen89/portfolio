@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=c7322607">
+<link rel="stylesheet" href="styles.css?v=99a81a01">
 <link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
 </head>
 <body>
@@ -189,7 +189,7 @@
             </span>
             <span class="cs-projectNav__text">
               <span class="cs-projectNav__kicker">Previous project</span>
-              <span class="cs-projectNav__title">Systems Design</span>
+              <span class="cs-projectNav__title">Education System</span>
             </span>
           </a>
           <a class="cs-projectNav__btn cs-projectNav__btn--next" href="../slack/index.html" data-project-nav="next">
@@ -229,34 +229,42 @@
     if (e.key === 'Escape') modal.querySelector('[data-modal-close]').click();
   });
 
-  // Subtle scroll-in reveal. Elements are grouped so grids stagger row by row.
+  // Subtle scroll-in reveal. Elements reveal strictly top-down: targets are
+  // collected in document order, and each batch that scrolls into view gets a
+  // short stagger based on where it sits in that batch — not on how many
+  // elements precede it in the page, which used to push late items to
+  // multi-second delays.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const groups = [
-      { sel: '.cs-hero__badge, .cs-hero__title, .cs-hero__lede', stagger: 70 },
-      { sel: '.cs-heroVisual .cs-ph', stagger: 0 },
-      { sel: '.cs-glance__title', stagger: 0 },
-      { sel: '.cs-tag', stagger: 35 },
-      { sel: '.cs-copy > *', stagger: 70 },
-      { sel: '.cs-plate', stagger: 0 },
-    ];
+    const SELECTOR = [
+      '.cs-hero__icon', '.cs-hero__title', '.cs-hero__lede',
+      '.cs-heroVisual .cs-shot',
+      '.cs-glance__logo', '.cs-glance__title',
+      '.cs-tag', '.cs-fact',
+      '.cs-copy > *',
+      '.cs-shots--band', '.cs-problem', '.cs-plate',
+      '.cs-card', '.cs-rule-item',
+      '.cs-outcomes .cs-stat',
+      '.cs-projectNav__btn',
+    ].join(', ');
 
-    const targets = [];
-    groups.forEach(({ sel, stagger }) => {
-      document.querySelectorAll(sel).forEach((el, i) => {
-        el.setAttribute('data-reveal', '');
-        if (stagger) el.style.setProperty('--reveal-delay', `${i * stagger}ms`);
-        targets.push(el);
-      });
-    });
+    const STAGGER = 45;   // ms between neighbours in the same batch
+    const MAX_DELAY = 180; // never hold an element back longer than this
+
+    // querySelectorAll returns document order, so the list is already top-down.
+    const targets = [...document.querySelectorAll(SELECTOR)];
+    targets.forEach((el) => el.setAttribute('data-reveal', ''));
     document.documentElement.classList.add('cs-reveal');
 
     const revealer = new IntersectionObserver((entries) => {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (!isIntersecting) return;
-        target.classList.add('is-revealed');
-        revealer.unobserve(target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach(({ target }, i) => {
+          target.style.setProperty('--reveal-delay', Math.min(i * STAGGER, MAX_DELAY) + 'ms');
+          target.classList.add('is-revealed');
+          revealer.unobserve(target);
+        });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
 
     targets.forEach((el) => revealer.observe(el));
   }

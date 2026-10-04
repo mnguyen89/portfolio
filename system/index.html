@@ -6,8 +6,8 @@
 <!-- soft password gate for the whole site (see shared/gate.js) -->
 <script src="../shared/gate.js"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
-<title>Systems Design — Case Study</title>
-<meta name="description" content="Two design systems: the in-product education system at Slack and the UI token system at PayPal — the patterns, the naming, and the process that made them stick.">
+<title>An Education System for Slack — Case Study</title>
+<meta name="description" content="An education system for Slack — five patterns, a shared visual language, and the engineering guardrails that keep in-product messages from piling up.">
 <!-- Link previews. Scrapers do not run JS and never receive the #slug, so a
      shared /#system link previews with the card below; the per-project cards
      apply to the standalone /system/ URLs. Absolute by spec - update BASE here
@@ -15,8 +15,8 @@
 <link rel="canonical" href="https://mnguyen89.github.io/portfolio/system/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Minh Nguyen — Product Design">
-<meta property="og:title" content="Systems Design — Case Study">
-<meta property="og:description" content="Two design systems: the in-product education system at Slack and the UI token system at PayPal — the patterns, the naming, and the process that made them stick.">
+<meta property="og:title" content="An Education System for Slack — Case Study">
+<meta property="og:description" content="An education system for Slack — five patterns, a shared visual language, and the engineering guardrails that keep in-product messages from piling up.">
 <meta property="og:url" content="https://mnguyen89.github.io/portfolio/system/">
 <meta property="og:image" content="https://mnguyen89.github.io/portfolio/assets/og/og-home.jpg">
 <meta property="og:image:width" content="1200">
@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=02d0fa9d">
+<link rel="stylesheet" href="styles.css?v=16faf3bd">
 <link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
 </head>
 <body>
@@ -44,13 +44,11 @@
           <p class="cs-hero__icon">
             <img src="assets/system-nodes.svg" alt="" width="48" height="48">
           </p>
-          <h1 class="cs-hero__title" id="cs-title">Systems Design</h1>
-          <p class="cs-hero__lede">The in-product education system at Slack, and the UI token system at PayPal. Both started the same way: every team quietly building its own version of the same component.</p>
+          <h1 class="cs-hero__title" id="cs-title">An Education System for Slack</h1>
+          <p class="cs-hero__lede">A system for how Slack teaches — turning hundreds of one-off messages into shared patterns that are easier for users to understand and teams to build.</p>
         </header>
 
         <div class="cs-heroVisual">
-          <!-- Drawn 1297 wide inside the 960 panel, so it bleeds past the text
-               column on both sides and the panel clips it. -->
           <figure class="cs-shot cs-shot--bleed">
             <img src="assets/edu-system-grid.webp" width="1297" height="428"
                  alt="Nine labelled wireframe thumbnails of Slack education surfaces — Badge: New Feature, Badge: Dot, Action List, Demo, Modal: Feature Intro, Inline Card, Tooltip, Coachmark and Context Bar."
@@ -63,288 +61,241 @@
         <p class="cs-glance__logo">
           <img src="../assets/logos/slack.svg" alt="Slack" width="40" height="40">
         </p>
-        <h2 class="cs-glance__title" id="cs-glance-title">Slack education system</h2>
+        <h2 class="cs-glance__title" id="cs-glance-title">Project at a glance</h2>
         <ul class="cs-tags">
           <li class="cs-tag">Design Lead</li>
-          <li class="cs-tag">2026</li>
-          <li class="cs-tag">Education System</li>
-          <li class="cs-tag">Megaphone</li>
+          <li class="cs-tag">Education Framework</li>
+          <li class="cs-tag">UI system</li>
           <li class="cs-tag">Slack Kit</li>
-          <li class="cs-tag">Education Kit</li>
-          <li class="cs-tag">Documentation</li>
-          <li class="cs-tag">Governance</li>
-          <li class="cs-tag">Desktop &amp; Mobile</li>
+          <li class="cs-tag">Notification Systems</li>
+          <li class="cs-tag">2025</li>
         </ul>
       </section>
 
       <hr class="cs-rule">
 
-      <!-- ---------------- The shared problem ---------------- -->
+      <!-- ---------------- The gap ---------------- -->
       <section class="cs-premise" aria-labelledby="cs-premise-title">
         <div class="cs-copy cs-copy--wide">
-          <p class="cs-copy__eyebrow">Problem</p>
-          <h2 class="cs-copy__title" id="cs-premise-title">A design system fails quietly</h2>
-          <p class="cs-copy__body">Nobody files a bug when two teams ship two coachmarks. I built the fix twice — a vocabulary of raw values at PayPal, a vocabulary of moments at Slack — and the hard part was never drawing the components. It was getting them chosen.</p>
+          <h2 class="cs-copy__title" id="cs-premise-title">An education framework and library</h2>
+          <p class="cs-copy__body">Slack had a design system for the permanent furniture of the product — sidebar, composer, buttons, modals — but not for how Slack teaches, introduces something new, or explains a change.</p>
+          <p class="cs-copy__body"><strong>The missing piece was an education system:</strong> shared patterns, components, and rules for how Slack communicates with its customers in product.</p>
         </div>
 
-        <div class="cs-problemSet">
-          <figure class="cs-shots cs-shots--band">
-            <img src="assets/edu-tag-new.webp" width="1473" height="582"
-                 alt="A Slack coachmark tagged New, reading “10 channels are now hidden”, with a Got it button."
-                 loading="lazy" decoding="async">
-            <img src="assets/edu-tag-tip.webp" width="1473" height="578"
-                 alt="A near-identical Slack coachmark tagged Tip, reading “Want to hide muted channels?”, with No thanks and Hide muted channels buttons."
-                 loading="lazy" decoding="async">
-            <figcaption class="cs-shot__cap">Exhibit A: <strong>New</strong> and <strong>Tip</strong> are different jobs and near-identical objects. Teams used them interchangeably.</figcaption>
-          </figure>
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-library.webp" width="1280" height="423"
+               alt="The education component family laid out as a library — badges, coachmarks, banners, cards and modals in their documented states."
+               loading="lazy" decoding="async">
+        </figure>
+      </section>
 
+      <!-- ---------------- The problem ---------------- -->
+      <section class="cs-band cs-band--grey" aria-labelledby="cs-noise-title">
+        <div class="cs-copy cs-copy--wide">
+          <h2 class="cs-copy__title" id="cs-noise-title">Slack’s biggest problem was noise</h2>
+          <p class="cs-copy__body">As a collaboration product, messages between co-workers are the point. But there were no rules for how Slack itself talked to customers, so every product message added to the same pile. A common system could make those interruptions fewer, clearer, and more intentional.</p>
+        </div>
+
+        <figure class="cs-shots cs-shots--band cs-shots--uneven">
+          <img src="assets/fig-noise-a.webp" width="749" height="984"
+               alt="A Slack sidebar and channel view carrying several product messages at once."
+               loading="lazy" decoding="async">
+          <img src="assets/fig-noise-b.webp" width="404" height="984"
+               alt="A second Slack view stacked with competing in-product messages."
+               loading="lazy" decoding="async">
+        </figure>
+
+        <div class="cs-problemSet">
           <ul class="cs-problems">
             <li class="cs-problem">
               <span class="cs-problem__num">01</span>
-              <h3 class="cs-problem__title">Everyone drew the same thing</h3>
-              <p class="cs-problem__body">Banners in one release, coachmarks in the next. Each team solved announcing a feature from scratch.</p>
+              <h3 class="cs-problem__title">Teams kept inventing</h3>
+              <p class="cs-problem__body">Every team built its own version of the same thing.</p>
             </li>
             <li class="cs-problem">
               <span class="cs-problem__num">02</span>
               <h3 class="cs-problem__title">No rule for choosing</h3>
-              <p class="cs-problem__body">Nothing told a team which pattern to reach for — or whether to interrupt anyone at all.</p>
+              <p class="cs-problem__body">Nothing said which pattern to use — or whether to interrupt at all.</p>
             </li>
             <li class="cs-problem">
               <span class="cs-problem__num">03</span>
-              <h3 class="cs-problem__title">Nothing stopped the pile-up</h3>
-              <p class="cs-problem__body">A new user could meet three of them in one session, each sure it was the most important thing on screen.</p>
+              <h3 class="cs-problem__title">Nothing went away</h3>
+              <p class="cs-problem__body">Nothing expired, growing to <strong>~560 messages across 177 places</strong>.</p>
             </li>
           </ul>
+
+          <figure class="cs-shots cs-shots--band">
+            <img src="assets/fig-tag-new.webp" width="608" height="246"
+                 alt="A Slack coachmark tagged New, announcing that something has changed."
+                 loading="lazy" decoding="async">
+            <img src="assets/fig-tag-tip.webp" width="608" height="244"
+                 alt="A near-identical Slack coachmark tagged Tip, suggesting something optional."
+                 loading="lazy" decoding="async">
+            <figcaption class="cs-shot__cap">One message could announce something new while another suggested something optional, yet both looked equally important. A new user could encounter several in one sitting.</figcaption>
+          </figure>
         </div>
       </section>
 
-      <!-- ---------------- Slack ---------------- -->
-      <section class="cs-band" aria-labelledby="cs-slack-title">
+      <!-- ---------------- Organising the content ---------------- -->
+      <section class="cs-band" aria-labelledby="cs-organize-title">
         <div class="cs-copy">
-          <p class="cs-copy__kicker">Slack · 2026</p>
-          <h2 class="cs-copy__title" id="cs-slack-title">An education system on top of Megaphone</h2>
-          <p class="cs-copy__body">Megaphone could already decide what to show a user and when. What it had no vocabulary for was <em>which</em> thing to show. I led the design of that layer — the patterns, the rule for choosing, and the process for getting one built.</p>
+          <h2 class="cs-copy__title" id="cs-organize-title">Organizing Slack’s content</h2>
+          <p class="cs-copy__body">Before simplifying education, we needed a map of the whole problem. Research and an audit organized Slack’s messages into <strong>three families and nine properties</strong>.</p>
         </div>
 
-        <!-- The framework is the deliverable, so it gets a plate of its own —
-             on the shared gutter, like every other block on the page. -->
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/edu-framework.webp" width="800" height="319"
-               alt="Decision diagram: new-to-workspace and returning-user entry points feed a Heads-Up check, then a per-feature layer of zero state, guided tour, NUX suggestion cards, segmentation and setup tasks, ending at Suggestions."
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-ontology.webp" width="1280" height="116"
+               alt="The notification ontology as a single strip — three families of message with their properties."
                loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap">Entry decides the path. New users drop straight into the per-feature layer; returning users clear a Heads-Up first. Both end at Suggestions.</figcaption>
-        </figure>
-
-        <!-- Five patterns as a card grid: each one is a picture plus the single
-             condition that should make you reach for it. -->
-        <div class="cs-copy">
-          <h3 class="cs-copy__sub">Five patterns, each with one job</h3>
-        </div>
-
-        <ul class="cs-cards">
-          <li class="cs-card">
-            <figure class="cs-ph" style="--ph-ratio: 16 / 11">
-              <figcaption class="cs-ph__label">Zero state — first-use and empty variants, each handing over one action</figcaption>
-            </figure>
-            <h4 class="cs-card__title">Zero state</h4>
-            <p class="cs-card__body">The feature starts empty, before anything has been created.</p>
-          </li>
-          <li class="cs-card">
-            <figure class="cs-ph" style="--ph-ratio: 16 / 11">
-              <figcaption class="cs-ph__label">Onboarding &amp; Setup — three modal options: split hero, top hero, minimal</figcaption>
-            </figure>
-            <h4 class="cs-card__title">Onboarding &amp; Setup</h4>
-            <p class="cs-card__body">The feature needs setup before it can be used at all.</p>
-          </li>
-          <li class="cs-card">
-            <figure class="cs-ph" style="--ph-ratio: 16 / 11">
-              <figcaption class="cs-ph__label">Guided Tour — one coachmark per stop, anchored to a real element, with a step counter</figcaption>
-            </figure>
-            <h4 class="cs-card__title">Guided Tour</h4>
-            <p class="cs-card__body">The surface is complex or unfamiliar and needs orienting.</p>
-          </li>
-          <li class="cs-card">
-            <figure class="cs-ph" style="--ph-ratio: 16 / 11">
-              <figcaption class="cs-ph__label">Heads-Up — the banner, stated plainly in past tense, with an escape hatch</figcaption>
-            </figure>
-            <h4 class="cs-card__title">Heads-Up</h4>
-            <p class="cs-card__body">Something was added, moved or removed since they were last here.</p>
-          </li>
-          <li class="cs-card">
-            <figure class="cs-ph" style="--ph-ratio: 16 / 11">
-              <figcaption class="cs-ph__label">Suggestions — a light-touch nudge on the context bar</figcaption>
-            </figure>
-            <h4 class="cs-card__title">Suggestions</h4>
-            <p class="cs-card__body">They are set up and active, and there is more value to surface.</p>
-          </li>
-          <li class="cs-card cs-card--note">
-            <p class="cs-card__body">The per-feature patterns are optional — reach for one, or all five. What is not optional is picking deliberately.</p>
-          </li>
-        </ul>
-
-        <!-- The documented sheet the cards above are pulled from: every pattern,
-             its variants, and the anatomy note that carries the guidance. -->
-        <figure class="cs-plate cs-plate--sheet">
-          <span class="cs-ph" style="--ph-ratio: 3 / 2">
-               <span class="cs-ph__label">Education components — the documented sheet: all five patterns built on Slack Kit, each with its variants and the anatomy note that carries its guidance</span>
-             </span>
-          <figcaption class="cs-plate__cap">The documented sheet: every pattern built on Slack Kit, with the anatomy that carries its guidance. Variants are named options, not one-offs — three ways to run an onboarding modal, two zero states.</figcaption>
         </figure>
 
         <div class="cs-copy">
-          <h3 class="cs-copy__sub">The same patterns, in the product</h3>
-        </div>
-
-        <ul class="cs-strip">
-          <li>
-            <figure class="cs-strip__shot">
-              <span class="cs-ph" style="--ph-ratio: 16 / 10">
-                <span class="cs-ph__label">Heads-Up in product — a modal announcing a notification change, with a single Got it action</span>
-              </span>
-              <figcaption class="cs-strip__cap">Heads-Up — a notification change, stated plainly</figcaption>
-            </figure>
-          </li>
-          <li>
-            <figure class="cs-strip__shot">
-              <span class="cs-ph" style="--ph-ratio: 16 / 10">
-                <span class="cs-ph__label">Suggestion in product — an inline tip above the composer, dismissible, in the flow of work</span>
-              </span>
-              <figcaption class="cs-strip__cap">Suggestion — in the flow of work, dismissible</figcaption>
-            </figure>
-          </li>
-        </ul>
-
-        <!-- Principles compress to three lines; the long version lives in the
-             docs, not in the portfolio. -->
-        <div class="cs-copy">
-          <h3 class="cs-copy__sub">Three principles that gate the work</h3>
+          <h3 class="cs-copy__sub">Turning the map into something usable</h3>
+          <p class="cs-copy__body">Like most systems, the ontology organizes messages by what they are — category, intent, urgency. That is the taxonomy the business thinks in. Education became the first layer to ship, and it bridges the gap with users by organizing itself around the moment the user is in instead.</p>
+          <p class="cs-copy__body">The result was three parts designed to work together:</p>
           <ol class="cs-rules">
             <li class="cs-rule-item">
-              <span class="cs-rule-item__q">Is it worth interrupting them?</span>
-              <span class="cs-rule-item__a">The benefit of learning has to outweigh the cost of the interruption. Plenty of proposals should not clear this.</span>
+              <span class="cs-rule-item__q">Framework</span>
+              <span class="cs-rule-item__a">Helps designers choose the right pattern.</span>
             </li>
             <li class="cs-rule-item">
-              <span class="cs-rule-item__q">Lead with value</span>
-              <span class="cs-rule-item__a">Why this makes someone’s working life simpler — not that the feature exists.</span>
+              <span class="cs-rule-item__q">UI system</span>
+              <span class="cs-rule-item__a">Reinforces what each pattern means for users.</span>
             </li>
             <li class="cs-rule-item">
-              <span class="cs-rule-item__q">Build it with Megaphone</span>
-              <span class="cs-rule-item__a">So two pieces of education can never fire at once.</span>
+              <span class="cs-rule-item__q">Engineering guardrails</span>
+              <span class="cs-rule-item__a">Control when, where, and how often messages appear.</span>
             </li>
           </ol>
         </div>
+      </section>
 
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/edu-inproduct.webp" width="800" height="535"
-               alt="A Slack desktop window with the Launchpad open — a welcome panel offering next steps, an education coachmark reading “Tip for you” beside Connect apps, and a trial banner in the sidebar."
-               loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap">Three pieces of education on one screen — only coherent because something upstream is sequencing them.</figcaption>
-        </figure>
-
+      <!-- ---------------- What shipped ---------------- -->
+      <section class="cs-band cs-band--grey" aria-labelledby="cs-shipped-title">
         <div class="cs-copy">
-          <h3 class="cs-copy__sub">It shipped as Education Kit</h3>
-          <p class="cs-copy__body">Banner, coachmark, glow, modal and tag — stateless and design-agnostic, with no runtime dependency on Megaphone. Live in the webapp, in the Slack Kit Figma libraries as education variants, and documented where designers already look.</p>
+          <h2 class="cs-copy__title" id="cs-shipped-title">What shipped</h2>
+          <p class="cs-copy__body">The education framework became a library of patterns and variants in Slack Kit — giving teams a shared starting point for common education moments across desktop and mobile.</p>
+          <p class="cs-copy__body">Instead of designing each experience from scratch, teams could choose a pattern based on the behavior they wanted to support, then adapt it to their feature and surface.</p>
         </div>
 
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/edu-components.webp" width="384" height="206"
-               alt="Two education components — a card with an illustration, a New tag and Try it now and Got it actions, and the same content as a compact blue coachmark."
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-shipped.webp" width="1280" height="854"
+               alt="The education library in Slack Kit — every pattern with its documented variants and anatomy notes."
                loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap">One payload, two patterns, one education colour token.</figcaption>
         </figure>
 
         <ul class="cs-outcomes">
           <li class="cs-stat">
             <span class="cs-stat__figure">5</span>
-            <span class="cs-stat__label">Patterns, with one written rule for choosing between them</span>
+            <span class="cs-stat__label">Patterns, with one written rule for choosing between them. Desktop + mobile</span>
           </li>
           <li class="cs-stat">
-            <span class="cs-stat__figure">Shipped</span>
+            <span class="cs-stat__figure">UI Kit</span>
             <span class="cs-stat__label">Education Kit live in code and in the Slack Kit Figma libraries</span>
           </li>
           <li class="cs-stat">
-            <span class="cs-stat__figure">1</span>
-            <span class="cs-stat__label">Orchestration layer — two pieces of education can no longer collide</span>
+            <span class="cs-stat__figure">20%</span>
+            <span class="cs-stat__label">Of the inventory retired in two months, with guardrails in place to keep it down</span>
           </li>
         </ul>
       </section>
 
-      <!-- Second project glance. Sits on the white surface ahead of the grey
-           band so it is the same block as the Slack one above, not a variant. -->
-      <section class="cs-glance" aria-labelledby="cs-glance-paypal">
-        <p class="cs-glance__logo">
-          <img class="is-tall" src="../assets/logos/paypal.webp" alt="PayPal" width="33" height="40">
-        </p>
-        <h2 class="cs-glance__title" id="cs-glance-paypal">PayPal Design System</h2>
-        <ul class="cs-tags">
-        <li class="cs-tag">Design Lead</li>
-        <li class="cs-tag">2021</li>
-        <li class="cs-tag">UI Token System</li>
-        <li class="cs-tag">Naming Structure</li>
-        <li class="cs-tag">Semantic Tokens</li>
-        <li class="cs-tag">Motion Tokens</li>
-        <li class="cs-tag">Guidelines Site</li>
-        <li class="cs-tag">Sketch Kit</li>
-        <li class="cs-tag">iOS · Android · Web</li>
-        </ul>
-      </section>
-
-      <!-- ---------------- PayPal ---------------- -->
-      <section class="cs-band cs-band--grey" aria-labelledby="cs-paypal-title">
+      <!-- ---------------- Every pattern has a job ---------------- -->
+      <section class="cs-band" aria-labelledby="cs-patterns-title">
         <div class="cs-copy">
-          <p class="cs-copy__kicker">PayPal · 2021</p>
-          <h2 class="cs-copy__title" id="cs-paypal-title">A token system for a wallet being rebuilt mid-flight</h2>
-          <p class="cs-copy__body">A hundred markets kept shipping while the app was rebuilt into a digital wallet. The same blue existed a dozen times over, each copy with its own fate. I built the layer that gave every value one name.</p>
+          <h2 class="cs-copy__title" id="cs-patterns-title">Every pattern has a job</h2>
+          <p class="cs-copy__body">Onboarding helps people <strong>set up</strong>, NUX gets them <strong>activated</strong>, tours <strong>guide</strong> them through something unfamiliar, and suggestions <strong>educate</strong> them on what else is possible.</p>
+          <p class="cs-copy__body">A shared visual language reinforces those expectations. Consistent anatomy, color, and behavior help people recognize what kind of help they’re getting — and what’s expected of them — before they read.</p>
         </div>
 
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/pp-naming.webp" width="640" height="395"
-               alt="Token naming reference — the structure component-element-property-type-variant-state, with columns of element, component and animation token names for a toast."
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">New User Experiences</h3>
+          <p class="cs-copy__body">Getting someone from an empty workspace to a first meaningful action.</p>
+        </div>
+
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-grp-nux.webp" width="1280" height="820"
+               alt="New user experience patterns — a welcome panel, a setup checklist and starter tasks shown in the Slack client."
                loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap"><code>component-element-property-[type]-[variant]-[state]</code> — read left to right, a name says exactly what it touches. A name that does not parse is a name that is wrong, which turns review into reading.</figcaption>
         </figure>
 
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/pp-tiers.webp" width="640" height="296"
-               alt="Diagram mapping design values — 16px, #0070BA, 16px — through base tokens like spacing-md and color-blue-600 out to semantic component tokens like toast-background-space.top and link-text-color."
-               loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap">A value enters once as a base token, then aliases out to the semantic tokens components consume. Change the base, every component moves — without opening one of them.</figcaption>
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">Empty states &amp; Onboarding</h3>
+          <p class="cs-copy__body">The feature starts empty, or needs setting up before it can be used at all.</p>
+        </div>
+
+        <figure class="cs-plate cs-plate--sheet">
+          <span class="cs-ph" style="--ph-ratio: 16 / 7">
+            <span class="cs-ph__label">Empty states and onboarding modals — first-use and empty variants, each handing over one action</span>
+          </span>
         </figure>
 
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/pp-library.webp" width="960" height="832"
-               alt="Component library plates — attention cards with Pay Now and Add funds actions, dropdown, checkbox and radio-button states, horizontally scrolling balance cards, and phone screens showing them assembled."
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">Education for existing users</h3>
+          <p class="cs-copy__body">People already set up and active, who have more value still to find.</p>
+        </div>
+
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-grp-existing.webp" width="1280" height="510"
+               alt="Education patterns for returning users shown together across Slack surfaces."
                loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap">Drawn against real surfaces, not in the abstract. Every screen turned up a value the set was missing — the only reliable way to find them.</figcaption>
         </figure>
 
-        <figure class="cs-plate cs-plate--wide">
-          <img src="assets/pp-pipeline.webp" width="1200" height="539"
-               alt="Pipeline diagram: discovery, feedback and iteration, and design feed a guidelines site, Sketch kit and JSON tokens; those build pp-components-ios, pp-components-android and pp-vx/pp-react, which iOS, Android and web apps are built from."
+        <div class="cs-copy">
+          <h4 class="cs-copy__sub cs-copy__sub--minor">Heads-Up</h4>
+          <p class="cs-copy__body">Something was added, moved or removed since they were last here — for large and small updates alike.</p>
+        </div>
+
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-headsup-a.webp" width="1280" height="854"
+               alt="A heads-up announcing a significant change, shown in place on the surface that changed."
                loading="lazy" decoding="async">
-          <figcaption class="cs-plate__cap">Defined once on the guidelines site, drawn into the Sketch kit, emitted as JSON — then <code>pp-components-ios</code>, <code>-android</code> and <code>pp-react</code> built themselves from it. Motion went in the same set: curves and durations as tokens, not a spec doc.</figcaption>
         </figure>
 
-        <ul class="cs-outcomes">
-          <li class="cs-stat">
-            <span class="cs-stat__figure">3</span>
-            <span class="cs-stat__label">Tiers — design value, base token, semantic token</span>
-          </li>
-          <li class="cs-stat">
-            <span class="cs-stat__figure">4</span>
-            <span class="cs-stat__label">Dimensions tokenised — colour, size, spacing and time</span>
-          </li>
-          <li class="cs-stat">
-            <span class="cs-stat__figure">3</span>
-            <span class="cs-stat__label">Platform libraries — iOS, Android and web — from one JSON source</span>
-          </li>
-        </ul>
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-headsup-b.webp" width="1280" height="687"
+               alt="A lighter heads-up for a smaller change, stated plainly with a single action."
+               loading="lazy" decoding="async">
+        </figure>
+
+        <div class="cs-copy">
+          <h4 class="cs-copy__sub cs-copy__sub--minor">Guided Tour</h4>
+          <p class="cs-copy__body">The surface is complex or unfamiliar and needs orienting.</p>
+        </div>
+
+        <figure class="cs-plate cs-plate--wide cs-plate--bare">
+          <img src="assets/fig-tour.webp" width="1280" height="767"
+               alt="A guided tour — one coachmark per stop, anchored to a real element, with a step counter."
+               loading="lazy" decoding="async">
+        </figure>
+
+        <div class="cs-copy">
+          <h4 class="cs-copy__sub cs-copy__sub--minor">Suggestions</h4>
+          <p class="cs-copy__body">They are set up and active, and there is more value to surface.</p>
+        </div>
+
+        <figure class="cs-plate cs-plate--wide cs-plate--bare cs-plate--half">
+          <img src="assets/fig-suggestions.webp" width="880" height="448"
+               alt="A suggestion — a light-touch, dismissible nudge in the flow of work."
+               loading="lazy" decoding="async">
+        </figure>
+      </section>
+
+      <!-- ---------------- Rules in the platform ---------------- -->
+      <section class="cs-band cs-band--grey" aria-labelledby="cs-rules-title">
+        <div class="cs-copy">
+          <h2 class="cs-copy__title" id="cs-rules-title">Rules built into the system</h2>
+          <p class="cs-copy__body">A pattern library still asks people to remember, so the same rules went into Megaphone.</p>
+          <p class="cs-copy__body cs-copy__body--lead">One message at a time<br>Expiry by default<br>Performance built in</p>
+        </div>
       </section>
 
       <section class="cs-close-section" aria-labelledby="cs-takeaway-title">
         <div class="cs-copy cs-copy--wide">
-          <h2 class="cs-copy__title" id="cs-takeaway-title">Adoption is the design problem</h2>
-          <p class="cs-copy__body">The components are the easy half. What decides whether a system survives a roadmap is whether a designer under deadline can find the right pattern in under a minute — and whether reaching for it beats building a bespoke one. So most of the work is naming, documentation and process. Unglamorous, and the part that compounds.</p>
+          <h2 class="cs-copy__title" id="cs-takeaway-title">Where it goes</h2>
+          <p class="cs-copy__body">Education was the first branch of the ontology to get a design layer. Upgrade messaging and system alerts are next.</p>
+          <p class="cs-copy__body">The goal is for the next designer to find the right pattern in Slack Kit <strong>without ever knowing there was a gap</strong>.</p>
+          <p class="cs-copy__body cs-copy__body--lead">A design system catches a bad component. It doesn’t catch a hundred good ones landing on the same person.</p>
         </div>
       </section>
 
@@ -399,40 +350,42 @@
     if (e.key === 'Escape') modal.querySelector('[data-modal-close]').click();
   });
 
-  // Subtle scroll-in reveal. Elements are grouped so grids stagger row by row.
+  // Subtle scroll-in reveal. Elements reveal strictly top-down: targets are
+  // collected in document order, and each batch that scrolls into view gets a
+  // short stagger based on where it sits in that batch — not on how many
+  // elements precede it in the page, which used to push late items to
+  // multi-second delays.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const groups = [
-      { sel: '.cs-hero__icon, .cs-hero__title, .cs-hero__lede', stagger: 70 },
-      { sel: '.cs-heroVisual .cs-shot', stagger: 0 },
-      { sel: '.cs-glance__logo, .cs-glance__title', stagger: 60 },
-      { sel: '.cs-tag', stagger: 35 },
-      { sel: '.cs-copy > *', stagger: 70 },
-      { sel: '.cs-shots--band', stagger: 0 },
-      { sel: '.cs-problem', stagger: 100 },
-      { sel: '.cs-plate', stagger: 0 },
-      { sel: '.cs-card', stagger: 80 },
-      { sel: '.cs-rule-item', stagger: 90 },
-      { sel: '.cs-outcomes .cs-stat', stagger: 90 },
-      { sel: '.cs-projectNav__btn', stagger: 80 },
-    ];
+    const SELECTOR = [
+      '.cs-hero__icon', '.cs-hero__title', '.cs-hero__lede',
+      '.cs-heroVisual .cs-shot',
+      '.cs-glance__logo', '.cs-glance__title',
+      '.cs-tag', '.cs-fact',
+      '.cs-copy > *',
+      '.cs-shots--band', '.cs-problem', '.cs-plate',
+      '.cs-card', '.cs-rule-item',
+      '.cs-outcomes .cs-stat',
+      '.cs-projectNav__btn',
+    ].join(', ');
 
-    const targets = [];
-    groups.forEach(({ sel, stagger }) => {
-      document.querySelectorAll(sel).forEach((el, i) => {
-        el.setAttribute('data-reveal', '');
-        if (stagger) el.style.setProperty('--reveal-delay', `${i * stagger}ms`);
-        targets.push(el);
-      });
-    });
+    const STAGGER = 45;   // ms between neighbours in the same batch
+    const MAX_DELAY = 180; // never hold an element back longer than this
+
+    // querySelectorAll returns document order, so the list is already top-down.
+    const targets = [...document.querySelectorAll(SELECTOR)];
+    targets.forEach((el) => el.setAttribute('data-reveal', ''));
     document.documentElement.classList.add('cs-reveal');
 
     const revealer = new IntersectionObserver((entries) => {
-      entries.forEach(({ target, isIntersecting }) => {
-        if (!isIntersecting) return;
-        target.classList.add('is-revealed');
-        revealer.unobserve(target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach(({ target }, i) => {
+          target.style.setProperty('--reveal-delay', Math.min(i * STAGGER, MAX_DELAY) + 'ms');
+          target.classList.add('is-revealed');
+          revealer.unobserve(target);
+        });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
 
     targets.forEach((el) => revealer.observe(el));
   }
