@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Opened on its own (a shared /visual-design/ link, a new tab), this page hands
+     over to the home page with the project in the hash, so it opens as the
+     overlay on top of the portfolio. Inside that overlay it is framed and
+     stays put. Scrapers do not run JS, so link previews still read the tags
+     below. -->
+<script>if (window.top === window.self) { document.documentElement.style.visibility = 'hidden'; location.replace((location.protocol === 'file:' ? '../index.html' : '../') + location.search + '#visual-design'); }</script>
 <!-- soft password gate for the whole site (see shared/gate.js) -->
 <script src="../shared/gate.js"></script>
 <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
