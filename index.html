@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="home.css?v=255d3ea4">
+<link rel="stylesheet" href="home.css?v=47ea7a33">
 </head>
 <body>
 
@@ -92,16 +92,13 @@
            from the hidden copy instead of whichever phrase is showing. -->
       <h1 class="vs-hero__title">
         Minh Nguyen&nbsp;–<br>
-        <span class="vs-visuallyHidden">Shaping experiences through product design, systems thinking, design strategy, and visual craft.</span>
-        <span aria-hidden="true"><span class="vs-nowrap">Shaping experiences through</span> <span class="vs-nowrap"><span class="vs-rotator" data-rotator>
-          <!-- Semi-analogous around the teal (hue 232), which leads: then cobalt
-               and violet stepping round the wheel, and jade, which sits next to
-               the teal again as the cycle loops. Rich but not neon: chroma held
-               below each hue's maximum. -->
-          <span class="vs-phrase is-current" style="--hue: oklch(0.62 0.14 232)">product design,</span>
-          <span class="vs-phrase" style="--hue: oklch(0.48 0.16 264)">systems thinking,</span>
-          <span class="vs-phrase" style="--hue: oklch(0.48 0.15 292)">design strategy,</span>
-          <span class="vs-phrase is-prev" style="--hue: oklch(0.54 0.11 168)"><span class="vs-phrase__lead">and </span>visual craft.</span>
+        <span class="vs-visuallyHidden">Shaping products through UX design, systems thinking, design strategy, and visual craft.</span>
+        <span aria-hidden="true"><span class="vs-nowrap">Shaping products through</span> <span class="vs-nowrap"><span class="vs-rotator" data-rotator>
+          <!-- Palette in order: yellow, green, purple, sky blue. -->
+          <span class="vs-phrase is-current" style="--hue: #eda800">UX design,</span>
+          <span class="vs-phrase" style="--hue: #20c577">systems thinking,</span>
+          <span class="vs-phrase" style="--hue: #7d2aab">design strategy,</span>
+          <span class="vs-phrase is-prev" style="--hue: #52b5e1"><span class="vs-phrase__lead">and </span>visual craft.</span>
         </span></span></span>
       </h1>
     </section>
@@ -109,7 +106,7 @@
     <div class="vs-worksRow">
       <h2 class="vs-worksRow__title">Selected Works</h2>
       <button class="vs-iconBtn" type="button" aria-label="Scroll to selected work" data-scroll-work>
-        <img src="assets/logos/arrow-right.svg" alt="" width="18" height="18">
+        <svg width="18" height="18" viewBox="0 0 13.3333 13.3333" fill="none" aria-hidden="true"><path d="M6.6667 2.7778V10.5565M2.7773 6.6672L6.6667 10.5565L10.556 6.6672" stroke="currentColor" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
   </div>
@@ -125,7 +122,7 @@
         <li class="vs-row is-active" data-row>
           <span class="vs-row__track"></span>
           <!-- phones only: the picture leads its project; wider screens use the stage -->
-          <img class="vs-row__pic vs-row__pic--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" loading="lazy">
+          <img class="vs-row__pic" src="assets/projects/slackbot-v2.webp" alt="Slackbot illustration" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="true" aria-controls="work-1">
             <span class="vs-row__num" aria-hidden="true">01</span>
             <img class="vs-row__logo" src="assets/logos/slack.svg" alt="Slack">
@@ -143,7 +140,7 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
-          <img class="vs-row__pic vs-row__pic--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" loading="lazy">
+          <img class="vs-row__pic" src="assets/projects/education-system-v2.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
             <span class="vs-row__num" aria-hidden="true">02</span>
             <img class="vs-row__logo" src="assets/logos/systems-design-slack.svg" alt="Slack">
@@ -161,7 +158,7 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
-          <img class="vs-row__pic" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" loading="lazy">
+          <img class="vs-row__pic" src="assets/projects/digital-wallet-nux-v2.webp" alt="PayPal crypto detail screen" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-2">
             <span class="vs-row__num" aria-hidden="true">03</span>
             <img class="vs-row__logo vs-row__logo--solid" src="assets/logos/paypal.webp" alt="PayPal">
@@ -218,9 +215,9 @@
       <!-- One image per row, in the same order. All load up front so switching
            rows never waits on the network. -->
       <div class="vs-stage">
-        <img class="vs-stage__img vs-stage__img--slackbot" src="assets/projects/slackbot.webp" alt="Slackbot illustration" data-stage>
-        <img class="vs-stage__img vs-stage__img--rounded" src="assets/projects/education-system.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" data-stage hidden>
-        <img class="vs-stage__img" src="assets/projects/digital-wallet-nux.webp" alt="PayPal crypto detail screen" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/slackbot-v2.webp" alt="Slackbot illustration" data-stage>
+        <img class="vs-stage__img" src="assets/projects/education-system-v2.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/digital-wallet-nux-v2.webp" alt="PayPal crypto detail screen" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" data-stage hidden>
       </div>
@@ -230,9 +227,9 @@
   <footer class="vs-footer">
     <div class="vs-menuWrap" data-menu>
       <button class="vs-contact vs-contact--flat" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="contact-menu" data-menu-trigger>
-        <svg class="vs-contact__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
-        <span>Contact Me</span>
-        <svg class="vs-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 6.5 5 3.5 8 6.5" fill="none" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="vs-contact__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
+        <span>Contact</span>
+        <svg class="vs-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 6.5 5 3.5 8 6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <div class="vs-menu vs-menu--up" role="menu" id="contact-menu" hidden>
         <div class="vs-menu__panel" data-panel="main">
@@ -325,7 +322,7 @@
     ticking = false;
     const h = first.offsetHeight;
     const p = Math.min(1, scrollY / (h * 0.6));
-    wave.style.opacity = (0.85 * (1 - p)).toFixed(3);
+    wave.style.opacity = (1 - p).toFixed(3);
     if (!still) {
       wave.style.setProperty('--vs-wave-shift', (Math.min(scrollY, h) * 0.3).toFixed(1) + 'px');
     }
@@ -336,16 +333,31 @@
   addEventListener('resize', drift);
 
   /* Keep the dots clear of the headline. The wave scales with the window's
-     width, so on wide screens its crest climbs into the text. The crest, the
-     first row of dots, sits 0.244 of the wave's width below its box top once
-     the -8deg tilt is applied (the art is empty above 38% of its height).
-     If that is less than 32px under the headline, push the wave down. */
+     width, so on some screens it climbs into the text. TOPS is the top edge
+     of the dots, measured off the art at the -13.91deg tilt: one sample every
+     0.05 of the wave's width, from 0.6 left of its centre to 0.6 right, each
+     the distance below the box top in wave-widths (null = no dots there).
+     Only the stretch under the headline's text counts, so the high crest out
+     at the right edge does not push it. If the dots there come within 32px
+     of the headline, the wave moves down. */
+  const TOPS = [null, null, null, .569, .547, .527, .492, .445, .402, .404, .441, .469, .453,
+                .396, .305, .236, .221, .232, .266, .307, .33, .345, .344, null, null];
   const title = document.querySelector('.vs-hero__title');
-  const hero = document.querySelector('.vs-hero');
   const clearHeadline = () => {
-    const headlineBottom = hero.offsetTop + title.offsetTop + title.offsetHeight;
-    const crest = wave.offsetTop + 0.244 * wave.offsetWidth;
-    const push = Math.max(0, headlineBottom + 32 - crest);
+    const f = first.getBoundingClientRect();
+    // the text itself, not the 880px box it sits in; the hidden phrases are
+    // left out, as they sit translated above and below their line
+    const t = title.getBoundingClientRect();
+    const lines = [title.querySelector('.vs-nowrap'), rotator].map(el => el.getBoundingClientRect().right);
+    const left = t.left - f.left, right = Math.max(...lines) - f.left, bottom = t.bottom - f.top;
+    const w = wave.offsetWidth, centre = wave.offsetLeft + w / 2;
+    let top = Infinity;
+    TOPS.forEach((d, i) => {
+      const x = centre + (-0.6 + i * 0.05) * w;
+      if (d !== null && x >= left && x <= right) top = Math.min(top, d);
+    });
+    const crest = wave.offsetTop + top * w;
+    const push = Number.isFinite(crest) ? Math.max(0, bottom + 32 - crest) : 0;
     wave.style.setProperty('--vs-wave-push', push.toFixed(1) + 'px');
   };
   clearHeadline();
