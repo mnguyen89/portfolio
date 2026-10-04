@@ -24,7 +24,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="home.css?v=e0433262">
+<link rel="stylesheet" href="home.css?v=b5bb9b9c">
 </head>
 <body>
 
@@ -93,7 +93,7 @@
       <h1 class="vs-hero__title">
         Minh Nguyen&nbsp;–<br>
         <span class="vs-visuallyHidden">Shaping products through UX design, systems thinking, design strategy, and visual craft.</span>
-        <span aria-hidden="true"><span class="vs-nowrap">Shaping products through</span> <span class="vs-nowrap"><span class="vs-rotator" data-rotator>
+        <span aria-hidden="true"><span class="vs-nowrap">Shaping products through</span><br><span class="vs-nowrap"><span class="vs-rotator" data-rotator>
           <!-- Palette in order: yellow, green, purple, sky blue. -->
           <span class="vs-phrase is-current" style="--hue: #eda800">UX design,</span>
           <span class="vs-phrase" style="--hue: #20c577">systems thinking,</span>
@@ -312,7 +312,7 @@
   }, 2600);
 
   /* Dots wave: drifts down at 30% of the scroll speed so it trails the
-     page, and fades out over the first 60% of the first screen. The fade
+     page, and shrinks and fades out over the first 60% of the first screen. The fade
      still runs under reduced motion; the drift does not. */
   const wave = document.querySelector('.vs-wave');
   const first = document.querySelector('.vs-first');
@@ -325,6 +325,17 @@
     wave.style.opacity = (1 - p).toFixed(3);
     if (!still) {
       wave.style.setProperty('--vs-wave-shift', (Math.min(scrollY, h) * 0.3).toFixed(1) + 'px');
+      // shrinks to 75% as it fades out, so it seems to sink back as it drifts.
+      // It scales about its centre; sliding it by what the shrink takes off
+      // towards its top-right corner (along the -13.91deg tilt) would hold
+      // that corner still. It goes half that far, so it recedes up and to
+      // the right without travelling much.
+      const s = 1 - 0.25 * p, hw = wave.offsetWidth / 2, hh = wave.offsetHeight / 2;
+      const cos = 0.97068, sin = -0.24038;   // the tilt
+      const travel = 0.5;
+      wave.style.setProperty('--vs-wave-scale', s.toFixed(3));
+      wave.style.setProperty('--vs-wave-ax', (travel * (1 - s) * (hw * cos + hh * sin)).toFixed(1) + 'px');
+      wave.style.setProperty('--vs-wave-ay', (travel * (1 - s) * (hw * sin - hh * cos)).toFixed(1) + 'px');
     }
   };
   addEventListener('scroll', () => {

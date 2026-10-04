@@ -81,7 +81,7 @@ button { font: inherit; color: inherit; }
    1007px from the left and 544px down. Measured from the top, not the
    bottom, so it keeps its place beside the headline however tall the window
    is (the box top is 44px down at full size and scales below 1200). The mask
-   fades it out as it reaches the projects. */
+   fades it out as it reaches the projects, and at its cut-off left edge. */
 .vs-wave {
   position: absolute;
   z-index: 0;
@@ -91,12 +91,24 @@ button { font: inherit; color: inherit; }
   aspect-ratio: 1372 / 980;
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
   opacity: 1;
-  /* --vs-wave-shift is the parallax, set by the script on scroll;
+  /* --vs-wave-shift is the parallax and --vs-wave-scale shrinks it as it
+     goes, so it reads as receding into the page; --vs-wave-ax/ay slide it
+     towards its top-right corner while it shrinks, so it recedes upward. All set by the script on scroll.
      --vs-wave-push moves it down when the headline would reach it */
-  transform: translate3d(0, calc(var(--vs-wave-push, 0px) + var(--vs-wave-shift, 0px)), 0) rotate(-13.91deg);
+  transform:
+    translate3d(var(--vs-wave-ax, 0px), calc(var(--vs-wave-push, 0px) + var(--vs-wave-shift, 0px) + var(--vs-wave-ay, 0px)), 0)
+    rotate(-13.91deg) scale(var(--vs-wave-scale, 1));
   will-change: transform;
-  -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
-  mask-image: linear-gradient(to bottom, #000 58%, transparent 92%);
+  /* two fades, both kept: out towards the bottom, and in from the left edge,
+     where the art is cut off square */
+  -webkit-mask-image:
+    linear-gradient(to bottom, #000 58%, transparent 92%),
+    linear-gradient(to right, transparent 0%, #000 28%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, #000 58%, transparent 92%),
+    linear-gradient(to right, transparent 0%, #000 28%);
+  mask-composite: intersect;
   pointer-events: none;
 }
 
@@ -225,6 +237,22 @@ button { font: inherit; color: inherit; }
 /* ---- Projects: story-style list on the left, image on the right */
 
 .vs-work { padding: 8px var(--vs-gutter) 0; }
+/* The page colour, across the full window, behind the projects and in front
+   of the dots wave: it fades in over the section's first 120px, so the last
+   of the dots trailing in under the first project fade out rather than
+   showing through. */
+.vs-work::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background: linear-gradient(to bottom, rgb(251 250 248 / 0), var(--vs-bg) 120px);
+  pointer-events: none;
+}
 
 .vs-work__grid {
   position: relative;
@@ -669,9 +697,10 @@ body.is-modalOpen { overflow: hidden; }
   .vs-nav { gap: 14px; }
   .vs-nav > a { --vs-nav-pad: 7px; }   /* half the gap, so hover pills never touch */
   .vs-contact--nav { padding: 10px 14px 10px 12px; }
-  .vs-hero__title { font-size: clamp(34px, 7vw, 60px); }
-  /* "Shaping products through" is wider than a phone at this size */
-  .vs-hero__title .vs-nowrap:first-child { white-space: normal; }
+  /* The rotating phrase always takes the third line, so "Shaping products
+     through" has to fit on one: it is 12.03em wide (12.5 leaves room for font differences), and the gutters take
+     48px. On phones that brings the headline below 34px. */
+  .vs-hero__title { font-size: min(clamp(34px, 7vw, 60px), calc((100vw - 48px) / 12.5)); }
 
   .vs-work__grid {
     grid-template-columns: minmax(0, 1fr);
