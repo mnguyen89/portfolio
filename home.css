@@ -78,13 +78,15 @@ button { font: inherit; color: inherit; }
 
 /* Size, tilt and position follow Figma (home frame 628:122862, "Dots wave"),
    drawn on a 1200 x 900 first screen: 1399px wide, tilted 13.9deg, centred
-   1007px from the left and 544px down. The mask fades it out as it reaches
-   the projects. */
+   1007px from the left and 544px down. Measured from the top, not the
+   bottom, so it keeps its place beside the headline however tall the window
+   is (the box top is 44px down at full size and scales below 1200). The mask
+   fades it out as it reaches the projects. */
 .vs-wave {
   position: absolute;
   z-index: 0;
   right: -42.23%;
-  bottom: -15.89%;
+  top: min(44px, 3.6667vw);
   width: 116.55%;
   aspect-ratio: 1372 / 980;
   background: url("assets/decor/hero-wave-1775.webp") no-repeat center / cover;
