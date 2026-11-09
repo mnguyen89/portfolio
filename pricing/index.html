@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Opened on its own (a shared /pricing/ link, a new tab), this page hands
+     over to the home page with the project in the hash, so it opens as the
+     overlay on top of the portfolio. Inside that overlay it is framed and
+     stays put. Scrapers do not run JS, so link previews still read the tags
+     below. -->
+<script>if (window.top === window.self) { document.documentElement.style.visibility = 'hidden'; location.replace((location.protocol === 'file:' ? '../index.html' : '../') + location.search + '#pricing'); }</script>
+<!-- soft password gate for the whole site (see shared/gate.js) -->
+<script src="../shared/gate.js"></script>
+<link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+<title>Pricing &amp; Packaging at Slack — Case Study</title>
+<meta name="description" content="Running the design side of Slack’s plan changes — shared components, a string sweep and clear rules, so every team updating its own upgrade moments shipped one consistent experience.">
+<!-- Link previews. Absolute by spec - update BASE here if the site ever moves
+     to a custom domain. -->
+<link rel="canonical" href="https://mnguyen89.github.io/portfolio/pricing/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Minh Nguyen — Product Design">
+<meta property="og:title" content="Pricing &amp; Packaging at Slack — Case Study">
+<meta property="og:description" content="Running the design side of Slack’s plan changes — shared components, a string sweep and clear rules, so every team updating its own upgrade moments shipped one consistent experience.">
+<meta property="og:url" content="https://mnguyen89.github.io/portfolio/pricing/">
+<meta property="og:image" content="https://mnguyen89.github.io/portfolio/assets/og/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Minh Nguyen product design portfolio.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=75d7eab1">
+<link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
+</head>
+<body>
+
+<div class="cs-backdrop" data-modal>
+  <div class="cs-panel" role="dialog" aria-modal="true" aria-labelledby="cs-title" tabindex="-1">
+    <button class="cs-close" type="button" data-modal-close aria-label="Close case study">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+
+    <article class="cs">
+
+      <div class="cs-open">
+        <header class="cs-hero">
+          <p class="cs-hero__icon">
+            <img src="assets/pp-tag.svg" alt="" width="48" height="48">
+          </p>
+          <h1 class="cs-hero__title" id="cs-title">Pricing &amp; Packaging</h1>
+          <p class="cs-hero__lede">Running the design side of Slack’s plan changes — so every product team updating its own upgrade moments shipped one consistent experience.</p>
+        </header>
+
+        <div class="cs-heroVisual">
+          <figure class="cs-shot">
+            <img src="../assets/projects/pricing-packaging.webp" width="1576" height="1016"
+                 alt="An illustrative plan picker — Free, Pro and Business+ side by side, with Pro highlighted and a Start free trial button."
+                 decoding="async">
+          </figure>
+        </div>
+      </div>
+
+      <section class="cs-glance" aria-labelledby="cs-glance-title">
+        <p class="cs-glance__logo">
+          <img src="../assets/logos/slack.svg" alt="Slack" width="40" height="40">
+        </p>
+        <h2 class="cs-glance__title" id="cs-glance-title">Project at a glance</h2>
+        <ul class="cs-tags">
+          <li class="cs-tag">Design DRI</li>
+          <li class="cs-tag">Growth &amp; Monetization</li>
+          <li class="cs-tag">Design Operations</li>
+          <li class="cs-tag">Upgrades Kit</li>
+          <li class="cs-tag">Trials</li>
+          <li class="cs-tag">2024–2025</li>
+        </ul>
+      </section>
+
+      <hr class="cs-rule">
+
+      <!-- ---------------- The premise ---------------- -->
+      <section class="cs-premise" aria-labelledby="cs-premise-title">
+        <div class="cs-copy cs-copy--wide">
+          <h2 class="cs-copy__title" id="cs-premise-title">A plan change touches everything</h2>
+          <p class="cs-copy__body">Slack repackaged its self-serve plans so each tier had a clearer reason to pay for it. Deciding what went into each plan was a business call. The design problem was everything downstream of it.</p>
+          <p class="cs-copy__body"><strong>Every paywall, trial, banner, email and plans page that described a plan had to change at once</strong> — and those surfaces belonged to product teams across the company, each shipping on its own schedule.</p>
+        </div>
+      </section>
+
+      <!-- ---------------- Where design sat ---------------- -->
+      <section class="cs-band cs-band--grey" aria-labelledby="cs-hub-title">
+        <div class="cs-copy cs-copy--wide">
+          <h2 class="cs-copy__title" id="cs-hub-title">One hub, many spokes</h2>
+          <p class="cs-copy__body">The program ran hub and spoke. Expansion, the Growth team that owns upgrades, built the foundation. Every product pillar updated the entry points inside its own features.</p>
+          <p class="cs-copy__body">As a design DRI in the hub, my job was less about drawing screens and more about making sure every pillar’s screens added up to one experience.</p>
+        </div>
+
+        <div class="cs-problemSet">
+          <ul class="cs-problems">
+            <li class="cs-problem">
+              <span class="cs-problem__num">01</span>
+              <h3 class="cs-problem__title">Teams in parallel</h3>
+              <p class="cs-problem__body">Each pillar updated its own upgrade moments at the same time — and was tempted to build its own version of each.</p>
+            </li>
+            <li class="cs-problem">
+              <span class="cs-problem__num">02</span>
+              <h3 class="cs-problem__title">Copy in the code</h3>
+              <p class="cs-problem__body">Plan names and limits sat in strings across the client, in places no design file covered.</p>
+            </li>
+            <li class="cs-problem">
+              <span class="cs-problem__num">03</span>
+              <h3 class="cs-problem__title">States on states</h3>
+              <p class="cs-problem__body">The same screen had to read right during a trial, with a promo, or with credit on the account.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------------- Operating the hub ---------------- -->
+      <section class="cs-band" aria-labelledby="cs-ops-title">
+        <div class="cs-copy">
+          <h2 class="cs-copy__title" id="cs-ops-title">Making consistency the easy path</h2>
+          <p class="cs-copy__body">Reviewing every pillar’s work one screen at a time wasn’t going to scale. So most of my work went into making the consistent choice the default one.</p>
+        </div>
+
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">One component, not ten copies</h3>
+          <p class="cs-copy__body">I pointed every pillar to the Upgrades Kit — our shared upgrade components — and wrote down when to use what. A change made once in the kit reached every surface that used it, instead of every team patching its own version.</p>
+          <ol class="cs-rules">
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">A button says Try Pro, or carries a Pro badge</span>
+              <span class="cs-rule-item__a">It opens the shared trial modal. Expansion updates the design once; each pillar QAs it in place.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">The component you need doesn’t exist yet</span>
+              <span class="cs-rule-item__a">Ask Expansion before building it, so it gets built once, in the kit.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">A feature needs a banner</span>
+              <span class="cs-rule-item__a">One placement in every browser view — below search, scrolling with the page — instead of a different spot per feature.</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">Sweeping the strings</h3>
+          <p class="cs-copy__body">Figma files only cover what someone remembered to design. Engineering ran a code sweep for every string that touched a plan, and <strong>nearly 800</strong> came back. I split them by pillar and gave each team three options:</p>
+          <ol class="cs-rules cs-rules--alpha">
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Retired</span>
+              <span class="cs-rule-item__a">The string, and the experience it lives in, is deprecated.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Covered</span>
+              <span class="cs-rule-item__a">New design and copy are already in the team’s Figma deliverables.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Rewrite</span>
+              <span class="cs-rule-item__a">The team drafts new copy, content design and I review it, then it goes to engineering.</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">Designing for every state</h3>
+          <p class="cs-copy__body">An upgrade message rarely shows up alone. I mapped the layers that stack on top of the base message, so pillars designed for them up front, not in QA.</p>
+          <ul class="cs-problems cs-problems--pairs">
+            <li class="cs-problem">
+              <h4 class="cs-problem__title">During a trial</h4>
+              <p class="cs-problem__body">The team is trying a paid plan.</p>
+            </li>
+            <li class="cs-problem">
+              <h4 class="cs-problem__title">Mid-trial at launch</h4>
+              <p class="cs-problem__body">Plans change while the trial is still running.</p>
+            </li>
+            <li class="cs-problem">
+              <h4 class="cs-problem__title">With a promo</h4>
+              <p class="cs-problem__body">A discount is attached to the upgrade.</p>
+            </li>
+            <li class="cs-problem">
+              <h4 class="cs-problem__title">With credit</h4>
+              <p class="cs-problem__body">The team already has credit on its account.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ---------------- Round two ---------------- -->
+      <section class="cs-band cs-band--grey" aria-labelledby="cs-packages-title">
+        <div class="cs-copy">
+          <h2 class="cs-copy__title" id="cs-packages-title">From “end to end” to work packages</h2>
+          <p class="cs-copy__body">When the plan changed shape for a second round, I co-led design for it. “End to end” was too vague to staff or schedule, so the program broke it into work packages — each with one goal, one team, and one question: <strong>is this ready to bring to engineering?</strong></p>
+          <ul class="cs-board" aria-label="Readiness scale">
+            <li class="cs-board__item" style="--dot: #e01e5a">
+              <span class="cs-board__dot" aria-hidden="true"></span>
+              <span class="cs-board__state">Not yet</span>
+              <span class="cs-board__note">Don’t bring it to the team.</span>
+            </li>
+            <li class="cs-board__item" style="--dot: #ecb22e">
+              <span class="cs-board__dot" aria-hidden="true"></span>
+              <span class="cs-board__state">Early</span>
+              <span class="cs-board__note">A kickoff is possible, but expect to kick it off again.</span>
+            </li>
+            <li class="cs-board__item" style="--dot: #9bc53d">
+              <span class="cs-board__dot" aria-hidden="true"></span>
+              <span class="cs-board__state">Bring it</span>
+              <span class="cs-board__note">Log the big open questions and work through them together.</span>
+            </li>
+            <li class="cs-board__item" style="--dot: #2eb67d">
+              <span class="cs-board__dot" aria-hidden="true"></span>
+              <span class="cs-board__state">Ready</span>
+              <span class="cs-board__note">Schedule the kickoff.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-copy">
+          <h3 class="cs-copy__sub">The packages I owned</h3>
+          <p class="cs-copy__body">Trials — the moment a team decides whether a paid plan is worth it.</p>
+          <ol class="cs-rules">
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Pro trial</span>
+              <span class="cs-rule-item__a">The updated self-serve trial, including the entry points that lead into it.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Business+ trial</span>
+              <span class="cs-rule-item__a">A new self-serve trial, so teams could try the top plan before buying it.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Trial emails</span>
+              <span class="cs-rule-item__a">Updated with lifecycle marketing so the inbox matched the product.</span>
+            </li>
+            <li class="cs-rule-item">
+              <span class="cs-rule-item__q">Invoice trials</span>
+              <span class="cs-rule-item__a">Discovery with Sales for teams that pay by invoice rather than card.</span>
+            </li>
+          </ol>
+        </div>
+
+        <ul class="cs-outcomes">
+          <li class="cs-stat">
+            <span class="cs-stat__figure">~800</span>
+            <span class="cs-stat__label">Plan strings swept, split by pillar and triaged to retire, keep or rewrite</span>
+          </li>
+          <li class="cs-stat">
+            <span class="cs-stat__figure">1</span>
+            <span class="cs-stat__label">Shared trial modal behind every Try Pro button, changed once in the Upgrades Kit</span>
+          </li>
+          <li class="cs-stat">
+            <span class="cs-stat__figure">~12</span>
+            <span class="cs-stat__label">Places to buy the AI add-on, mapped so all of them came out when it was retired</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="cs-close-section" aria-labelledby="cs-takeaway-title">
+        <div class="cs-copy cs-copy--wide">
+          <h2 class="cs-copy__title" id="cs-takeaway-title">What I took from it</h2>
+          <p class="cs-copy__body">On a program this wide, design quality is mostly an operations problem. The screens were rarely the hard part. Keeping every team’s screens telling the same story was.</p>
+          <p class="cs-copy__body">One principle we wrote for the second round says it well: <strong>upgrade paths are education, too.</strong> No one wants to feel tricked into paying. They want to feel like they made a smart, informed decision.</p>
+          <p class="cs-copy__body cs-copy__body--lead">At this scale, consistency doesn’t come from reviewing every screen. It comes from making the right choice the default.</p>
+        </div>
+      </section>
+
+      <nav class="cs-projectNav cs-projectNav--onLight" aria-label="Project navigation">
+        <hr class="cs-projectNav__divider">
+        <div class="cs-projectNav__row">
+          <a class="cs-projectNav__btn cs-projectNav__btn--prev" href="../paypal/index.html" data-project-nav="prev">
+            <span class="cs-projectNav__icon">
+              <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M7.5 4.167 13.333 10 7.5 15.833" />
+              </svg>
+            </span>
+            <span class="cs-projectNav__text">
+              <span class="cs-projectNav__kicker">Previous project</span>
+              <span class="cs-projectNav__title">Digital Wallet NUX</span>
+            </span>
+          </a>
+          <a class="cs-projectNav__btn cs-projectNav__btn--next" href="../visual-design/index.html" data-project-nav="next">
+            <span class="cs-projectNav__text">
+              <span class="cs-projectNav__kicker">Next project</span>
+              <span class="cs-projectNav__title">Visual Design</span>
+            </span>
+            <span class="cs-projectNav__icon">
+              <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                <path d="M7.5 4.167 13.333 10 7.5 15.833" />
+              </svg>
+            </span>
+          </a>
+        </div>
+      </nav>
+
+    </article>
+  </div>
+</div>
+
+<script>
+  const modal = document.querySelector('[data-modal]');
+
+  modal.querySelector('[data-modal-close]').addEventListener('click', () => {
+    modal.dispatchEvent(new CustomEvent('casestudy:close', { bubbles: true }));
+    // When embedded by the portfolio home, tell the host to dismiss the overlay.
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'case-study:close' }, '*');
+    } else {
+      // Opened on its own there is no host to dismiss, so closing goes back to
+      // the home page instead of doing nothing.
+      window.location.href = '../index.html';
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') modal.querySelector('[data-modal-close]').click();
+  });
+
+  // Subtle scroll-in reveal, strictly top-down. Each batch that scrolls into
+  // view gets a short stagger based on its place in that batch.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const SELECTOR = [
+      '.cs-hero__icon', '.cs-hero__title', '.cs-hero__lede',
+      '.cs-heroVisual .cs-shot',
+      '.cs-glance__logo', '.cs-glance__title',
+      '.cs-tag',
+      '.cs-copy > *',
+      '.cs-problem', '.cs-rule-item', '.cs-board__item',
+      '.cs-outcomes .cs-stat',
+      '.cs-projectNav__btn',
+    ].join(', ');
+
+    const STAGGER = 45;   // ms between neighbours in the same batch
+    const MAX_DELAY = 180; // never hold an element back longer than this
+
+    const targets = [...document.querySelectorAll(SELECTOR)];
+    targets.forEach((el) => el.setAttribute('data-reveal', ''));
+    document.documentElement.classList.add('cs-reveal');
+
+    const revealer = new IntersectionObserver((entries) => {
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach(({ target }, i) => {
+          target.style.setProperty('--reveal-delay', Math.min(i * STAGGER, MAX_DELAY) + 'ms');
+          target.classList.add('is-revealed');
+          revealer.unobserve(target);
+        });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
+
+    targets.forEach((el) => revealer.observe(el));
+  }
+</script>
+
+<script src="../shared/cs-fold.js"></script>
+</body>
+</html>

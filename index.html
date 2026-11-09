@@ -140,6 +140,29 @@
         </li>
         <li class="vs-row" data-row>
           <span class="vs-row__track"></span>
+          <img class="vs-row__pic" src="assets/projects/pricing-packaging.webp" alt="An illustrative Slack plan picker with Free, Pro and Business+ side by side" loading="lazy">
+          <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-6">
+            <span class="vs-row__num" aria-hidden="true">02</span>
+            <img class="vs-row__logo" src="assets/logos/slack.svg" alt="Slack">
+            <span class="vs-row__name">Pricing &amp; Packaging</span>
+          </button>
+          <div class="vs-row__details" id="work-6" inert>
+            <div class="vs-row__clip">
+              <div class="vs-row__inner">
+                <span class="vs-row__meta">Slack · 2024–2025</span>
+                <p class="vs-row__desc">Ran the design side of Slack’s plan changes — shared components, a string sweep and clear rules, so every product team updating its own upgrade moments shipped one consistent experience.</p>
+                <a class="vs-cta" href="pricing/index.html" data-case-study data-case-title="Slack Pricing &amp; Packaging">See Project <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- Education System is hidden from the list but still ships: no
+             data-row, so the carousel skips it, and its link stays in the page
+             so /#system and old /system/ links still open the case study. To
+             bring it back, restore data-row here and data-stage on its stage
+             image below, and renumber. -->
+        <li class="vs-row" hidden>
+          <span class="vs-row__track"></span>
           <img class="vs-row__pic" src="assets/projects/education-system-v2.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" loading="lazy">
           <button class="vs-row__title" type="button" aria-expanded="false" aria-controls="work-3">
             <span class="vs-row__num" aria-hidden="true">02</span>
@@ -216,7 +239,9 @@
            rows never waits on the network. -->
       <div class="vs-stage">
         <img class="vs-stage__img" src="assets/projects/slackbot-v2.webp" alt="Slackbot illustration" data-stage>
-        <img class="vs-stage__img" src="assets/projects/education-system-v2.webp" alt="A Slack education modal announcing a new feature, over the Slack desktop app" data-stage hidden>
+        <img class="vs-stage__img" src="assets/projects/pricing-packaging.webp" alt="An illustrative Slack plan picker with Free, Pro and Business+ side by side" data-stage hidden>
+        <!-- Education System, hidden with its row above -->
+        <img class="vs-stage__img" src="assets/projects/education-system-v2.webp" alt="" hidden>
         <img class="vs-stage__img" src="assets/projects/digital-wallet-nux-v2.webp" alt="PayPal crypto detail screen" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/visual-design.webp" alt="SoundHound 200 million users illustration" data-stage hidden>
         <img class="vs-stage__img" src="assets/projects/ai-crm-email.webp" alt="AI-assisted inbox concept" data-stage hidden>
