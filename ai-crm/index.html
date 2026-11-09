@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Opened on its own (a shared /ai-crm/ link, a new tab), this page hands
+     over to the home page with the project in the hash, so it opens as the
+     overlay on top of the portfolio. Inside that overlay it is framed and
+     stays put. Scrapers do not run JS, so link previews still read the tags
+     below. -->
+<script>if (window.top === window.self) { document.documentElement.style.visibility = 'hidden'; location.replace((location.protocol === 'file:' ? '../index.html' : '../') + location.search + '#ai-crm'); }</script>
+<!-- soft password gate for the whole site (see shared/gate.js) -->
+<script src="../shared/gate.js"></script>
+<link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+<title>AI CRM and Email — Case Study</title>
+<meta name="description" content="A desktop email product for Salesforce sales reps: the deal beside every email, a priority inbox, Einstein replies and a calendar that knows the deal.">
+<link rel="canonical" href="https://mnguyen89.github.io/portfolio/ai-crm/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Minh Nguyen — Product Design">
+<meta property="og:title" content="AI CRM and Email — Case Study">
+<meta property="og:description" content="A desktop email product for Salesforce sales reps: the deal beside every email, a priority inbox, Einstein replies and a calendar that knows the deal.">
+<meta property="og:url" content="https://mnguyen89.github.io/portfolio/ai-crm/">
+<meta property="og:image" content="https://mnguyen89.github.io/portfolio/assets/og/og-ai-crm.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The AI CRM email app on a laptop: an email from a buyer, the matched Salesforce deal beside it, and an Einstein-drafted reply.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=01ae3416">
+<link rel="stylesheet" href="../shared/project-nav.css?v=df416aa3">
+</head>
+<body>
+
+<!-- Placeholder build of the case study, made from the Figma frame
+     "AI CRM — V2" (726:11473). Copy is taken from that frame as written; the
+     images are 2x exports of its slots (masters in assets/_source/). -->
+
+<div class="cs-backdrop" data-modal>
+  <div class="cs-panel" role="dialog" aria-modal="true" aria-labelledby="cs-title" tabindex="-1">
+    <button class="cs-close" type="button" data-modal-close aria-label="Close case study">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+
+    <article class="cs">
+
+      <div class="cs-open">
+        <header class="cs-hero">
+          <p class="cs-hero__icon cs-hero__icon--bare">
+            <img src="../assets/logos/salesforce.webp" alt="Salesforce" width="57" height="40">
+          </p>
+          <h1 class="cs-hero__title" id="cs-title">AI CRM and Email</h1>
+          <p class="cs-hero__lede">Following a major reorganization, our team designed a desktop email product from scratch to fill key gaps in the Salesforce ecosystem and optimize the core sales workflow.</p>
+        </header>
+
+        <div class="cs-heroVisual">
+          <figure class="cs-wide">
+            <img src="assets/hero-mock.webp" width="1760" height="1120"
+                 alt="The app on a laptop: Will Adams’s email about pricing for 40 seats, the matched Avocado Inc renewal in the Salesforce panel, and a floating Einstein-drafted reply above Forward, Reply all and Reply buttons."
+                 decoding="async">
+          </figure>
+        </div>
+      </div>
+
+      <section class="cs-glance" aria-labelledby="cs-glance-title">
+        <h2 class="cs-glance__title" id="cs-glance-title">Project at a glance</h2>
+        <ul class="cs-tags">
+          <li class="cs-tag">2016&ndash;2018</li>
+          <li class="cs-tag">8 months</li>
+          <li class="cs-tag">Desktop</li>
+          <li class="cs-tag">New product</li>
+          <li class="cs-tag">Research</li>
+          <li class="cs-tag">Strategy</li>
+          <li class="cs-tag">Product mapping</li>
+          <li class="cs-tag">Framework design</li>
+          <li class="cs-tag">AI / ML</li>
+        </ul>
+      </section>
+
+      <hr class="cs-rule">
+
+      <!-- Research -->
+      <section class="cs-set" aria-labelledby="cs-research-title">
+        <div class="cs-copy">
+          <h2 class="cs-copy__title" id="cs-research-title">Sales reps lived in their inbox. Their deals lived in Salesforce.</h2>
+          <p class="cs-copy__body">Working with the product manager, we researched the current landscape of email products to see where we stood. Most sales reps were using Outlook and Gmail. While there were niche products that catered to sales, none could provide the deep CRM integrations that we could.</p>
+        </div>
+
+        <div class="cs-copy">
+          <ul class="cs-stats">
+            <li class="cs-stat"><span class="cs-stat__figure">22%</span><span class="cs-stat__label">of sales reps could spend more than 3 hours a day closing deals</span></li>
+            <li class="cs-stat"><span class="cs-stat__figure">8 months</span><span class="cs-stat__label">from market research to development</span></li>
+          </ul>
+        </div>
+
+        <div class="cs-competitors">
+          <p class="cs-competitors__label">Where sales reps were already working</p>
+          <img src="assets/logos.webp" width="640" height="112"
+               alt="Outlook, Gmail, Yesware and a sales email tool."
+               loading="lazy" decoding="async">
+        </div>
+
+        <ul class="cs-plates">
+          <li>
+            <figure class="cs-plate">
+              <img src="assets/charts.webp" width="1280" height="386"
+                   alt="Survey charts: a bar chart of reps’ top activities in Salesforce, and a pie chart of how much of the working day goes to closing deals."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Findings -->
+      <section class="cs-band cs-band--sky" aria-label="Research findings">
+        <ul class="cs-plates">
+          <li>
+            <figure class="cs-plate">
+              <img src="assets/activities.webp" width="1280" height="682"
+                   alt="Sales activities in three rows: lead activities, outside sales-type activities and account maintenance activities, each with its steps."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+        </ul>
+
+        <ul class="cs-findings">
+          <li class="cs-finding">
+            <h3 class="cs-finding__title">Selling is a team sport</h3>
+            <p class="cs-finding__body">Few salespeople do everything in the sales process, so collaboration happens throughout it. Reps needed a simple way to start an internal conversation.</p>
+          </li>
+          <li class="cs-finding">
+            <h3 class="cs-finding__title">Buried in admin work</h3>
+            <p class="cs-finding__body">Most reps couldn’t spend more than 3 hours a day closing. The rest went to account management, finding and nurturing leads, and other admin.</p>
+          </li>
+          <li class="cs-finding">
+            <h3 class="cs-finding__title">The CRM comes first</h3>
+            <p class="cs-finding__body">Updating leads and deal info, and logging events, were reps’ top activities in Salesforce. They needed to do it in context, not in another tab.</p>
+          </li>
+        </ul>
+
+        <ul class="cs-plates">
+          <li>
+            <figure class="cs-plate cs-plate--shadow" style="--sw: 115%; --sl: -7.5%; --st: -4.6875%; --sb: -10.3125%">
+              <img src="assets/mapping.webp" width="1472" height="912"
+                   alt="A spreadsheet mapping each research finding, and where it came from, to what it means for the product and the feature it became."
+                   loading="lazy" decoding="async">
+              <figcaption class="cs-plate__cap">Each research finding mapped to a feature — side conversations, @mentions, inline comments and updating records without leaving email.</figcaption>
+            </figure>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Concepts -->
+      <section class="cs-set" aria-labelledby="cs-concepts-title">
+        <div class="cs-copy">
+          <h2 class="cs-copy__title" id="cs-concepts-title">From the whiteboard to three concepts</h2>
+          <p class="cs-copy__body">I moderated and gathered the collective ideas from brainstorming sessions to form and pitch high-level solutions.</p>
+          <p class="cs-copy__body">Low-fidelity wireframes illustrated each concept and communicated it to the team and stakeholders. Three made the final pitch: Communication Hub, Collaborative Email and Intelligent Inbox.</p>
+        </div>
+
+        <ul class="cs-plates">
+          <li>
+            <figure class="cs-plate">
+              <img src="assets/whiteboard.webp" width="1280" height="1168"
+                   alt="Whiteboard sketch listing the outside sales workflow, from finding leads to closing and ongoing relationships, beside columns for platform, inbox and AI/data ideas."
+                   loading="lazy" decoding="async">
+              <figcaption class="cs-plate__cap">Mapping the outside sales workflow against platform, inbox and AI/data opportunities.</figcaption>
+            </figure>
+          </li>
+          <li>
+            <figure class="cs-plate cs-plate--shadow" style="--sw: 115%; --sl: -7.5%; --st: -4.6875%; --sb: -10.3125%">
+              <img src="assets/concept.webp" width="1472" height="1092"
+                   alt="Intelligent Inbox concept: a dashboard with scored suggested actions on the left and columns of email for all mail, leads and accounts."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+          <li>
+            <figure class="cs-plate cs-plate--shadow" style="--sw: 115%; --sl: -7.5%; --st: -4.6875%; --sb: -10.391%">
+              <img src="assets/wireframes.webp" width="1472" height="807"
+                   alt="Two concept wireframes of a conversation view with a contact panel, and a floating chat window."
+                   loading="lazy" decoding="async">
+            </figure>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Product -->
+      <section class="cs-band cs-band--product" aria-labelledby="cs-product-title">
+        <div class="cs-block">
+          <div class="cs-copy">
+            <h2 class="cs-copy__title" id="cs-product-title">An AI-powered inbox for sales</h2>
+            <p class="cs-copy__body">Moving forward with the idea of an AI-powered inbox, a user journey map identified points of opportunity. The backend team helped us understand how machine learning and natural language processing could sift through emails and surface relevant CRM data and suggestions, so reps could target and prioritize.</p>
+          </div>
+          <div class="cs-copy">
+            <h3 class="cs-copy__sub">What we heard from reps</h3>
+            <ul class="cs-quotes">
+              <li class="cs-quote">“Currently I eyeball where to start. It would be great to see which emails correspond to active deals, high ACV (Annual Contract Value), are overdue.”</li>
+              <li class="cs-quote">“I don’t want to get distracted by internal emails and other non-ACV generating stuff.”</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cs-block">
+          <div class="cs-copy">
+            <h3 class="cs-copy__sub">AI touchpoints</h3>
+            <p class="cs-copy__body">The journey map traced where signals like pricing questions, contract requests and meeting changes show up in email, and what a rep would do next.</p>
+          </div>
+          <ul class="cs-plates">
+            <li>
+              <figure class="cs-plate">
+                <img src="assets/journey.webp" width="1280" height="684"
+                     alt="User journey flowchart in four columns, tracing how pricing, contract and meeting signals in email lead to a rep’s next step."
+                     loading="lazy" decoding="async">
+              </figure>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-block">
+          <div class="cs-copy">
+            <h3 class="cs-copy__sub">One framework for every signal</h3>
+            <p class="cs-copy__body">Each suggestion pairs the record it’s tied to with the context that triggered it, so a single pattern could cover pricing, contract and meeting signals.</p>
+          </div>
+          <ul class="cs-plates">
+            <li>
+              <figure class="cs-plate">
+                <img src="assets/framework.webp" width="1280" height="1320"
+                     alt="The signal framework: an email preview with a signal footer naming the object and its context, then the signal expanded with a profile picture, with multiple actions, and in a preview."
+                     loading="lazy" decoding="async">
+              </figure>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-block">
+          <div class="cs-copy">
+            <h3 class="cs-copy__sub">Priority inbox</h3>
+            <p class="cs-copy__body">Einstein ranks email by deal impact and says why, with the account, deal size and stage beside each thread.</p>
+          </div>
+          <figure class="cs-wide">
+            <img src="assets/priority-mock.webp" width="1760" height="1120"
+                 alt="The priority inbox on a laptop: email grouped under Needs your reply, Deals going quiet and Closing this week, with Einstein’s reason under the top thread."
+                 loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <div class="cs-block">
+          <div class="cs-copy">
+            <h3 class="cs-copy__sub">Read receipts and smart compose</h3>
+            <p class="cs-copy__body">Einstein finishes a reply with numbers pulled from Salesforce and shows where they came from. Read receipts show when a buyer opens the email, so reps can follow up while they’re reading.</p>
+          </div>
+          <ul class="cs-plates">
+            <li>
+              <figure class="cs-plate cs-plate--shadow" style="--sw: 108.991%; --sl: -4.457%; --st: -2.815%; --sb: -6.177%">
+                <img src="assets/smart-compose.webp" width="1394" height="914"
+                     alt="Smart compose: a reply to Will with the 12% volume discount filled in by Einstein, and a note naming the Opportunity and open Case it used."
+                     loading="lazy" decoding="async">
+              </figure>
+            </li>
+            <li>
+              <figure class="cs-plate cs-plate--shadow" style="--sw: 108.991%; --sl: -4.457%; --st: -2.815%; --sb: -6.177%">
+                <img src="assets/read-receipts.webp" width="1394" height="914"
+                     alt="Read receipts: a toast saying Will Adams opened your email, and the Activity tab listing when it was opened, on which device, and that he viewed the order form."
+                     loading="lazy" decoding="async">
+              </figure>
+            </li>
+          </ul>
+        </div>
+
+        <ul class="cs-pair">
+          <li>
+            <figure class="cs-plate cs-plate--shadow" style="--sw: 109.032%; --sl: -4.516%; --st: -2.839%; --sb: -6.194%">
+              <img src="assets/send-later.webp" width="845" height="554"
+                   alt="Send later: Einstein’s suggested send time at the top of a list of quick options."
+                   loading="lazy" decoding="async">
+            </figure>
+            <h3 class="cs-copy__sub">Send later</h3>
+            <p class="cs-copy__body">Einstein suggests a send time based on when this person usually reads email.</p>
+          </li>
+          <li>
+            <figure class="cs-plate cs-plate--shadow" style="--sw: 109.032%; --sl: -4.516%; --st: -2.839%; --sb: -6.194%">
+              <img src="assets/new-person.webp" width="845" height="554"
+                   alt="New person: a Salesforce contact pre-filled from someone’s email signature, matched to the account, ready to add."
+                   loading="lazy" decoding="async">
+            </figure>
+            <h3 class="cs-copy__sub">New person</h3>
+            <p class="cs-copy__body">A new contact is drafted from their email signature, matched to the right account.</p>
+          </li>
+        </ul>
+
+        <div class="cs-block">
+          <div class="cs-copy">
+            <h3 class="cs-copy__sub">A calendar that knows the deal</h3>
+            <p class="cs-copy__body">Meetings tied to a Salesforce record show the deal, who’s coming and what’s still open. Add a contact’s calendar and Einstein suggests one time that works for both of you.</p>
+          </div>
+          <figure class="cs-wide">
+            <img src="assets/calendar-mock.webp" width="1760" height="1120"
+                 alt="The calendar on a laptop: a work week of meetings, with the selected meeting’s Salesforce deal, attendees and an Einstein prep note in the side panel."
+                 loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <div class="cs-closing">
+          <div>
+            <h2 class="cs-closing__title">Results</h2>
+            <ul>
+              <li>Company re-organization</li>
+              <li>The product was integrated into the core Sales Cloud application</li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="cs-closing__title">Learnings</h2>
+            <ul>
+              <li>Launch faster with a mobile app</li>
+              <li>Have the architecture conversation earlier</li>
+            </ul>
+          </div>
+        </div>
+
+        <nav class="cs-projectNav" aria-label="Project navigation">
+          <hr class="cs-projectNav__divider">
+          <div class="cs-projectNav__row">
+            <a class="cs-projectNav__btn cs-projectNav__btn--prev" href="../visual-design/index.html" data-project-nav="prev">
+              <span class="cs-projectNav__icon">
+                <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                  <path d="M7.5 4.167 13.333 10 7.5 15.833" />
+                </svg>
+              </span>
+              <span class="cs-projectNav__text">
+                <span class="cs-projectNav__kicker">Previous project</span>
+                <span class="cs-projectNav__title">Visual Design</span>
+              </span>
+            </a>
+            <a class="cs-projectNav__btn cs-projectNav__btn--next" href="../slack/index.html" data-project-nav="next">
+              <span class="cs-projectNav__text">
+                <span class="cs-projectNav__kicker">Next project</span>
+                <span class="cs-projectNav__title">New Team Activation</span>
+              </span>
+              <span class="cs-projectNav__icon">
+                <svg class="cs-projectNav__chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                  <path d="M7.5 4.167 13.333 10 7.5 15.833" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </nav>
+      </section>
+
+    </article>
+  </div>
+</div>
+
+<script>
+  const modal = document.querySelector('[data-modal]');
+
+  modal.querySelector('[data-modal-close]').addEventListener('click', () => {
+    modal.dispatchEvent(new CustomEvent('casestudy:close', { bubbles: true }));
+    // When embedded by the portfolio home, tell the host to dismiss the overlay.
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'case-study:close' }, '*');
+    } else {
+      // Opened on its own there is no host to dismiss, so go back home.
+      window.location.href = '../index.html';
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') modal.querySelector('[data-modal-close]').click();
+  });
+
+  // Subtle scroll-in reveal, top-down, same as the other case studies.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const SELECTOR = [
+      '.cs-hero__icon', '.cs-hero__title', '.cs-hero__lede',
+      '.cs-heroVisual .cs-wide',
+      '.cs-glance__title', '.cs-tag',
+      '.cs-copy > *', '.cs-stat', '.cs-competitors',
+      '.cs-plate', '.cs-wide', '.cs-finding', '.cs-quote',
+      '.cs-closing', '.cs-projectNav__btn',
+    ].join(', ');
+
+    const STAGGER = 45;
+    const MAX_DELAY = 180;
+
+    const targets = [...new Set(document.querySelectorAll(SELECTOR))];
+    targets.forEach((el) => el.setAttribute('data-reveal', ''));
+    document.documentElement.classList.add('cs-reveal');
+
+    const revealer = new IntersectionObserver((entries) => {
+      entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach(({ target }, i) => {
+          target.style.setProperty('--reveal-delay', Math.min(i * STAGGER, MAX_DELAY) + 'ms');
+          target.classList.add('is-revealed');
+          revealer.unobserve(target);
+        });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
+
+    targets.forEach((el) => revealer.observe(el));
+  }
+</script>
+
+<script src="../shared/cs-fold.js"></script>
+</body>
+</html>
